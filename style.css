@@ -69,8 +69,6 @@ body {
   gap: 12px;
 }
 
-/* ICON */
-
 .btn-icon {
   width: 26px;
   height: 26px;
@@ -89,7 +87,7 @@ body {
   display: inline-block;
 }
 
-/* RUNNING TEXT */
+/* RUNNING */
 
 .btn-text.move {
   animation: marquee 10s linear infinite;
@@ -98,4 +96,52 @@ body {
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
+}
+
+/* SLIDER */
+
+.slider {
+  margin-top: 25px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.slides {
+  display: flex;
+  transition: 0.5s;
+}
+
+.slides img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  padding: 6px 10px;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.dots {
+  margin-top: 10px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: gray;
+  display: inline-block;
+  border-radius: 50%;
+  margin: 3px;
+}
+
+.dot.active {
+  background: white;
 }
