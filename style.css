@@ -222,3 +222,34 @@ p {
     font-size: 22px;
   }
 }
+
+/* SOCIAL ICONS */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 15px 0 20px;
+}
+
+.social-icons a {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.social-icons img {
+  width: 22px;
+  height: 22px;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
