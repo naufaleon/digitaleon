@@ -1,85 +1,178 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Digitaleon</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="stars"></div>
 
-<!-- BACKGROUND -->
-<div class="stars"></div>
+  <main class="container">
+    <img id="logo" class="logo" src="" alt="Logo" />
 
-<div class="container">
-  <img src="logo.png" class="logo">
+    <h1 id="site-title">Loading...</h1>
+    <p id="site-description">Memuat data...</p>
 
-  <h1>Digitaleon</h1>
-  <p>Kebutuhan Digital mu ada disini by Naufaleon 🚀</p>
+    <div id="buttons" class="buttons"></div>
 
-  <a href="#" class="btn">📸 Instagram @naufaleon.id</a>
-  <a href="#" class="btn">💬 Chat via WhatsApp</a>
-  <a href="#" class="btn">📦 Pricelist</a>
-  <a href="#" class="btn">⚙️ Digitaleon Tools</a>
+    <section class="slider">
+      <div class="slides" id="slides"></div>
 
-  <!-- SLIDER -->
-  <div class="slider">
-    <div class="slides" id="slides">
-      <img src="poster1.jpg">
-      <img src="poster2.jpg">
-      <img src="poster3.jpg">
-    </div>
+      <button class="nav prev" id="prevBtn" type="button">‹</button>
+      <button class="nav next" id="nextBtn" type="button">›</button>
 
-    <button class="nav prev" onclick="prevSlide()">‹</button>
-    <button class="nav next" onclick="nextSlide()">›</button>
+      <div class="dots" id="dots"></div>
+    </section>
+  </main>
 
-    <div class="dots">
-      <span onclick="goToSlide(0)" class="dot active"></span>
-      <span onclick="goToSlide(1)" class="dot"></span>
-      <span onclick="goToSlide(2)" class="dot"></span>
-    </div>
-  </div>
-</div>
+  <script>
+    let currentIndex = 0;
+    let autoSlideInterval = null;
 
-<script>
-let index = 0;
-const slides = document.getElementById("slides");
-const dots = document.querySelectorAll(".dot");
+    async function loadConfig() {
+      try {
+        const res = await fetch("config.json?t=" + Date.now());
+        if (!res.ok) throw new Error("Gagal memuat config.json");
+        const config = await res.json();
 
-function showSlide(i) {
-  index = i;
-  slides.style.transform = "translateX(" + (-index * 100) + "%)";
-  dots.forEach(dot => dot.classList.remove("active"));
-  dots[index].classList.add("active");
-}
+        document.title = config.title || "Website";
+        document.getElementById("site-title").textContent = config.title || "";
+        document.getElementById("site-description").textContent = config.description || "";
 
-function nextSlide() {
-  index = (index + 1) % dots.length;
-  showSlide(index);
-}
+        const logo = document.getElementById("logo");
+        logo.src = config.logo || "";
+        logo.style.display = config.logo ? "block" : "none";
 
-function prevSlide() {
-  index = (index - 1 + dots.length) % dots.length;
-  showSlide(index);
-}
+        renderButtons(config.buttons || []);
+        renderSlides(config.posters || []);
+      } catch (err) {
+        console.error(err);
+        document.getElementById("site-title").textContent = "Gagal memuat data";
+        document.getElementById("site-description").textContent = "Periksa config.json";
+      }
+    }
 
-function goToSlide(i) {
-  showSlide(i);
-}
+    function renderButtons(buttons) {
+      const container = document.getElementById("buttons");
+      container.innerHTML = "";
 
-setInterval(nextSlide, 4000);
+      buttons.forEach((btn) => {
+        const a = document.createElement("a");
+        a.className = "btn";
+        a.href = btn.url || "#";
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = btn.text || "Button";
+        container.appendChild(a);
+      });
+    }
 
-// swipe HP
-let startX = 0;
-slides.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-});
+    function renderSlides(posters) {
+      const slides = document.getElementById("slides");
+      const dots = document.getElementById("dots");
 
-slides.addEventListener("touchend", e => {
-  let endX = e.changedTouches[0].clientX;
-  if (startX > endX + 50) nextSlide();
-  if (startX < endX - 50) prevSlide();
-});
-</script>
+      slides.innerHTML = "";
+      dots.innerHTML = "";
+      currentIndex = 0;
 
+      if (!posters.length) {
+        slides.innerHTML = '<div class="empty-slide">Belum ada poster</div>';
+        document.getElementById("prevBtn").style.display = "none";
+        document.getElementById("nextBtn").style.display = "none";
+        return;
+      }
+
+      document.getElementById("prevBtn").style.display = "block";
+      document.getElementById("nextBtn").style.display = "block";
+
+      posters.forEach((src, index) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = `Poster ${index + 1}`;
+        slides.appendChild(img);
+
+        const dot = document.createElement("span");
+        dot.className = "dot" + (index === 0 ? " active" : "");
+        dot.addEventListener("click", () => goToSlide(index));
+        dots.appendChild(dot);
+      });
+
+      updateSlide();
+      startAutoSlide();
+    }
+
+    function updateSlide() {
+      const slides = document.getElementById("slides");
+      const dots = document.querySelectorAll(".dot");
+      slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === currentIndex));
+    }
+
+    function nextSlide() {
+      const total = document.querySelectorAll("#slides img").length;
+      if (!total) return;
+      currentIndex = (currentIndex + 1) % total;
+      updateSlide();
+    }
+
+    function prevSlide() {
+      const total = document.querySelectorAll("#slides img").length;
+      if (!total) return;
+      currentIndex = (currentIndex - 1 + total) % total;
+      updateSlide();
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      updateSlide();
+      restartAutoSlide();
+    }
+
+    function startAutoSlide() {
+      stopAutoSlide();
+      autoSlideInterval = setInterval(nextSlide, 4000);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideInterval) clearInterval(autoSlideInterval);
+    }
+
+    function restartAutoSlide() {
+      stopAutoSlide();
+      startAutoSlide();
+    }
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      nextSlide();
+      restartAutoSlide();
+    });
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      prevSlide();
+      restartAutoSlide();
+    });
+
+    let touchStartX = 0;
+    const slidesEl = document.getElementById("slides");
+
+    slidesEl.addEventListener("touchstart", (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    slidesEl.addEventListener("touchend", (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      if (touchStartX - touchEndX > 50) {
+        nextSlide();
+        restartAutoSlide();
+      } else if (touchEndX - touchStartX > 50) {
+        prevSlide();
+        restartAutoSlide();
+      }
+    });
+
+    loadConfig();
+  </script>
 </body>
 </html>
