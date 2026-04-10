@@ -216,6 +216,58 @@
   </style>
 </head>
 <body>
+
+  <!-- Modal Calculator Refund -->
+<div id="refundModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+    <h2>Calculator Refund</h2>
+
+    <label>Mode</label>
+    <select>
+      <option>Seller</option>
+      <option>Buyer</option>
+    </select>
+
+    <label>Harga Beli (Rp)</label>
+    <input type="number" placeholder="contoh: 29500">
+
+    <label>Tanggal Beli</label>
+    <input type="date">
+
+    <label>Tanggal Error</label>
+    <input type="date">
+
+    <label>Durasi (hari)</label>
+    <select>
+      <option>7 hari</option>
+      <option>30 hari (1 bulan)</option>
+      <option>60 hari (2 bulan)</option>
+      <option>90 hari (3 bulan)</option>
+      <option>Custom</option>
+    </select>
+
+    <label>Fee (Seller)</label>
+    <select>
+      <option>0.7</option>
+      <option>0.8</option>
+      <option>0.9</option>
+      <option>0.95</option>
+      <option>Custom</option>
+    </select>
+
+    <!-- Deskripsi -->
+    <p class="fee-desc">
+      Fee Seller adalah jasa layanan proses garansi, pergantian produk baru dan jasa replace
+    </p>
+
+    <button class="btn">Hitung Refund</button>
+    <button class="btn back">← Back to Home</button>
+  </div>
+</div>
+  
+  
   <div class="app">
     <main class="content">
       <div class="clock-wrap" aria-label="Jam analog">
