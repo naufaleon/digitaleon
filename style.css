@@ -55,7 +55,7 @@ body {
 .container {
   width: min(92vw, 460px);
   margin: 0 auto;
-  padding: 42px 16px 36px;
+  padding: 34px 16px 36px;
 }
 
 .logo {
@@ -76,10 +76,56 @@ h1 {
 }
 
 p {
-  margin: 0 0 22px;
+  margin: 0 0 18px;
   font-size: clamp(14px, 3.5vw, 17px);
   opacity: 0.86;
   line-height: 1.5;
+}
+
+/* 4 tombol sosial atas */
+.social-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  width: 100%;
+  margin: 0 0 16px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 800;
+  font-size: clamp(18px, 4vw, 22px);
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.facebook {
+  background: #1da1e2;
+}
+
+.instagram {
+  background: #f7c816;
+  color: #fff;
+}
+
+.tiktok {
+  background: #4a4fcb;
+}
+
+.youtube {
+  background: #ff1624;
 }
 
 .buttons {
@@ -199,12 +245,26 @@ p {
 
 @media (max-width: 480px) {
   .container {
-    padding-top: 34px;
+    width: min(94vw, 460px);
+    padding-top: 24px;
   }
 
   .logo {
     width: 72px;
     height: 72px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  p {
+    margin-bottom: 16px;
+  }
+
+  .social-btn {
+    min-height: 54px;
+    font-size: 16px;
   }
 
   .btn {
@@ -221,35 +281,4 @@ p {
     height: 34px;
     font-size: 22px;
   }
-}
-
-/* SOCIAL ICONS */
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 15px 0 20px;
-}
-
-.social-icons a {
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.1);
-  border-radius: 50%;
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
-}
-
-.social-icons img {
-  width: 22px;
-  height: 22px;
-}
-
-.social-icons a:hover {
-  transform: scale(1.2);
-  background: rgba(255,255,255,0.2);
-  box-shadow: 0 0 10px rgba(255,255,255,0.5);
 }
