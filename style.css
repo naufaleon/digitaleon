@@ -144,6 +144,8 @@ p {
   width: 24px;
   height: 24px;
   object-fit: contain;
+  position: absolute;
+  left: 15px;
 }
 
 .btn:hover {
