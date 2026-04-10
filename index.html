@@ -74,6 +74,7 @@
       }
     }
 
+    
     function renderButtons(buttons) {
       const container = document.getElementById("buttons");
       container.innerHTML = "";
@@ -83,12 +84,29 @@
         a.className = "btn";
         a.href = btn.url || "#";
         a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.textContent = btn.text || "Button";
+
+        // wrapper isi
+        const content = document.createElement("div");
+        content.className = "btn-content";
+
+        // icon
+        if (btn.icon) {
+          const img = document.createElement("img");
+          img.src = btn.icon;
+          img.className = "btn-icon";
+          content.appendChild(img);
+        }
+
+        // text
+        const span = document.createElement("span");
+        span.textContent = btn.text || "Button";
+        content.appendChild(span);
+
+        a.appendChild(content);
         container.appendChild(a);
       });
     }
-
+    
     function renderSlides(posters) {
       const slides = document.getElementById("slides");
       const dots = document.getElementById("dots");
