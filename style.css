@@ -121,6 +121,7 @@ p {
 
 .btn {
   display: block;
+  padding-left: 50px;
   width: 100%;
   margin: 12px 0;
   padding: 15px;
