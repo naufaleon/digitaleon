@@ -1,188 +1,178 @@
+<!-- ========================= -->
+<!-- FILE: index.html (MAIN) -->
+<!-- ========================= -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menu Page</title>
-
-<style>
-/* === (CSS kamu tetap, tidak diubah banyak) === */
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-}
-
-.modal-content {
-  background: #2f3441;
-  margin: 5% auto;
-  padding: 20px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 400px;
-  color: white;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {opacity:0; transform: translateY(20px);}
-  to {opacity:1; transform: translateY(0);}
-}
-
-.modal-content label {
-  display: block;
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.modal-content input,
-.modal-content select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 10px;
-  border: none;
-  background: #3c4252;
-  color: white;
-}
-
-.btn {
-  width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: #5a6275;
-  color: white;
-  cursor: pointer;
-}
-
-.back {
-  background: transparent;
-  border: 1px solid #aaa;
-}
-
-.close {
-  float: right;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.fee-desc {
-  font-size: 12px;
-  color: #ccc;
-  margin-top: 8px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Utama</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+<body>
+  <div class="center">
+    <a href="digitaleontools.html" class="main-btn">Digitaleon Tools</a>
+  </div>
+</body>
+</html>
 
+
+<!-- ========================= -->
+<!-- FILE: digitaleontools.html -->
+<!-- ========================= -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digitaleon Tools</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
-<!-- ✅ MODAL -->
-<div id="refundModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-
-    <h2>Calculator Refund</h2>
-
-    <label>Mode</label>
-    <select>
-      <option>Seller</option>
-      <option>Buyer</option>
-    </select>
-
-    <label>Harga Beli (Rp)</label>
-    <input type="number" placeholder="contoh: 29500">
-
-    <label>Tanggal Beli</label>
-    <input type="date">
-
-    <label>Tanggal Error</label>
-    <input type="date">
-
-    <label>Durasi (hari)</label>
-    <select>
-      <option>7 hari</option>
-      <option>30 hari (1 bulan)</option>
-      <option>60 hari (2 bulan)</option>
-      <option>90 hari (3 bulan)</option>
-      <option>Custom</option>
-    </select>
-
-    <label>Fee (Seller)</label>
-    <select>
-      <option>0.7</option>
-      <option>0.8</option>
-      <option>0.9</option>
-      <option>0.95</option>
-      <option>Custom</option>
-    </select>
-
-    <p class="fee-desc">
-      Fee Seller adalah jasa layanan proses garansi, pergantian produk baru dan jasa replace
-    </p>
-
-    <button class="btn">Hitung Refund</button>
-    <button class="btn back">← Back to Home</button>
-  </div>
-</div>
-
-<!-- ✅ MENU -->
 <div class="app">
   <main class="content">
 
+    <!-- CLOCK -->
+    <div class="clock-wrap">
+      <div class="hand hour" id="hourHand"></div>
+      <div class="hand minute" id="minuteHand"></div>
+      <div class="hand second" id="secondHand"></div>
+      <div class="center-dot"></div>
+    </div>
+
+    <!-- MENU -->
     <section class="menu-grid">
-      
-      <!-- 🔥 FIX DI SINI -->
-      <a id="openRefund" class="menu-btn" href="javascript:void(0)">
-        <div class="icon-box">
-          <img src="https://i.ibb.co.com/Pzb1fbDd/Whats-App-Image-2026-04-11-at-03-21-53.jpg">
-        </div>
+
+      <a class="menu-btn" href="#">
+        <div class="icon-box">Calculator</div>
         <div class="label">Calculator Refund</div>
       </a>
 
       <a class="menu-btn" href="#">
-        <div class="icon-box">
-          <img src="https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg">
-        </div>
-        <div class="label">Qris Dinamis Generator</div>
+        <div class="icon-box">Aris</div>
+        <div class="label">Aris Dinamia Generator</div>
       </a>
 
     </section>
 
+    <a class="back-btn" href="index.html">Back to Menu</a>
+
   </main>
 </div>
 
-<!-- ✅ SCRIPT -->
-<script>
-// ambil elemen
-const modal = document.getElementById("refundModal");
-const openBtn = document.getElementById("openRefund");
-const closeBtn = document.querySelector(".close");
-
-// buka modal
-openBtn.onclick = () => {
-  modal.style.display = "block";
-};
-
-// tutup modal
-closeBtn.onclick = () => {
-  modal.style.display = "none";
-};
-
-// klik luar modal
-window.onclick = (e) => {
-  if (e.target === modal) {
-    modal.style.display = "none";
-  }
-};
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
+
+
+<!-- ========================= -->
+<!-- FILE: style.css -->
+<!-- ========================= -->
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #111;
+  color: white;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main-btn {
+  padding: 20px 30px;
+  background: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.app {
+  min-height: 100vh;
+  background-image: url('https://i.ibb.co.com/dwQpYtSH/Whats-App-Image-2026-04-11-at-02-49-38.jpg" alt="What');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  text-align: center;
+}
+
+.clock-wrap {
+  width: 250px;
+  height: 250px;
+  border: 4px solid white;
+  border-radius: 50%;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom;
+}
+
+.hour { height: 60px; width: 4px; background: white; }
+.minute { height: 80px; width: 3px; background: white; }
+.second { height: 90px; width: 2px; background: red; }
+
+.menu-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.menu-btn {
+  text-decoration: none;
+  color: white;
+  text-align: center;
+}
+
+.icon-box {
+  width: 100px;
+  height: 100px;
+  background: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  text-decoration: none;
+  color: white;
+}
+
+
+<!-- ========================= -->
+<!-- FILE: script.js -->
+<!-- ========================= -->
+const hourHand = document.getElementById('hourHand');
+const minuteHand = document.getElementById('minuteHand');
+const secondHand = document.getElementById('secondHand');
+
+function updateClock() {
+  const now = new Date();
+  const s = now.getSeconds();
+  const m = now.getMinutes();
+  const h = now.getHours();
+
+  secondHand.style.transform = `rotate(${s * 6}deg)`;
+  minuteHand.style.transform = `rotate(${m * 6}deg)`;
+  hourHand.style.transform = `rotate(${h * 30 + m * 0.5}deg)`;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
