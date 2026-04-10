@@ -141,9 +141,10 @@ p {
 }
 
 .btn-icon {
+  position: absolute;
+  left: 15px;
   width: 26px;
   height: 26px;
-  object-fit: contain;
 }
 
 .btn:hover {
