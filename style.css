@@ -136,9 +136,8 @@ p {
 .btn-content {
   display: flex;
   align-items: center;
-  justify-content: center; /* bikin ke tengah */
-  gap: 12px;
-  position: relative;
+  justify-content: center;
+  text-align: center;
 }
 
 .btn-icon {
