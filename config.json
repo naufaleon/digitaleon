@@ -5,22 +5,22 @@
   "buttons": [
     {
       "text": "🔴 Naufaleon ⭑ 𝘒𝘢𝘯𝘢𝘭 𝘚𝘵𝘳𝘦𝘢𝘮𝘪𝘯𝘨 𝘠𝘛 𝘴𝘢𝘺𝘢",
-      "url": "https://www.youtube.com/@naufaleon_id/streams"
+      "url": "https://www.youtube.com/@naufaleon_id/streams",
       "icon": "https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
     },
     {
       "text": "🎁 tako.id ⭑ Support / Mediashare Naufaleon",
-      "url": "https://www.tako.id/naufaleon"
+      "url": "https://www.tako.id/naufaleon",
       "icon": "https://avatars.githubusercontent.com/u/139215619?s=200&v=4"
     },
     {
       "text": "🎮 digitaleon.my.id ⭑ TopUp Games Automatis",
-      "url": "https://digitaleon.my.id"
+      "url": "https://digitaleon.my.id",
       "icon": "https://digitaleon.my.id/img/web/Digitaleon%20Dark%20Theme.png"
     },
     {
       "text": "💻 ibmstore.my.id ⭑ Auto Order Apk Prem",
-      "url": " https://ibmstore.my.id"
+      "url": " https://ibmstore.my.id",
       "icon": "https://i.ibb.co.com/V0kHJ2PB/logo.png"
     }
   ],
