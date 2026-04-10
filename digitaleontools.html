@@ -3,185 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menu Page</title>
+<title>Digitaleon Tools</title>
 
 <style>
-/* === (CSS kamu tetap, tidak diubah banyak) === */
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
+body{
+  background:url('https://i.ibb.co.com/hxrJRM74/Whats-App-Image-2026-04-11-at-02-49-38.jpg') center/cover no-repeat;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
 }
 
-.modal-content {
-  background: #2f3441;
-  margin: 5% auto;
-  padding: 20px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 400px;
-  color: white;
-  animation: fadeIn 0.3s ease;
+/* MENU */
+.menu{
+  text-align:center;
 }
 
-@keyframes fadeIn {
-  from {opacity:0; transform: translateY(20px);}
-  to {opacity:1; transform: translateY(0);}
+.menu-grid{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  margin-top:20px;
 }
 
-.modal-content label {
-  display: block;
-  margin-top: 10px;
-  font-size: 14px;
+.card{
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);
+  padding:15px;
+  border-radius:15px;
+  cursor:pointer;
+  transition:.3s;
+  width:130px;
 }
 
-.modal-content input,
-.modal-content select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 10px;
-  border: none;
-  background: #3c4252;
-  color: white;
+.card:hover{transform:scale(1.05)}
+
+.card img{
+  width:100%;
+  border-radius:10px;
 }
 
-.btn {
-  width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: #5a6275;
-  color: white;
-  cursor: pointer;
+.title{
+  margin-top:10px;
+  font-weight:bold;
 }
 
-.back {
-  background: transparent;
-  border: 1px solid #aaa;
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.7);
+  justify-content:center;
+  align-items:center;
 }
 
-.close {
-  float: right;
-  font-size: 22px;
-  cursor: pointer;
+.modal-box{
+  background:#2f3441;
+  padding:20px;
+  border-radius:15px;
+  width:90%;
+  max-width:400px;
 }
 
-.fee-desc {
-  font-size: 12px;
-  color: #ccc;
-  margin-top: 8px;
+input,select{
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border:none;
+  border-radius:10px;
+  background:#3c4252;
+  color:#fff;
 }
+
+label{margin-top:10px;display:block}
+
+button{
+  width:100%;
+  padding:10px;
+  margin-top:15px;
+  border:none;
+  border-radius:10px;
+  background:#5a6275;
+  color:#fff;
+  cursor:pointer;
+}
+
+.desc{
+  font-size:12px;
+  color:#ccc;
+  margin-top:5px;
+}
+
+/* RESULT */
+.result{
+  margin-top:20px;
+  background:#3c4252;
+  padding:15px;
+  border-radius:15px;
+  text-align:center;
+}
+
+hr{margin:10px 0;border:1px solid #777}
 </style>
 </head>
 
 <body>
 
-<!-- ✅ MODAL -->
-<div id="refundModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
+<div class="menu">
+  <h1>Digitaleon Tools</h1>
+
+  <div class="menu-grid">
+    <div class="card" onclick="openModal()">
+      <img src="https://i.ibb.co.com/Pzb1fbDd/Whats-App-Image-2026-04-11-at-03-21-53.jpg">
+      <div class="title">Calculator Refund</div>
+    </div>
+
+    <div class="card">
+      <img src="https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg">
+      <div class="title">QRIS Generator</div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:30px">Back to Menu</h2>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
 
     <h2>Calculator Refund</h2>
 
     <label>Mode</label>
-    <select>
+    <select id="mode">
       <option>Seller</option>
       <option>Buyer</option>
     </select>
 
     <label>Harga Beli (Rp)</label>
-    <input type="number" placeholder="contoh: 29500">
+    <input type="number" id="harga">
 
     <label>Tanggal Beli</label>
-    <input type="date">
+    <input type="date" id="tglBeli">
 
     <label>Tanggal Error</label>
-    <input type="date">
+    <input type="date" id="tglError">
 
-    <label>Durasi (hari)</label>
-    <select>
-      <option>7 hari</option>
-      <option>30 hari (1 bulan)</option>
-      <option>60 hari (2 bulan)</option>
-      <option>90 hari (3 bulan)</option>
-      <option>Custom</option>
+    <label>Durasi</label>
+    <select id="durasi">
+      <option value="7">7 hari</option>
+      <option value="30">30 hari</option>
+      <option value="60">60 hari</option>
+      <option value="90">90 hari</option>
     </select>
 
-    <label>Fee (Seller)</label>
-    <select>
-      <option>0.7</option>
-      <option>0.8</option>
-      <option>0.9</option>
-      <option>0.95</option>
-      <option>Custom</option>
+    <label>Fee</label>
+    <select id="fee">
+      <option value="0.7">0.7</option>
+      <option value="0.8">0.8</option>
+      <option value="0.9">0.9</option>
+      <option value="0.95">0.95</option>
     </select>
 
-    <p class="fee-desc">
+    <div class="desc">
       Fee Seller adalah jasa layanan proses garansi, pergantian produk baru dan jasa replace
-    </p>
+    </div>
 
-    <button class="btn">Hitung Refund</button>
-    <button class="btn back">← Back to Home</button>
+    <button onclick="hitung()">Hitung Refund</button>
+
+    <div id="hasil"></div>
+
+    <button onclick="closeModal()">Back</button>
   </div>
 </div>
 
-<!-- ✅ MENU -->
-<div class="app">
-  <main class="content">
-
-    <section class="menu-grid">
-      
-      <!-- 🔥 FIX DI SINI -->
-      <a id="openRefund" class="menu-btn" href="javascript:void(0)">
-        <div class="icon-box">
-          <img src="https://i.ibb.co.com/Pzb1fbDd/Whats-App-Image-2026-04-11-at-03-21-53.jpg">
-        </div>
-        <div class="label">Calculator Refund</div>
-      </a>
-
-      <a class="menu-btn" href="#">
-        <div class="icon-box">
-          <img src="https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg">
-        </div>
-        <div class="label">Qris Dinamis Generator</div>
-      </a>
-
-    </section>
-
-  </main>
-</div>
-
-<!-- ✅ SCRIPT -->
 <script>
-// ambil elemen
-const modal = document.getElementById("refundModal");
-const openBtn = document.getElementById("openRefund");
-const closeBtn = document.querySelector(".close");
+function openModal(){
+  document.getElementById("modal").style.display="flex";
+}
 
-// buka modal
-openBtn.onclick = () => {
-  modal.style.display = "block";
-};
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
 
-// tutup modal
-closeBtn.onclick = () => {
-  modal.style.display = "none";
-};
+function hitung(){
+  let harga = parseInt(document.getElementById("harga").value);
+  let tglBeli = new Date(document.getElementById("tglBeli").value);
+  let tglError = new Date(document.getElementById("tglError").value);
+  let durasi = parseInt(document.getElementById("durasi").value);
+  let fee = parseFloat(document.getElementById("fee").value);
 
-// klik luar modal
-window.onclick = (e) => {
-  if (e.target === modal) {
-    modal.style.display = "none";
-  }
-};
+  let selisih = (tglError - tglBeli) / (1000*60*60*24);
+  let sisa = durasi - selisih;
+
+  if(sisa < 0) sisa = 0;
+
+  let refund = harga * (sisa/durasi) * fee;
+
+  document.getElementById("hasil").innerHTML = `
+    <div class="result">
+      <b>📊 Hasil Refund</b><br><br>
+      Harga: Rp ${harga.toLocaleString()}<br>
+      Durasi: ${durasi} hari<br>
+      Sisa: ${sisa} hari<br>
+      Fee: ${fee}<br>
+      <hr>
+      <b>Total: Rp ${Math.round(refund).toLocaleString()}</b>
+    </div>
+  `;
+}
 </script>
 
 </body>
