@@ -132,6 +132,18 @@ p {
   transition: 0.3s;
 }
 
+.btn-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
 .btn:hover {
   transform: scale(1.05);
   background: rgba(255,255,255,0.2);
