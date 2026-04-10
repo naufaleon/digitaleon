@@ -123,26 +123,23 @@ p {
   display: block;
   width: 100%;
   margin: 12px 0;
-  padding: 15px 15px 15px 55px; /* kiri lebih besar */
+  padding: 15px;
   border-radius: 15px;
   text-decoration: none;
   color: white;
   background: rgba(255,255,255,0.1);
   backdrop-filter: blur(10px);
   transition: 0.3s;
-  position: relative;
 }
 
 .btn-content {
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: center; /* center keseluruhan */
+  gap: 12px;
 }
 
 .btn-icon {
-  position: absolute;
-  left: 15px;
   width: 26px;
   height: 26px;
   object-fit: contain;
