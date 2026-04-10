@@ -1,3 +1,719 @@
+
+
+
+Invite team members
+Uploaded image
+saya ingin membuat website seperti ini bagaimana cara membuatnya dan hosting gratis untuk domain saya punya my.id
+
+Keren, itu tampilan seperti link-in-bio / landing page sederhana (mirip Linktree tapi custom). Kamu bisa bikin seperti itu cukup dengan HTML + CSS + sedikit JavaScript saja — nggak perlu backend.
+
+Aku jelasin step-by-step biar kamu bisa langsung bikin 👇
+
+🧱 1. Struktur Website (HTML dasar)
+Buat file index.html:
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Premixio.id</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <img src="logo.png" class="logo">
+
+  <h1>Premixio.id</h1>
+  <p>You trusted digital goods hub 🚀</p>
+
+  <a href="#" class="btn">📸 Instagram @premixio.id</a>
+  <a href="#" class="btn">💬 Chat via WhatsApp</a>
+  <a href="#" class="btn">📦 Pricelist</a>
+  <a href="#" class="btn">⚙️ Premixio Tools</a>
+</div>
+
+</body>
+</html>
+🎨 2. Styling (biar mirip gambar kamu)
+Buat file style.css:
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+}
+
+.container {
+  margin-top: 80px;
+}
+
+.logo {
+  width: 100px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+h1 {
+  margin: 10px 0;
+}
+
+p {
+  opacity: 0.7;
+}
+
+.btn {
+  display: block;
+  width: 300px;
+  margin: 15px auto;
+  padding: 15px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+✨ 3. Tambahin efek bintang (optional tapi bikin keren)
+Tambahin di body:
+
+body {
+  background: url('https://www.transparenttextures.com/patterns/stardust.png'), #0f172a;
+}
+🌐 4. Hosting GRATIS (pakai domain .my.id kamu)
+Karena kamu sudah punya domain .my.id, ini opsi terbaik:
+
+✅ 1. GitHub Pages (RECOMMENDED)
+Gratis + stabil + gampang
+
+Langkah:
+Buat akun GitHub
+
+Buat repository (misal: premixio)
+
+Upload file:
+
+index.html
+
+style.css
+
+Masuk ke:
+Settings → Pages
+
+Pilih:
+
+Source: Deploy from branch (main)
+Dapat link:
+
+https://username.github.io/premixio
+🔗 5. Hubungkan ke domain .my.id
+Masuk ke DNS domain kamu → tambah:
+
+A Record:
+@ → 185.199.108.153
+@ → 185.199.109.153
+@ → 185.199.110.153
+@ → 185.199.111.153
+CNAME:
+www → username.github.io
+Lalu di GitHub Pages:
+
+isi custom domain:
+
+premixio.my.id
+🆓 Alternatif Hosting Gratis
+Kalau mau opsi lain:
+
+Platform	Kelebihan
+Netlify	paling gampang drag & drop
+Vercel	cepat & modern
+Cloudflare Pages	performa tinggi
+🔥 Tips biar lebih profesional
+Pakai font dari Google Fonts (Poppins / Inter)
+
+Tambahin icon pakai:
+
+https://icons8.com
+
+atau FontAwesome
+
+Tambahin animasi hover (scale / glow)
+
+Gunakan favicon biar terlihat legit
+
+🚀 Kalau kamu mau next level
+Aku bisa bantu:
+
+bikin versi lebih premium (animasi halus + glow + gradient)
+
+tambah dashboard admin edit link
+
+bikin mirip Linktree tapi custom brand kamu
+
+Mau aku bikinin template yang 100% mirip + lebih keren dari gambar kamu (siap upload ke hosting)?
+
+
+Uploaded image
+
+Mantap, kamu sudah di langkah yang benar 👍 Ini tinggal sedikit lagi jadi website live.
+
+Aku pandu langsung dari posisi kamu sekarang 👇
+
+🚀 1. Isi Repository di GitHub
+Di halaman itu isi seperti ini:
+
+📌 Repository name:
+premixio
+📌 Description (optional):
+Landing page Premixio
+📌 Setting lain:
+✅ Public
+
+❌ Add README → OFF (biar simpel)
+
+❌ .gitignore → No
+
+❌ License → No
+
+👉 Lalu klik:
+Create repository
+
+📤 2. Upload File Website
+Setelah repo jadi:
+
+Klik:
+👉 "uploading an existing file"
+
+Upload:
+
+index.html
+
+style.css
+
+(logo kamu kalau ada, misal logo.png)
+
+🌍 3. Aktifkan GitHub Pages
+Masuk ke:
+
+👉 Settings → Pages
+
+Setting seperti ini:
+
+Source: Deploy from branch
+
+Branch: main
+
+Folder: /root
+
+Klik Save
+
+🔗 4. Dapat Link Website
+Nanti muncul link:
+
+https://naufaleon.github.io/premixio/
+Coba buka → harusnya sudah muncul website kamu 🎉
+
+🌐 5. Hubungkan ke domain .my.id kamu
+Masuk ke DNS domain kamu (Niagahoster / Rumahweb / dll)
+
+Tambahkan ini:
+🔴 A Record
+@ → 185.199.108.153
+@ → 185.199.109.153
+@ → 185.199.110.153
+@ → 185.199.111.153
+🔵 CNAME
+www → naufaleon.github.io
+⚙️ 6. Setting Custom Domain di GitHub
+Balik ke:
+👉 Settings → Pages
+
+Isi:
+
+premixio.my.id
+Klik save ✅
+
+⏳ 7. Tunggu DNS (5–30 menit)
+Lalu buka:
+
+https://premixio.my.id
+🔥 BONUS (biar makin mirip gambar kamu)
+Kalau mau tampilan lebih premium:
+
+Tambahin blur effect
+
+Glow button
+
+Animasi hover
+
+Background bintang animasi
+
+Aku bisa bantu bikin versi lebih keren dari yang kamu kirim (siap upload) 😎
+
+Kalau kamu mau lanjut, kirim:
+👉 file logo kamu / warna brand
+
+Nanti aku buatin desain yang 100% mirip + lebih modern 💯
+
+
+Uploaded image
+upload nya dimana
+
+Mantap, kamu sudah di halaman yang benar 👍 Tinggal upload file aja.
+
+📤 Cara Upload File di GitHub (dari halaman kamu sekarang)
+Di bagian ini 👇 (yang ada tulisan Quick setup):
+
+👉 Klik link ini:
+
+uploading an existing file
+📍 Letaknya:
+
+Di tengah layar
+
+Tulisan kecil warna biru
+
+Sebaris dengan:
+
+creating a new file or uploading an existing file
+
+🔽 Setelah diklik
+Kamu akan masuk ke halaman upload:
+
+Cara upload:
+Drag & drop file:
+
+index.html
+
+style.css
+
+logo.png (kalau ada)
+
+ATAU
+
+Klik:
+👉 choose your files
+
+✅ Setelah itu:
+Scroll ke bawah → klik:
+
+👉 Commit changes
+
+🎉 Hasilnya:
+File kamu akan muncul di repo
+
+🚀 Next Step (WAJIB biar jadi website)
+Setelah upload:
+
+Masuk ke:
+👉 Settings
+
+Klik:
+👉 Pages
+
+Pilih:
+
+Source: Deploy from branch
+Branch: main
+Klik Save
+
+🔗 Nanti dapat link:
+https://naufaleon.github.io/digitaleon/
+⚠️ Kalau kamu nggak nemu tombol upload
+Kasih tau aku — nanti aku tandain langsung di gambar kamu 👇
+
+Atau kirim screenshot lagi, aku guide sampai live 💯
+
+
+Uploaded image
+kok ga ada Source: Deploy from branch (main)
+
+Sebenarnya sudah ada 👍 — kamu cuma belum pilih branch-nya aja.
+
+Di screenshot kamu:
+👉 Sudah pilih “Deploy from a branch” ✅ (ini benar)
+
+🔧 Langkah yang harus kamu lakukan sekarang:
+1. Scroll sedikit ke bawah 👇
+Biasanya akan muncul pilihan baru:
+
+Branch
+2. Pilih branch:
+Klik dropdown → pilih:
+
+main
+Lalu pilih folder:
+
+/root
+3. Klik:
+👉 Save
+
+❗ Kalau “main” tidak muncul
+Berarti ini masalahnya:
+
+👉 Kamu BELUM upload file sama sekali
+
+GitHub tidak akan kasih opsi branch kalau repo masih kosong.
+
+💡 Solusinya:
+Balik ke tab Code:
+
+👉 Klik:
+
+uploading an existing file
+Upload:
+
+index.html
+
+style.css
+
+👉 Klik Commit changes
+
+🔁 Setelah itu:
+Balik lagi ke:
+👉 Settings → Pages
+
+Baru nanti muncul:
+
+Branch: main
+Folder: /root
+🎯 Intinya:
+✔ Sudah benar pilih "Deploy from a branch"
+❌ Tapi repo kamu masih kosong → jadi belum ada "main"
+
+Kalau masih bingung:
+👉 kirim screenshot halaman Code repo kamu sekarang
+
+Aku bantu cek langsung sampai live 🔥
+
+
+Uploaded image
+ga ada main?
+
+Nah ini sudah jelas penyebabnya 👇
+
+👉 Repo kamu masih kosong (belum ada file sama sekali)
+Makanya:
+❌ Tidak ada branch main
+❌ Tidak bisa pilih di GitHub Pages
+
+🔥 SOLUSI (WAJIB DILAKUKAN)
+📤 1. Upload file dulu
+Balik ke tab:
+👉 Code
+
+Lalu klik:
+
+uploading an existing file
+📁 2. Upload minimal 1 file ini:
+Wajib:
+
+index.html
+(Boleh tambah style.css juga)
+
+✅ 3. Klik:
+👉 Commit changes
+
+🚀 Setelah itu:
+Balik lagi ke:
+👉 Settings → Pages
+
+Sekarang pasti sudah muncul:
+
+Branch: main
+Folder: /root
+👉 Klik Save
+
+🎯 Kenapa harus upload dulu?
+Karena:
+
+GitHub baru bikin branch main kalau ada file
+
+Repo kosong = belum ada apa-apa
+
+⚡ Shortcut biar cepat (kalau belum punya file)
+Kalau kamu belum bikin file:
+
+👉 Klik:
+
+creating a new file
+Buat file:
+
+index.html
+Isi aja dulu:
+
+<h1>Halo dunia</h1>
+Commit → selesai
+
+🟢 Setelah itu:
+Langsung bisa aktifin GitHub Pages 🎉
+
+Kalau kamu mau:
+👉 Aku bisa kirim file siap upload (tinggal drag) biar langsung jadi keren 💯
+
+
+Uploaded image
+
+🔥 Mantap, ini sudah BENAR 100%!
+
+Dari screenshot kamu:
+✅ Deploy from a branch
+✅ Branch: main
+✅ /root
+👉 Artinya: website kamu sedang diproses (build)
+
+⏳ Sekarang tinggal tunggu
+Biasanya:
+
+10 detik – 1 menit sudah live
+
+🔗 Link website kamu:
+Coba buka ini:
+
+https://naufaleon.github.io/digitaleon/
+❗ Kalau belum muncul
+Coba:
+
+Refresh (Ctrl + F5)
+
+Tunggu 1–2 menit
+
+Pastikan file index.html ada di repo
+
+🚨 Kalau muncul error / blank
+Biasanya karena:
+
+❌ File bukan index.html
+
+❌ Salah nama (misal: Index.html)
+
+❌ File kosong
+
+🎯 Next step (opsional tapi penting)
+🌐 Pasang domain kamu (.my.id)
+Isi di bagian:
+👉 Custom domain
+
+Contoh:
+
+premixio.my.id
+🚀 Status kamu sekarang:
+✅ Repo sudah jadi
+✅ Pages aktif
+✅ Tinggal live
+
+Kalau mau lanjut:
+👉 Aku bisa bantu:
+
+bikin tampilan lebih premium (seperti gambar kamu)
+
+pasang domain .my.id sampai jadi
+
+tambahin WhatsApp auto chat, dll
+
+Tinggal bilang aja:
+"lanjut desain premium" 😎
+
+
+Uploaded image
+
+index.html
+File
+
+style.css
+File
+tambahkan tempat taruh poster yang bisa di slide 1:1 di bawah button
+
+Mantap 🔥 kita upgrade jadi ada slider poster 1:1 di bawah button (mirip showcase produk).
+
+Aku langsung kasih versi siap pakai 👇
+
+✨ 1. Tambahin HTML (di bawah button terakhir)
+Edit index.html kamu, tambahkan ini di bawah tombol terakhir:
+
+<div class="poster-slider">
+  <div class="slides">
+    <img src="poster1.jpg">
+    <img src="poster2.jpg">
+    <img src="poster3.jpg">
+  </div>
+</div>
+👉 Jadi file kamu sekarang akan seperti ini (ringkas):
+
+
+Tambahan ini posisinya tepat di bawah:
+
+<a href="#" class="btn">⚙️ Digitaleon Tools</a>
+🎨 2. Tambahin CSS Slider
+Edit style.css, tambahkan di bawah:
+
+.poster-slider {
+  width: 300px;
+  height: 300px; /* 1:1 */
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: 20px;
+  position: relative;
+}
+
+.slides {
+  display: flex;
+  width: 300%;
+  animation: slide 10s infinite;
+}
+
+.slides img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+@keyframes slide {
+  0% { transform: translateX(0); }
+  33% { transform: translateX(0); }
+  36% { transform: translateX(-100%); }
+  66% { transform: translateX(-100%); }
+  69% { transform: translateX(-200%); }
+  100% { transform: translateX(-200%); }
+}
+
+Tambahkan ke file ini:
+
+
+🖼️ 3. Siapkan Poster
+Upload ke repo kamu:
+
+poster1.jpg
+poster2.jpg
+poster3.jpg
+👉 Ukuran disarankan:
+
+1080x1080 (biar perfect 1:1)
+
+🔥 Hasilnya
+Poster auto slide
+
+Rasio 1:1 (kotak)
+
+Smooth animasi
+
+Mobile friendly
+
+🚀 BONUS UPGRADE (opsional biar makin premium)
+Kalau mau lebih keren lagi, aku bisa tambahin:
+
+swipe pakai jari (mobile)
+
+tombol next/prev
+
+indicator bulat (● ● ●)
+
+efek glow + blur
+
+Kalau mau versi premium kayak web jualan pro (mirip toko digital)
+bilang aja:
+
+👉 “upgrade slider premium” 😎
+
+
+Uploaded image
+buatkan agar aku tinggal copy paste full
+
+Siap 🔥 ini aku bikinin FULL VERSION PREMIUM — tinggal copy paste langsung jadi (sudah ada slider swipe, tombol, indicator, glow, dll)
+
+📄 1. GANTI index.html KAMU DENGAN INI
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Digitaleon</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <img src="logo.png" class="logo">
+
+  <h1>Digitaleon</h1>
+  <p>Kebutuhan Digital mu ada disini by Naufaleon 🚀</p>
+
+  <a href="#" class="btn">📸 Instagram @naufaleon.id</a>
+  <a href="#" class="btn">💬 Chat via WhatsApp</a>
+  <a href="#" class="btn">📦 Pricelist</a>
+  <a href="#" class="btn">⚙️ Digitaleon Tools</a>
+
+  <!-- SLIDER -->
+  <div class="slider">
+    <div class="slides" id="slides">
+      <img src="poster1.jpg">
+      <img src="poster2.jpg">
+      <img src="poster3.jpg">
+    </div>
+
+    <!-- tombol -->
+    <button class="nav prev" onclick="prevSlide()">‹</button>
+    <button class="nav next" onclick="nextSlide()">›</button>
+
+    <!-- dots -->
+    <div class="dots">
+      <span onclick="goToSlide(0)" class="dot active"></span>
+      <span onclick="goToSlide(1)" class="dot"></span>
+      <span onclick="goToSlide(2)" class="dot"></span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let index = 0;
+const slides = document.getElementById("slides");
+const dots = document.querySelectorAll(".dot");
+
+function showSlide(i) {
+  index = i;
+  slides.style.transform = "translateX(" + (-index * 100) + "%)";
+  dots.forEach(dot => dot.classList.remove("active"));
+  dots[index].classList.add("active");
+}
+
+function nextSlide() {
+  index = (index + 1) % dots.length;
+  showSlide(index);
+}
+
+function prevSlide() {
+  index = (index - 1 + dots.length) % dots.length;
+  showSlide(index);
+}
+
+function goToSlide(i) {
+  showSlide(i);
+}
+
+// auto slide
+setInterval(nextSlide, 4000);
+
+// swipe mobile
+let startX = 0;
+slides.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+slides.addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+  if (startX > endX + 50) nextSlide();
+  if (startX < endX - 50) prevSlide();
+});
+</script>
+
+</body>
+</html>
+🎨 2. GANTI style.css KAMU DENGAN INI
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -102,3 +818,34 @@ p {
 .dot.active {
   background: white;
 }
+🖼️ 3. WAJIB upload ini ke repo
+poster1.jpg
+poster2.jpg
+poster3.jpg
+logo.png
+🔥 HASILNYA
+✅ Slider auto jalan
+✅ Bisa swipe HP
+✅ Ada tombol ← →
+✅ Ada indicator ● ● ●
+✅ Glow + blur effect
+✅ Responsive
+
+🚀 NEXT LEVEL (kalau mau makin gila 😎)
+Aku bisa upgrade lagi:
+
+animasi smooth premium (sekelas SaaS)
+
+efek parallax
+
+tombol WhatsApp langsung chat
+
+analytics klik
+
+Kalau mau:
+👉 bilang aja “buat versi super premium”
+nanti aku bikin desain yang bisa buat jualan serius 💰
+
+
+
+
