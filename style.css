@@ -130,6 +130,7 @@ p {
   background: rgba(255,255,255,0.1);
   backdrop-filter: blur(10px);
   transition: 0.3s;
+  padding-left: 50px;
 }
 
 .btn-content {
