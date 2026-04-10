@@ -177,6 +177,7 @@ p {
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;
+  margin: 0 auto;
 }
 
 .btn-text.marquee {
