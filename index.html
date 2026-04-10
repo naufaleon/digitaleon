@@ -2,218 +2,119 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Naufaleon</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="stars"></div>
 
-  <main class="container">
-    <img id="logo" class="logo" src="" alt="Logo" />
+<div class="stars"></div>
 
-    <h1 id="site-title">Loading...</h1>
-    <p id="site-description">Memuat data...</p>
+<main class="container">
+  <img id="logo" class="logo"/>
 
-    <div class="social-bar">
-      <a href="https://facebook.com/naufaleon.fb" target="_blank" class="social-item" aria-label="Facebook">
-        <svg viewBox="0 0 24 24"><path fill="#1877F2" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.6 4.5-4.6 1.3 0 2.6.2 2.6.2v2.9h-1.5c-1.5 0-2 1-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12"/></svg>
-      </a>
+  <h1 id="site-title"></h1>
+  <p id="site-description"></p>
 
-      <a href="https://instagram.com/naufaleon.id" target="_blank" class="social-item" aria-label="Instagram">
-        <svg viewBox="0 0 24 24"><path fill="#E4405F" d="M7 2C4.8 2 3 3.8 3 6v12c0 2.2 1.8 4 4 4h10c2.2 0 4-1.8 4-4V6c0-2.2-1.8-4-4-4H7m5 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10m6.5-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg>
-      </a>
+  <div id="buttons" class="buttons"></div>
 
-      <a href="https://tiktok.com/@naufaleon.id" target="_blank" class="social-item" aria-label="TikTok">
-        <svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2h3a5 5 0 0 0 5 5v3a8 8 0 0 1-5-1.7V15a5 5 0 1 1-5-5h1v3h-1a2 2 0 1 0 2 2V2Z"/></svg>
-      </a>
+  <section class="slider">
+    <div class="slides" id="slides"></div>
 
-      <a href="https://youtube.com/@naufaleon_id" target="_blank" class="social-item" aria-label="YouTube">
-        <svg viewBox="0 0 24 24"><path fill="#FF0000" d="M23 12s0-3-1-4-4-1-4-1H6S3 7 2 8s-1 4-1 4 0 3 1 4 4 1 4 1h12s3 0 4-1 1-4 1-4M10 15V9l5 3-5 3Z"/></svg>
-      </a>
-    </div>
+    <button class="nav prev" id="prevBtn">‹</button>
+    <button class="nav next" id="nextBtn">›</button>
 
-    <div id="buttons" class="buttons"></div>
+    <div class="dots" id="dots"></div>
+  </section>
+</main>
 
-    <section class="slider">
-      <div class="slides" id="slides"></div>
+<script>
+let currentIndex = 0;
 
-      <button class="nav prev" id="prevBtn" type="button">‹</button>
-      <button class="nav next" id="nextBtn" type="button">›</button>
+async function loadConfig() {
+  const res = await fetch("config.json?t=" + Date.now());
+  const config = await res.json();
 
-      <div class="dots" id="dots"></div>
-    </section>
-  </main>
+  document.getElementById("site-title").textContent = config.title;
+  document.getElementById("site-description").textContent = config.description;
 
-  <script>
-    let currentIndex = 0;
-    let autoSlideInterval = null;
+  document.getElementById("logo").src = config.logo;
 
-    async function loadConfig() {
-      try {
-        const res = await fetch("config.json?t=" + Date.now());
-        if (!res.ok) throw new Error("Gagal memuat config.json");
+  renderButtons(config.buttons);
+  renderSlides(config.posters);
+}
 
-        const config = await res.json();
+function renderButtons(buttons) {
+  const container = document.getElementById("buttons");
+  container.innerHTML = "";
 
-        document.title = config.title || "Website";
-        document.getElementById("site-title").textContent = config.title || "";
-        document.getElementById("site-description").textContent = config.description || "";
+  buttons.forEach(btn => {
+    const a = document.createElement("a");
+    a.className = "btn";
+    a.href = btn.url;
+    a.target = "_blank";
 
-        const logo = document.getElementById("logo");
-        logo.src = config.logo || "";
-        logo.style.display = config.logo ? "block" : "none";
+    a.innerHTML = `
+      <div class="btn-content">
+        <div class="btn-icon-wrap">
+          <img src="${btn.icon}" class="btn-icon">
+        </div>
+        <span class="btn-text">${btn.text}</span>
+      </div>
+    `;
 
-        renderButtons(config.buttons || []);
-        renderSlides(config.posters || []);
-      } catch (err) {
-        console.error(err);
-        document.getElementById("site-title").textContent = "Gagal memuat data";
-        document.getElementById("site-description").textContent = "Periksa config.json";
-      }
-    }
+    container.appendChild(a);
+  });
+}
 
-    function renderButtons(buttons) {
-      const container = document.getElementById("buttons");
-      container.innerHTML = "";
+function renderSlides(posters) {
+  const slides = document.getElementById("slides");
+  const dots = document.getElementById("dots");
 
-      buttons.forEach((btn) => {
-        const a = document.createElement("a");
-        a.className = "btn";
-        a.href = btn.url || "#";
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
+  slides.innerHTML = "";
+  dots.innerHTML = "";
 
-        const content = document.createElement("div");
-        content.className = "btn-content";
+  posters.forEach((src, i) => {
 
-        if (btn.icon) {
-          const iconWrap = document.createElement("div");
-          iconWrap.className = "btn-icon-wrap";
+    const img = document.createElement("img");
+    img.src = src;
 
-          const img = document.createElement("img");
-          img.src = btn.icon;
-          img.alt = btn.text || "icon";
-          img.className = "btn-icon";
+    // 🔥 FIX: kalau gambar gagal load
+    img.onerror = () => {
+      img.outerHTML = `<div class="empty-slide">Gagal load gambar</div>`;
+    };
 
-          iconWrap.appendChild(img);
-          content.appendChild(iconWrap);
-        }
+    slides.appendChild(img);
 
-        const text = document.createElement("span");
-        text.className = "btn-text";
-        text.textContent = btn.text || "Button";
-
-        content.appendChild(text);
-        a.appendChild(content);
-        container.appendChild(a);
-      });
-    }
-
-    function renderSlides(posters) {
-      const slides = document.getElementById("slides");
-      const dots = document.getElementById("dots");
-
-      slides.innerHTML = "";
-      dots.innerHTML = "";
-      currentIndex = 0;
-
-      if (!posters.length) {
-        slides.innerHTML = '<div class="empty-slide">Belum ada poster</div>';
-        document.getElementById("prevBtn").style.display = "none";
-        document.getElementById("nextBtn").style.display = "none";
-        return;
-      }
-
-      document.getElementById("prevBtn").style.display = "grid";
-      document.getElementById("nextBtn").style.display = "grid";
-
-      posters.forEach((src, index) => {
-        const img = document.createElement("img");
-        img.src = src;
-        img.alt = `Poster ${index + 1}`;
-        slides.appendChild(img);
-
-        const dot = document.createElement("span");
-        dot.className = "dot" + (index === 0 ? " active" : "");
-        dot.addEventListener("click", () => goToSlide(index));
-        dots.appendChild(dot);
-      });
-
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    dot.onclick = () => {
+      currentIndex = i;
       updateSlide();
-      startAutoSlide();
-    }
+    };
+    dots.appendChild(dot);
+  });
 
-    function updateSlide() {
-      const slides = document.getElementById("slides");
-      const dots = document.querySelectorAll(".dot");
-      slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-      dots.forEach((dot, i) => dot.classList.toggle("active", i === currentIndex));
-    }
+  updateSlide();
+}
 
-    function nextSlide() {
-      const total = document.querySelectorAll("#slides img").length;
-      if (!total) return;
-      currentIndex = (currentIndex + 1) % total;
-      updateSlide();
-    }
+function updateSlide() {
+  const slides = document.getElementById("slides");
+  slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
 
-    function prevSlide() {
-      const total = document.querySelectorAll("#slides img").length;
-      if (!total) return;
-      currentIndex = (currentIndex - 1 + total) % total;
-      updateSlide();
-    }
+document.getElementById("nextBtn").onclick = () => {
+  currentIndex++;
+  updateSlide();
+};
 
-    function goToSlide(index) {
-      currentIndex = index;
-      updateSlide();
-      restartAutoSlide();
-    }
+document.getElementById("prevBtn").onclick = () => {
+  currentIndex--;
+  updateSlide();
+};
 
-    function startAutoSlide() {
-      stopAutoSlide();
-      autoSlideInterval = setInterval(nextSlide, 4000);
-    }
+loadConfig();
+</script>
 
-    function stopAutoSlide() {
-      if (autoSlideInterval) clearInterval(autoSlideInterval);
-    }
-
-    function restartAutoSlide() {
-      stopAutoSlide();
-      startAutoSlide();
-    }
-
-    document.getElementById("nextBtn").addEventListener("click", () => {
-      nextSlide();
-      restartAutoSlide();
-    });
-
-    document.getElementById("prevBtn").addEventListener("click", () => {
-      prevSlide();
-      restartAutoSlide();
-    });
-
-    let touchStartX = 0;
-    const slidesEl = document.getElementById("slides");
-
-    slidesEl.addEventListener("touchstart", (e) => {
-      touchStartX = e.touches[0].clientX;
-    });
-
-    slidesEl.addEventListener("touchend", (e) => {
-      const touchEndX = e.changedTouches[0].clientX;
-      if (touchStartX - touchEndX > 50) {
-        nextSlide();
-        restartAutoSlide();
-      } else if (touchEndX - touchStartX > 50) {
-        prevSlide();
-        restartAutoSlide();
-      }
-    });
-
-    loadConfig();
-  </script>
 </body>
 </html>
