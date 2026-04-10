@@ -6,16 +6,19 @@ body {
   text-align: center;
 }
 
+/* CONTAINER */
 .container {
   margin-top: 80px;
 }
 
+/* LOGO */
 .logo {
   width: 100px;
   border-radius: 50%;
-  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+  box-shadow: 0 0 25px rgba(255,255,255,0.4);
 }
 
+/* TEXT */
 h1 {
   margin: 10px 0;
 }
@@ -24,57 +27,135 @@ p {
   opacity: 0.7;
 }
 
+/* BUTTON */
 .btn {
   display: block;
   width: 300px;
-  margin: 15px auto; 
+  margin: 15px auto;
   padding: 15px;
   background: rgba(255,255,255,0.1);
   border-radius: 15px;
   text-decoration: none;
   color: white;
   transition: 0.3s;
+  backdrop-filter: blur(10px);
 }
 
 .btn:hover {
   background: rgba(255,255,255,0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
 
-/* BACKGROUND ANIMASI */
+/* ================= SLIDER ================= */
+
+.slider {
+  width: 300px;
+  height: 300px;
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 0 25px rgba(255,255,255,0.2);
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slides img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* tombol */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  font-size: 25px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* dots */
+.dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  margin: 0 4px;
+  display: inline-block;
+  background: gray;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: white;
+}
+
+/* ================= BACKGROUND ANIMASI ================= */
+
 .stars {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: transparent;
-  overflow: hidden;
   z-index: -1;
+  overflow: hidden;
 }
 
-/* layer bintang */
-.stars::before,
+/* layer cepat */
+.stars::before {
+  content: "";
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  background-image: radial-gradient(white 2px, transparent 2px);
+  background-size: 40px 40px;
+  animation: moveStarsFast 20s linear infinite;
+  opacity: 0.7;
+}
+
+/* layer lambat */
 .stars::after {
   content: "";
   position: absolute;
-  width: 200%;
-  height: 200%;
-  background-image: radial-gradient(white 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: moveStars 60s linear infinite;
-  opacity: 0.3;
+  width: 300%;
+  height: 300%;
+  background-image: radial-gradient(white 3px, transparent 3px);
+  background-size: 80px 80px;
+  animation: moveStarsSlow 40s linear infinite;
+  opacity: 0.5;
 }
 
-/* layer kedua lebih kecil */
+@keyframes moveStarsFast {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-800px, -800px); }
+}
+
+@keyframes moveStarsSlow {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-400px, -400px); }
+}
+
+/* glow */
+.stars::before,
 .stars::after {
-  background-size: 100px 100px;
-  animation-duration: 120s;
-  opacity: 0.2;
-}
-
-@keyframes moveStars {
-  from {
-    transform: translate(0, 0);
-  }
-  to {
-    transform: translate(-500px, -500px);
-  }
+  filter: drop-shadow(0 0 6px white);
 }
