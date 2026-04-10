@@ -83,41 +83,35 @@ p {
 }
 
 /* 4 tombol sosial atas */
+/* SOCIAL BAR (MODEL MENYATU) */
 .social-bar {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
+  display: flex;
   width: 100%;
-  margin: 0 0 16px;
+  max-width: 420px;
+  margin: 15px auto 20px;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
-.social-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 56px;
+/* ITEM */
+.social-item {
+  flex: 1;
+  text-align: center;
+  padding: 15px 0;
+  color: white;
+  font-weight: bold;
   text-decoration: none;
-  color: #fff;
-  font-weight: 800;
-  font-size: clamp(18px, 4vw, 22px);
-  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+  font-size: 16px;
+  transition: 0.3s;
 }
 
-.social-btn:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.08);
-}
-
+/* WARNA */
 .facebook {
   background: #1da1e2;
 }
 
 .instagram {
-  background: #f7c816;
-  color: #fff;
+  background: #ffc107;
 }
 
 .tiktok {
@@ -125,7 +119,13 @@ p {
 }
 
 .youtube {
-  background: #ff1624;
+  background: #ff1c1c;
+}
+
+/* HOVER */
+.social-item:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
 .buttons {
