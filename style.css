@@ -82,8 +82,7 @@ p {
   line-height: 1.5;
 }
 
-/* 4 tombol sosial atas */
-/* SOCIAL BAR (MODEL MENYATU) */
+/* SOCIAL BAR ICON VERSION */
 .social-bar {
   display: flex;
   width: 100%;
@@ -91,37 +90,30 @@ p {
   margin: 15px auto 20px;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  box-shadow: 0 0 20px rgba(255,255,255,0.15);
 }
 
 /* ITEM */
 .social-item {
   flex: 1;
-  text-align: center;
-  padding: 15px 0;
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 0;
   transition: 0.3s;
 }
 
+/* ICON */
+.social-item img {
+  width: 22px;
+  height: 22px;
+}
+
 /* WARNA */
-.facebook {
-  background: #1da1e2;
-}
-
-.instagram {
-  background: #ffc107;
-}
-
-.tiktok {
-  background: #4a4fcb;
-}
-
-.youtube {
-  background: #ff1c1c;
-}
+.facebook:hover { box-shadow: 0 0 15px #1da1e2; }
+.instagram:hover { box-shadow: 0 0 15px #ffc107; }
+.tiktok:hover { box-shadow: 0 0 15px #4a4fcb; }
+.youtube:hover { box-shadow: 0 0 15px #ff1c1c; }
 
 /* HOVER */
 .social-item:hover {
