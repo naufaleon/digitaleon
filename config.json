@@ -1,26 +1,24 @@
 {
   "title": "Naufaleon",
   "description": "Menyediakan Kebutuhan Digitalmu :D",
-  "logo": "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png"
+  "logo": "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png",
   "buttons": [
     {
-      "text": "Chat via WhatsApp",
-      "url": "https://wa.me/6281234567890",
-      "icon": "https://cdn-icons-png.flaticon.com/512/733/733585.png"
+      "text": "💬 Chat via WhatsApp",
+      "url": "https://wa.me/6281234567890"
     },
     {
-      "text": "Pricelist",
-      "url": "https://example.com/pricelist",
-      "icon": "https://cdn-icons-png.flaticon.com/512/2920/2920244.png"
+      "text": "📦 Pricelist",
+      "url": "https://example.com/pricelist"
     },
     {
-      "text": "Digitaleon Tools",
-      "url": "https://example.com/tools",
-      "icon": "https://cdn-icons-png.flaticon.com/512/2099/2099058.png"
+      "text": "⚙️ Digitaleon Tools",
+      "url": "https://example.com/tools"
     }
   ],
   "posters": [
-    "https://picsum.photos/1080",
-    "https://picsum.photos/1081"
+    "https://via.placeholder.com/1080x1080.png?text=Poster+1",
+    "https://via.placeholder.com/1080x1080.png?text=Poster+2",
+    "https://via.placeholder.com/1080x1080.png?text=Poster+3"
   ]
 }
