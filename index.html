@@ -2,14 +2,11 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Naufaleon</title>
-
   <link rel="icon" href="favicon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
   <div class="stars"></div>
 
@@ -19,173 +16,216 @@
     <h1 id="site-title">Loading...</h1>
     <p id="site-description">Memuat data...</p>
 
-    <!-- BUTTON -->
+    <div class="social-bar">
+      <a href="https://facebook.com/naufaleon.fb" target="_blank" class="social-item" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path fill="#1877F2" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.6 4.5-4.6 1.3 0 2.6.2 2.6.2v2.9h-1.5c-1.5 0-2 1-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12"/></svg>
+      </a>
+
+      <a href="https://instagram.com/naufaleon.id" target="_blank" class="social-item" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path fill="#E4405F" d="M7 2C4.8 2 3 3.8 3 6v12c0 2.2 1.8 4 4 4h10c2.2 0 4-1.8 4-4V6c0-2.2-1.8-4-4-4H7m5 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10m6.5-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg>
+      </a>
+
+      <a href="https://tiktok.com/@naufaleon.id" target="_blank" class="social-item" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2h3a5 5 0 0 0 5 5v3a8 8 0 0 1-5-1.7V15a5 5 0 1 1-5-5h1v3h-1a2 2 0 1 0 2 2V2Z"/></svg>
+      </a>
+
+      <a href="https://youtube.com/@naufaleon_id" target="_blank" class="social-item" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path fill="#FF0000" d="M23 12s0-3-1-4-4-1-4-1H6S3 7 2 8s-1 4-1 4 0 3 1 4 4 1 4 1h12s3 0 4-1 1-4 1-4M10 15V9l5 3-5 3Z"/></svg>
+      </a>
+    </div>
+
     <div id="buttons" class="buttons"></div>
 
-    <!-- SLIDER -->
     <section class="slider">
       <div class="slides" id="slides"></div>
 
-      <button class="nav prev" id="prevBtn">‹</button>
-      <button class="nav next" id="nextBtn">›</button>
+      <button class="nav prev" id="prevBtn" type="button">‹</button>
+      <button class="nav next" id="nextBtn" type="button">›</button>
 
       <div class="dots" id="dots"></div>
     </section>
   </main>
 
-<script>
-let currentIndex = 0;
-let autoSlide;
+  <script>
+    let currentIndex = 0;
+    let autoSlideInterval = null;
 
-/* ================= LOAD CONFIG ================= */
+    async function loadConfig() {
+      try {
+        const res = await fetch("config.json?t=" + Date.now());
+        if (!res.ok) throw new Error("Gagal memuat config.json");
+        const config = await res.json();
 
-async function loadConfig() {
-  try {
-    const res = await fetch("config.json?t=" + Date.now());
-    const config = await res.json();
+        document.title = config.title || "Website";
+        document.getElementById("site-title").textContent = config.title || "";
+        document.getElementById("site-description").textContent = config.description || "";
 
-    document.title = config.title;
-    document.getElementById("site-title").textContent = config.title;
-    document.getElementById("site-description").textContent = config.description;
+        const logo = document.getElementById("logo");
+        logo.src = config.logo || "";
+        logo.style.display = config.logo ? "block" : "none";
 
-    const logo = document.getElementById("logo");
-    logo.src = config.logo;
-
-    renderButtons(config.buttons || []);
-    renderSlides(config.posters || []);
-
-  } catch (e) {
-    document.getElementById("site-title").textContent = "Gagal load config";
-  }
-}
-
-/* ================= BUTTON ================= */
-
-function renderButtons(buttons) {
-  const container = document.getElementById("buttons");
-  container.innerHTML = "";
-
-  buttons.forEach((btn) => {
-    const a = document.createElement("a");
-    a.className = "btn";
-    a.href = btn.url;
-    a.target = "_blank";
-
-    const content = document.createElement("div");
-    content.className = "btn-content";
-
-    // ICON
-    if (btn.icon) {
-      const img = document.createElement("img");
-      img.src = btn.icon;
-      img.className = "btn-icon";
-      content.appendChild(img);
+        renderButtons(config.buttons || []);
+        renderSlides(config.posters || []);
+      } catch (err) {
+        console.error(err);
+        document.getElementById("site-title").textContent = "Gagal memuat data";
+        document.getElementById("site-description").textContent = "Periksa config.json";
+      }
     }
 
-    // TEXT
-    const wrapper = document.createElement("div");
-    wrapper.className = "btn-text-wrapper";
+    function renderButtons(buttons) {
+      const container = document.getElementById("buttons");
+      container.innerHTML = "";
 
-    const text = document.createElement("div");
-    text.className = "btn-text";
-    text.textContent = btn.text;
+      buttons.forEach((btn) => {
+        const a = document.createElement("a");
+        a.className = "btn";
+        a.href = btn.url || "#";
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
 
-    wrapper.appendChild(text);
-    content.appendChild(wrapper);
+        const content = document.createElement("div");
+        content.className = "btn-content";
 
-    a.appendChild(content);
-    container.appendChild(a);
+        const iconWrap = document.createElement("div");
+        iconWrap.className = "btn-icon-wrap";
 
-    // AUTO RUNNING TEXT
-    setTimeout(() => {
-      if (text.scrollWidth > wrapper.clientWidth) {
-        text.classList.add("move");
+        if (btn.icon) {
+          const img = document.createElement("img");
+          img.src = btn.icon;
+          img.alt = btn.text || "icon";
+          img.className = "btn-icon";
+          iconWrap.appendChild(img);
+        }
+
+        const textWrap = document.createElement("div");
+        textWrap.className = "btn-text-wrap";
+
+        const text = document.createElement("div");
+        text.className = "btn-text";
+        text.textContent = btn.text || "Button";
+
+        textWrap.appendChild(text);
+        content.appendChild(iconWrap);
+        content.appendChild(textWrap);
+        a.appendChild(content);
+        container.appendChild(a);
+
+        requestAnimationFrame(() => {
+          if (text.scrollWidth > textWrap.clientWidth) {
+            text.classList.add("marquee");
+            const clone = text.cloneNode(true);
+            clone.classList.add("btn-text-clone");
+            textWrap.appendChild(clone);
+          }
+        });
+      });
+    }
+
+    function renderSlides(posters) {
+      const slides = document.getElementById("slides");
+      const dots = document.getElementById("dots");
+
+      slides.innerHTML = "";
+      dots.innerHTML = "";
+      currentIndex = 0;
+
+      if (!posters.length) {
+        slides.innerHTML = '<div class="empty-slide">Belum ada poster</div>';
+        document.getElementById("prevBtn").style.display = "none";
+        document.getElementById("nextBtn").style.display = "none";
+        return;
       }
-    }, 100);
-  });
-}
 
-/* ================= SLIDER ================= */
+      document.getElementById("prevBtn").style.display = "grid";
+      document.getElementById("nextBtn").style.display = "grid";
 
-function renderSlides(posters) {
-  const slides = document.getElementById("slides");
-  const dots = document.getElementById("dots");
+      posters.forEach((src, index) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = `Poster ${index + 1}`;
+        slides.appendChild(img);
 
-  slides.innerHTML = "";
-  dots.innerHTML = "";
-  currentIndex = 0;
+        const dot = document.createElement("span");
+        dot.className = "dot" + (index === 0 ? " active" : "");
+        dot.addEventListener("click", () => goToSlide(index));
+        dots.appendChild(dot);
+      });
 
-  if (!posters.length) {
-    slides.innerHTML = "<div style='padding:20px'>Belum ada poster</div>";
-    return;
-  }
+      updateSlide();
+      startAutoSlide();
+    }
 
-  posters.forEach((src, i) => {
-    const img = document.createElement("img");
-    img.src = src;
-    slides.appendChild(img);
+    function updateSlide() {
+      const slides = document.getElementById("slides");
+      const dots = document.querySelectorAll(".dot");
+      slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === currentIndex));
+    }
 
-    const dot = document.createElement("span");
-    dot.className = "dot" + (i === 0 ? " active" : "");
-    dot.onclick = () => goToSlide(i);
-    dots.appendChild(dot);
-  });
+    function nextSlide() {
+      const total = document.querySelectorAll("#slides img").length;
+      if (!total) return;
+      currentIndex = (currentIndex + 1) % total;
+      updateSlide();
+    }
 
-  updateSlide();
-  startAutoSlide();
-}
+    function prevSlide() {
+      const total = document.querySelectorAll("#slides img").length;
+      if (!total) return;
+      currentIndex = (currentIndex - 1 + total) % total;
+      updateSlide();
+    }
 
-function updateSlide() {
-  const slides = document.getElementById("slides");
-  slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+    function goToSlide(index) {
+      currentIndex = index;
+      updateSlide();
+      restartAutoSlide();
+    }
 
-  document.querySelectorAll(".dot").forEach((d, i) => {
-    d.classList.toggle("active", i === currentIndex);
-  });
-}
+    function startAutoSlide() {
+      stopAutoSlide();
+      autoSlideInterval = setInterval(nextSlide, 4000);
+    }
 
-function nextSlide() {
-  const total = document.querySelectorAll("#slides img").length;
-  currentIndex = (currentIndex + 1) % total;
-  updateSlide();
-}
+    function stopAutoSlide() {
+      if (autoSlideInterval) clearInterval(autoSlideInterval);
+    }
 
-function prevSlide() {
-  const total = document.querySelectorAll("#slides img").length;
-  currentIndex = (currentIndex - 1 + total) % total;
-  updateSlide();
-}
+    function restartAutoSlide() {
+      stopAutoSlide();
+      startAutoSlide();
+    }
 
-function goToSlide(i) {
-  currentIndex = i;
-  updateSlide();
-}
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      nextSlide();
+      restartAutoSlide();
+    });
 
-/* ================= AUTO SLIDE ================= */
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      prevSlide();
+      restartAutoSlide();
+    });
 
-function startAutoSlide() {
-  stopAutoSlide();
-  autoSlide = setInterval(nextSlide, 4000);
-}
+    let touchStartX = 0;
+    const slidesEl = document.getElementById("slides");
 
-function stopAutoSlide() {
-  clearInterval(autoSlide);
-}
+    slidesEl.addEventListener("touchstart", (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
 
-/* ================= EVENT ================= */
+    slidesEl.addEventListener("touchend", (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      if (touchStartX - touchEndX > 50) {
+        nextSlide();
+        restartAutoSlide();
+      } else if (touchEndX - touchStartX > 50) {
+        prevSlide();
+        restartAutoSlide();
+      }
+    });
 
-document.getElementById("nextBtn").onclick = () => {
-  nextSlide();
-  startAutoSlide();
-};
-
-document.getElementById("prevBtn").onclick = () => {
-  prevSlide();
-  startAutoSlide();
-};
-
-loadConfig();
-</script>
-
+    loadConfig();
+  </script>
 </body>
 </html>
