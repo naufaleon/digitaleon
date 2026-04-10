@@ -15,25 +15,23 @@
     <h1 id="site-title">Loading...</h1>
     <p id="site-description">Memuat data...</p>
 
-   <div class="social-bar">
+    <div class="social-bar">
+      <a href="https://facebook.com/naufaleon.fb" target="_blank" class="social-item" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path fill="#1877F2" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.6 4.5-4.6 1.3 0 2.6.2 2.6.2v2.9h-1.5c-1.5 0-2 1-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12"/></svg>
+      </a>
 
-  <a href="https://facebook.com/naufaleon.fb" target="_blank" class="social-item">
-    <svg viewBox="0 0 24 24"><path fill="#1877F2" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.6 4.5-4.6 1.3 0 2.6.2 2.6.2v2.9h-1.5c-1.5 0-2 1-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12"/></svg>
-  </a>
+      <a href="https://instagram.com/naufaleon.id" target="_blank" class="social-item" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path fill="#E4405F" d="M7 2C4.8 2 3 3.8 3 6v12c0 2.2 1.8 4 4 4h10c2.2 0 4-1.8 4-4V6c0-2.2-1.8-4-4-4H7m5 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10m6.5-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg>
+      </a>
 
-  <a href="https://instagram.com/naufaleon.id" target="_blank" class="social-item">
-    <svg viewBox="0 0 24 24"><path fill="#E4405F" d="M7 2C4.8 2 3 3.8 3 6v12c0 2.2 1.8 4 4 4h10c2.2 0 4-1.8 4-4V6c0-2.2-1.8-4-4-4H7m5 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10m6.5-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg>
-  </a>
+      <a href="https://tiktok.com/@naufaleon.id" target="_blank" class="social-item" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2h3a5 5 0 0 0 5 5v3a8 8 0 0 1-5-1.7V15a5 5 0 1 1-5-5h1v3h-1a2 2 0 1 0 2 2V2Z"/></svg>
+      </a>
 
-  <a href="https://tiktok.com/@naufaleon.id" target="_blank" class="social-item">
-    <svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2h3a5 5 0 0 0 5 5v3a8 8 0 0 1-5-1.7V15a5 5 0 1 1-5-5h1v3h-1a2 2 0 1 0 2 2V2Z"/></svg>
-  </a>
-
-  <a href="https://youtube.com/@naufaleon_id" target="_blank" class="social-item">
-    <svg viewBox="0 0 24 24"><path fill="#FF0000" d="M23 12s0-3-1-4-4-1-4-1H6S3 7 2 8s-1 4-1 4 0 3 1 4 4 1 4 1h12s3 0 4-1 1-4 1-4M10 15V9l5 3-5 3Z"/></svg>
-  </a>
-
-</div>
+      <a href="https://youtube.com/@naufaleon_id" target="_blank" class="social-item" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path fill="#FF0000" d="M23 12s0-3-1-4-4-1-4-1H6S3 7 2 8s-1 4-1 4 0 3 1 4 4 1 4 1h12s3 0 4-1 1-4 1-4M10 15V9l5 3-5 3Z"/></svg>
+      </a>
+    </div>
 
     <div id="buttons" class="buttons"></div>
 
@@ -55,6 +53,7 @@
       try {
         const res = await fetch("config.json?t=" + Date.now());
         if (!res.ok) throw new Error("Gagal memuat config.json");
+
         const config = await res.json();
 
         document.title = config.title || "Website";
@@ -84,7 +83,29 @@
         a.href = btn.url || "#";
         a.target = "_blank";
         a.rel = "noopener noreferrer";
-        a.textContent = btn.text || "Button";
+
+        const content = document.createElement("div");
+        content.className = "btn-content";
+
+        if (btn.icon) {
+          const iconWrap = document.createElement("div");
+          iconWrap.className = "btn-icon-wrap";
+
+          const img = document.createElement("img");
+          img.src = btn.icon;
+          img.alt = btn.text || "icon";
+          img.className = "btn-icon";
+
+          iconWrap.appendChild(img);
+          content.appendChild(iconWrap);
+        }
+
+        const text = document.createElement("span");
+        text.className = "btn-text";
+        text.textContent = btn.text || "Button";
+
+        content.appendChild(text);
+        a.appendChild(content);
         container.appendChild(a);
       });
     }
