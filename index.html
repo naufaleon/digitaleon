@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Premixio.id</title>
+  <title>Digitaleon</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,7 +17,70 @@
   <a href="#" class="btn">💬 Chat via WhatsApp</a>
   <a href="#" class="btn">📦 Pricelist</a>
   <a href="#" class="btn">⚙️ Digitaleon Tools</a>
+
+  <!-- SLIDER -->
+  <div class="slider">
+    <div class="slides" id="slides">
+      <img src="poster1.jpg">
+      <img src="poster2.jpg">
+      <img src="poster3.jpg">
+    </div>
+
+    <!-- tombol -->
+    <button class="nav prev" onclick="prevSlide()">‹</button>
+    <button class="nav next" onclick="nextSlide()">›</button>
+
+    <!-- dots -->
+    <div class="dots">
+      <span onclick="goToSlide(0)" class="dot active"></span>
+      <span onclick="goToSlide(1)" class="dot"></span>
+      <span onclick="goToSlide(2)" class="dot"></span>
+    </div>
+  </div>
+
 </div>
+
+<script>
+let index = 0;
+const slides = document.getElementById("slides");
+const dots = document.querySelectorAll(".dot");
+
+function showSlide(i) {
+  index = i;
+  slides.style.transform = "translateX(" + (-index * 100) + "%)";
+  dots.forEach(dot => dot.classList.remove("active"));
+  dots[index].classList.add("active");
+}
+
+function nextSlide() {
+  index = (index + 1) % dots.length;
+  showSlide(index);
+}
+
+function prevSlide() {
+  index = (index - 1 + dots.length) % dots.length;
+  showSlide(index);
+}
+
+function goToSlide(i) {
+  showSlide(i);
+}
+
+// auto slide
+setInterval(nextSlide, 4000);
+
+// swipe mobile
+let startX = 0;
+slides.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+slides.addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+  if (startX > endX + 50) nextSlide();
+  if (startX < endX - 50) prevSlide();
+});
+</script>
 
 </body>
 </html>
