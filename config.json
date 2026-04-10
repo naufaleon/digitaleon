@@ -1,0 +1,28 @@
+{
+  "title": "Digitaleon",
+  "description": "Kebutuhan Digital mu ada disini by Naufaleon 🚀",
+  "logo": "https://via.placeholder.com/200x200.png?text=Logo",
+  "buttons": [
+    {
+      "text": "📸 Instagram @naufaleon.id",
+      "url": "https://instagram.com/naufaleon.id"
+    },
+    {
+      "text": "💬 Chat via WhatsApp",
+      "url": "https://wa.me/6281234567890"
+    },
+    {
+      "text": "📦 Pricelist",
+      "url": "https://example.com/pricelist"
+    },
+    {
+      "text": "⚙️ Digitaleon Tools",
+      "url": "https://example.com/tools"
+    }
+  ],
+  "posters": [
+    "https://via.placeholder.com/1080x1080.png?text=Poster+1",
+    "https://via.placeholder.com/1080x1080.png?text=Poster+2",
+    "https://via.placeholder.com/1080x1080.png?text=Poster+3"
+  ]
+}
