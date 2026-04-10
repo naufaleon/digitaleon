@@ -159,3 +159,57 @@ p {
 .stars::after {
   filter: drop-shadow(0 0 6px white);
 }
+
+/* ================= RESPONSIVE MOBILE ================= */
+
+.container {
+  width: 90%;
+  max-width: 400px;
+  margin: 80px auto;
+}
+
+/* BUTTON FULL WIDTH */
+.btn {
+  width: 100%;
+  max-width: 100%;
+  font-size: 14px;
+  padding: 14px;
+}
+
+/* SLIDER RESPONSIVE */
+.slider {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* tetap kotak */
+  height: auto;
+}
+
+/* IMAGE SLIDER */
+.slides img {
+  height: 100%;
+}
+
+/* TEXT */
+h1 {
+  font-size: 22px;
+}
+
+p {
+  font-size: 13px;
+}
+
+/* LOGO */
+.logo {
+  width: 80px;
+}
+
+/* NAV BUTTON SLIDER */
+.nav {
+  font-size: 18px;
+  padding: 4px 8px;
+}
+
+/* DOTS */
+.dot {
+  width: 6px;
+  height: 6px;
+}
