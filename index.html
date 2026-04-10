@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>Naufaleon</title>
 
@@ -19,81 +19,173 @@
     <h1 id="site-title">Loading...</h1>
     <p id="site-description">Memuat data...</p>
 
+    <!-- BUTTON -->
     <div id="buttons" class="buttons"></div>
+
+    <!-- SLIDER -->
+    <section class="slider">
+      <div class="slides" id="slides"></div>
+
+      <button class="nav prev" id="prevBtn">‹</button>
+      <button class="nav next" id="nextBtn">›</button>
+
+      <div class="dots" id="dots"></div>
+    </section>
   </main>
 
-<section class="slider">
-  <div class="slides" id="slides"></div>
+<script>
+let currentIndex = 0;
+let autoSlide;
 
-  <button class="nav prev" id="prevBtn">‹</button>
-  <button class="nav next" id="nextBtn">›</button>
+/* ================= LOAD CONFIG ================= */
 
-  <div class="dots" id="dots"></div>
-</section>  
-  
-  <script>
-    async function loadConfig() {
-      try {
-        const res = await fetch("config.json?t=" + Date.now());
-        const config = await res.json();
+async function loadConfig() {
+  try {
+    const res = await fetch("config.json?t=" + Date.now());
+    const config = await res.json();
 
-        document.getElementById("site-title").textContent = config.title;
-        document.getElementById("site-description").textContent = config.description;
+    document.title = config.title;
+    document.getElementById("site-title").textContent = config.title;
+    document.getElementById("site-description").textContent = config.description;
 
-        const logo = document.getElementById("logo");
-        logo.src = config.logo;
+    const logo = document.getElementById("logo");
+    logo.src = config.logo;
 
-        renderButtons(config.buttons || []);
-      } catch (err) {
-        document.getElementById("site-title").textContent = "Error load config";
+    renderButtons(config.buttons || []);
+    renderSlides(config.posters || []);
+
+  } catch (e) {
+    document.getElementById("site-title").textContent = "Gagal load config";
+  }
+}
+
+/* ================= BUTTON ================= */
+
+function renderButtons(buttons) {
+  const container = document.getElementById("buttons");
+  container.innerHTML = "";
+
+  buttons.forEach((btn) => {
+    const a = document.createElement("a");
+    a.className = "btn";
+    a.href = btn.url;
+    a.target = "_blank";
+
+    const content = document.createElement("div");
+    content.className = "btn-content";
+
+    // ICON
+    if (btn.icon) {
+      const img = document.createElement("img");
+      img.src = btn.icon;
+      img.className = "btn-icon";
+      content.appendChild(img);
+    }
+
+    // TEXT
+    const wrapper = document.createElement("div");
+    wrapper.className = "btn-text-wrapper";
+
+    const text = document.createElement("div");
+    text.className = "btn-text";
+    text.textContent = btn.text;
+
+    wrapper.appendChild(text);
+    content.appendChild(wrapper);
+
+    a.appendChild(content);
+    container.appendChild(a);
+
+    // AUTO RUNNING TEXT
+    setTimeout(() => {
+      if (text.scrollWidth > wrapper.clientWidth) {
+        text.classList.add("move");
       }
-    }
+    }, 100);
+  });
+}
 
-    function renderButtons(buttons) {
-      const container = document.getElementById("buttons");
-      container.innerHTML = "";
+/* ================= SLIDER ================= */
 
-      buttons.forEach((btn) => {
-        const a = document.createElement("a");
-        a.className = "btn";
-        a.href = btn.url;
-        a.target = "_blank";
+function renderSlides(posters) {
+  const slides = document.getElementById("slides");
+  const dots = document.getElementById("dots");
 
-        const content = document.createElement("div");
-        content.className = "btn-content";
+  slides.innerHTML = "";
+  dots.innerHTML = "";
+  currentIndex = 0;
 
-        // ICON
-        if (btn.icon) {
-          const img = document.createElement("img");
-          img.src = btn.icon;
-          img.className = "btn-icon";
-          content.appendChild(img);
-        }
+  if (!posters.length) {
+    slides.innerHTML = "<div style='padding:20px'>Belum ada poster</div>";
+    return;
+  }
 
-        // TEXT WRAPPER
-        const wrapper = document.createElement("div");
-        wrapper.className = "btn-text-wrapper";
+  posters.forEach((src, i) => {
+    const img = document.createElement("img");
+    img.src = src;
+    slides.appendChild(img);
 
-        const text = document.createElement("div");
-        text.className = "btn-text";
-        text.textContent = btn.text;
+    const dot = document.createElement("span");
+    dot.className = "dot" + (i === 0 ? " active" : "");
+    dot.onclick = () => goToSlide(i);
+    dots.appendChild(dot);
+  });
 
-        wrapper.appendChild(text);
-        content.appendChild(wrapper);
+  updateSlide();
+  startAutoSlide();
+}
 
-        a.appendChild(content);
-        container.appendChild(a);
+function updateSlide() {
+  const slides = document.getElementById("slides");
+  slides.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-        // AUTO RUNNING TEXT
-        setTimeout(() => {
-          if (text.scrollWidth > wrapper.clientWidth) {
-            text.classList.add("move");
-          }
-        }, 100);
-      });
-    }
+  document.querySelectorAll(".dot").forEach((d, i) => {
+    d.classList.toggle("active", i === currentIndex);
+  });
+}
 
-    loadConfig();
-  </script>
+function nextSlide() {
+  const total = document.querySelectorAll("#slides img").length;
+  currentIndex = (currentIndex + 1) % total;
+  updateSlide();
+}
+
+function prevSlide() {
+  const total = document.querySelectorAll("#slides img").length;
+  currentIndex = (currentIndex - 1 + total) % total;
+  updateSlide();
+}
+
+function goToSlide(i) {
+  currentIndex = i;
+  updateSlide();
+}
+
+/* ================= AUTO SLIDE ================= */
+
+function startAutoSlide() {
+  stopAutoSlide();
+  autoSlide = setInterval(nextSlide, 4000);
+}
+
+function stopAutoSlide() {
+  clearInterval(autoSlide);
+}
+
+/* ================= EVENT ================= */
+
+document.getElementById("nextBtn").onclick = () => {
+  nextSlide();
+  startAutoSlide();
+};
+
+document.getElementById("prevBtn").onclick = () => {
+  prevSlide();
+  startAutoSlide();
+};
+
+loadConfig();
+</script>
+
 </body>
 </html>
