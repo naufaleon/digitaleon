@@ -142,11 +142,11 @@ p {
 }
 
 .btn-icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
   position: absolute;
   left: 15px;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
 }
 
 .btn:hover {
