@@ -40,9 +40,6 @@ body{
   cursor:pointer;
   transition:.3s;
   width:150px;
-  text-decoration:none;
-  color:#fff;
-  display:block;
 }
 
 .card:hover{transform:scale(1.05)}
@@ -52,20 +49,18 @@ body{
   height:110px;
   object-fit:cover;
   border-radius:10px;
-  background:rgba(255,255,255,0.15);
 }
 
 .title{
   margin-top:10px;
   font-weight:bold;
-  word-break:break-word;
 }
 
-.empty-tools{
+.empty{
   margin-top:20px;
-  background:rgba(255,255,255,0.12);
-  padding:16px;
-  border-radius:14px;
+  padding:15px;
+  background:rgba(255,255,255,0.2);
+  border-radius:15px;
 }
 
 /* MODAL */
@@ -78,7 +73,6 @@ body{
   justify-content:center;
   align-items:center;
   z-index:99;
-  padding:16px;
 }
 
 .modal-box{
@@ -112,13 +106,6 @@ button{
   cursor:pointer;
 }
 
-.desc{
-  font-size:12px;
-  color:#ccc;
-  margin-top:5px;
-}
-
-/* RESULT */
 .result{
   margin-top:20px;
   background:#3c4252;
@@ -135,7 +122,8 @@ hr{margin:10px 0;border:1px solid #777}
 
 <div class="menu">
   <h1>Digitaleon Tools</h1>
-  <div class="menu-grid" id="toolsContainer"></div>
+
+  <div class="menu-grid" id="tools"></div>
 
   <a href="index.html" style="
     display:inline-block;
@@ -143,7 +131,6 @@ hr{margin:10px 0;border:1px solid #777}
     padding:12px 25px;
     background:rgba(255,255,255,0.2);
     border-radius:20px;
-    backdrop-filter:blur(5px);
     color:white;
     text-decoration:none;
     font-weight:bold;
@@ -152,18 +139,13 @@ hr{margin:10px 0;border:1px solid #777}
   </a>
 </div>
 
-<!-- MODAL REFUND -->
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-box">
+
     <h2>Calculator Refund</h2>
 
-    <label>Mode</label>
-    <select id="mode">
-      <option>Seller</option>
-      <option>Buyer</option>
-    </select>
-
-    <label>Harga Beli (Rp)</label>
+    <label>Harga (Rp)</label>
     <input type="number" id="harga">
 
     <label>Tanggal Beli</label>
@@ -172,132 +154,135 @@ hr{margin:10px 0;border:1px solid #777}
     <label>Tanggal Error</label>
     <input type="date" id="tglError">
 
+    <!-- DURASI -->
     <label>Durasi</label>
-    <select id="durasi">
+    <select id="durasi" onchange="toggleCustomDurasi()">
       <option value="7">7 hari</option>
       <option value="30">30 hari</option>
       <option value="60">60 hari</option>
       <option value="90">90 hari</option>
+      <option value="custom">Custom</option>
     </select>
 
+    <input type="number" id="customDurasi" placeholder="Custom hari" style="display:none">
+
+    <!-- FEE -->
     <label>Fee</label>
-    <select id="fee">
-      <option value="0.7">0.7 ( Garansi 4x )</option>
-      <option value="0.8">0.8 ( Garansi 3x )</option>
-      <option value="0.9">0.9 ( Garansi 2x )</option>
-      <option value="0.95">0.95 ( Garansi 1x )</option>
+    <select id="fee" onchange="toggleCustomFee()">
+      <option value="0.7">0.7</option>
+      <option value="0.8">0.8</option>
+      <option value="0.9">0.9</option>
+      <option value="0.95">0.95</option>
+      <option value="custom">Custom</option>
     </select>
 
-    <div class="desc">
-      Fee Seller adalah jasa layanan proses garansi, pergantian produk baru dan jasa replace
-    </div>
+    <input type="number" step="0.01" id="customFee" placeholder="0.1 - 0.99" style="display:none">
 
-    <button onclick="hitung()">Hitung Refund</button>
+    <button onclick="hitung()">Hitung</button>
+
     <div id="hasil"></div>
+
     <button onclick="closeModal()">Back</button>
+
   </div>
 </div>
 
 <script>
-function openModal() {
-  document.getElementById("modal").style.display = "flex";
+function openModal(){
+  document.getElementById("modal").style.display="flex";
 }
 
-function closeModal() {
-  document.getElementById("modal").style.display = "none";
+function closeModal(){
+  document.getElementById("modal").style.display="none";
 }
 
-function hitung() {
-  const harga = parseInt(document.getElementById("harga").value || "0");
-  const tglBeliVal = document.getElementById("tglBeli").value;
-  const tglErrorVal = document.getElementById("tglError").value;
-  const durasi = parseInt(document.getElementById("durasi").value || "0");
-  const fee = parseFloat(document.getElementById("fee").value || "0");
+/* ===== CUSTOM FIELD ===== */
+function toggleCustomDurasi(){
+  document.getElementById("customDurasi").style.display =
+    document.getElementById("durasi").value === "custom" ? "block" : "none";
+}
 
-  if (!harga || !tglBeliVal || !tglErrorVal || !durasi || !fee) {
-    document.getElementById("hasil").innerHTML = `
-      <div class="result">
-        <b>Isi semua data dulu</b>
-      </div>
-    `;
+function toggleCustomFee(){
+  document.getElementById("customFee").style.display =
+    document.getElementById("fee").value === "custom" ? "block" : "none";
+}
+
+/* ===== HITUNG ===== */
+function hitung(){
+  let harga = parseInt(document.getElementById("harga").value);
+
+  let tglBeli = new Date(document.getElementById("tglBeli").value);
+  let tglError = new Date(document.getElementById("tglError").value);
+
+  let durasi = document.getElementById("durasi").value === "custom"
+    ? parseInt(document.getElementById("customDurasi").value)
+    : parseInt(document.getElementById("durasi").value);
+
+  let fee = document.getElementById("fee").value === "custom"
+    ? parseFloat(document.getElementById("customFee").value)
+    : parseFloat(document.getElementById("fee").value);
+
+  if(!harga || !durasi || !fee){
+    alert("Isi semua data!");
     return;
   }
 
-  const tglBeli = new Date(tglBeliVal);
-  const tglError = new Date(tglErrorVal);
+  if(fee < 0.1 || fee > 0.99){
+    alert("Fee harus 0.1 - 0.99");
+    return;
+  }
 
-  let selisih = (tglError - tglBeli) / (1000 * 60 * 60 * 24);
-  if (isNaN(selisih)) selisih = 0;
-
+  let selisih = (tglError - tglBeli) / (1000*60*60*24);
   let sisa = durasi - selisih;
-  if (sisa < 0) sisa = 0;
 
-  const refund = harga * (sisa / durasi) * fee;
+  if(sisa < 0) sisa = 0;
+
+  let refund = harga * (sisa/durasi) * fee;
 
   document.getElementById("hasil").innerHTML = `
     <div class="result">
-      <b>📊 Hasil Refund</b><br><br>
-      Harga: Rp ${harga.toLocaleString("id-ID")}<br>
+      Harga: Rp ${harga.toLocaleString()}<br>
       Durasi: ${durasi} hari<br>
       Sisa: ${Math.round(sisa)} hari<br>
       Fee: ${fee}<br>
       <hr>
-      <b>Total: Rp ${Math.round(refund).toLocaleString("id-ID")}</b>
+      <b>Total: Rp ${Math.round(refund).toLocaleString()}</b>
     </div>
   `;
 }
 
-async function loadTools() {
-  try {
-    const res = await fetch("config.json?t=" + Date.now());
-    if (!res.ok) throw new Error("Gagal memuat config.json");
+/* ===== LOAD TOOLS ===== */
+async function loadTools(){
+  const res = await fetch("config.json?t="+Date.now());
+  const config = await res.json();
 
-    const config = await res.json();
-    const tools = Array.isArray(config.tools) ? config.tools : [];
-    const container = document.getElementById("toolsContainer");
+  const container = document.getElementById("tools");
+  container.innerHTML = "";
 
-    container.innerHTML = "";
-
-    if (!tools.length) {
-      container.innerHTML = `<div class="empty-tools">Belum ada tools</div>`;
-      return;
-    }
-
-    tools.forEach((tool) => {
-      const card = document.createElement("a");
-      card.className = "card";
-      card.href = tool.url || "#";
-
-      const isModalRefund =
-        tool.url === "#refund" ||
-        tool.url === "modal:refund" ||
-        tool.url === "refund";
-
-      if (isModalRefund) {
-        card.href = "javascript:void(0)";
-        card.addEventListener("click", openModal);
-      } else {
-        card.target = "_blank";
-        card.rel = "noopener noreferrer";
-      }
-
-      const img = document.createElement("img");
-      img.src = tool.icon || "https://via.placeholder.com/300x200?text=Tool";
-      img.alt = tool.text || "Tool";
-
-      const title = document.createElement("div");
-      title.className = "title";
-      title.textContent = tool.text || "Untitled Tool";
-
-      card.appendChild(img);
-      card.appendChild(title);
-      container.appendChild(card);
-    });
-  } catch (err) {
-    console.error(err);
-    document.getElementById("toolsContainer").innerHTML =
-      `<div class="empty-tools">Gagal memuat tools</div>`;
+  if(!config.tools || config.tools.length === 0){
+    container.innerHTML = "<div class='empty'>Belum ada tools</div>";
+    return;
   }
+
+  config.tools.forEach(tool => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.onclick = () => {
+      if(tool.url === "#refund"){
+        openModal();
+      } else {
+        window.open(tool.url, "_blank");
+      }
+    };
+
+    div.innerHTML = `
+      <img src="${tool.icon}">
+      <div class="title">${tool.text}</div>
+    `;
+
+    container.appendChild(div);
+  });
 }
 
 loadTools();
