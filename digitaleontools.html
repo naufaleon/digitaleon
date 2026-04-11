@@ -156,14 +156,9 @@ function hitung(){
     ? parseInt(customDurasi.value)
     : parseInt(durasi.value);
 
-  let feeText = "";
-
-  if (feeVal === 1) {
-    feeText = "Tanpa Fee (Rp 0)";
-  } else {
-    let potonganFee = harga * (1 - feeVal);
-    feeText = `${feeVal} (${Math.round(feeVal*100)}%) - Potongan Rp ${Math.round(potonganFee).toLocaleString()}`;
-  }
+  let feeVal = fee.value==="custom"
+    ? parseFloat(customFee.value)
+    : parseFloat(fee.value);
 
   if(!harga || !durasiVal || !feeVal){
     alert("Isi semua data!");
@@ -176,6 +171,16 @@ function hitung(){
 
   let refund = harga*(sisa/durasiVal)*feeVal;
   let potongan = harga - refund;
+
+  /* ===== FIX FEE TEXT ===== */
+  let feeText = "";
+
+  if (feeVal === 1) {
+    feeText = "Tanpa Fee (Rp 0)";
+  } else {
+    let potonganFee = harga * (1 - feeVal);
+    feeText = `${feeVal} (${Math.round(feeVal*100)}%) - Potongan Rp ${Math.round(potonganFee).toLocaleString()}`;
+  }
 
   lastResult = {harga,durasiVal,sisa,feeVal,refund};
 
