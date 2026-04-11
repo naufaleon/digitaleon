@@ -10,22 +10,25 @@
 
 body{
   background:url('https://i.ibb.co.com/hxrJRM74/Whats-App-Image-2026-04-11-at-02-49-38.jpg') center/cover no-repeat;
-  height:100vh;
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
   color:#fff;
+  padding:20px;
 }
 
-/* MENU */
 .menu{
   text-align:center;
+  width:100%;
+  max-width:900px;
 }
 
 .menu-grid{
   display:flex;
   gap:20px;
   justify-content:center;
+  flex-wrap:wrap;
   margin-top:20px;
 }
 
@@ -36,19 +39,33 @@ body{
   border-radius:15px;
   cursor:pointer;
   transition:.3s;
-  width:130px;
+  width:150px;
+  text-decoration:none;
+  color:#fff;
+  display:block;
 }
 
 .card:hover{transform:scale(1.05)}
 
 .card img{
   width:100%;
+  height:110px;
+  object-fit:cover;
   border-radius:10px;
+  background:rgba(255,255,255,0.15);
 }
 
 .title{
   margin-top:10px;
   font-weight:bold;
+  word-break:break-word;
+}
+
+.empty-tools{
+  margin-top:20px;
+  background:rgba(255,255,255,0.12);
+  padding:16px;
+  border-radius:14px;
 }
 
 /* MODAL */
@@ -60,6 +77,8 @@ body{
   background:rgba(0,0,0,0.7);
   justify-content:center;
   align-items:center;
+  z-index:99;
+  padding:16px;
 }
 
 .modal-box{
@@ -116,38 +135,26 @@ hr{margin:10px 0;border:1px solid #777}
 
 <div class="menu">
   <h1>Digitaleon Tools</h1>
-
-  <div class="menu-grid">
-    <div class="card" onclick="openModal()">
-      <img src="https://i.ibb.co.com/Pzb1fbDd/Whats-App-Image-2026-04-11-at-03-21-53.jpg">
-      <div class="title">Calculator Refund</div>
-    </div>
-
-    <div class="card">
-      <img src="https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg">
-      <div class="title">QRIS Generator</div>
-    </div>
-  </div>
+  <div class="menu-grid" id="toolsContainer"></div>
 
   <a href="index.html" style="
-  display:inline-block;
-  margin-top:30px;
-  padding:12px 25px;
-  background:rgba(255,255,255,0.2);
-  border-radius:20px;
-  backdrop-filter:blur(5px);
-  color:white;
-  text-decoration:none;
-  font-weight:bold;
-">
-  ← Back to Menu
-</a>
+    display:inline-block;
+    margin-top:30px;
+    padding:12px 25px;
+    background:rgba(255,255,255,0.2);
+    border-radius:20px;
+    backdrop-filter:blur(5px);
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+  ">
+    ← Back to Menu
+  </a>
 </div>
 
-<!-- MODAL -->
+<!-- MODAL REFUND -->
 <div class="modal" id="modal">
   <div class="modal-box">
-
     <h2>Calculator Refund</h2>
 
     <label>Mode</label>
@@ -186,48 +193,114 @@ hr{margin:10px 0;border:1px solid #777}
     </div>
 
     <button onclick="hitung()">Hitung Refund</button>
-
     <div id="hasil"></div>
-
     <button onclick="closeModal()">Back</button>
   </div>
 </div>
 
 <script>
-function openModal(){
-  document.getElementById("modal").style.display="flex";
+function openModal() {
+  document.getElementById("modal").style.display = "flex";
 }
 
-function closeModal(){
-  document.getElementById("modal").style.display="none";
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
 }
 
-function hitung(){
-  let harga = parseInt(document.getElementById("harga").value);
-  let tglBeli = new Date(document.getElementById("tglBeli").value);
-  let tglError = new Date(document.getElementById("tglError").value);
-  let durasi = parseInt(document.getElementById("durasi").value);
-  let fee = parseFloat(document.getElementById("fee").value);
+function hitung() {
+  const harga = parseInt(document.getElementById("harga").value || "0");
+  const tglBeliVal = document.getElementById("tglBeli").value;
+  const tglErrorVal = document.getElementById("tglError").value;
+  const durasi = parseInt(document.getElementById("durasi").value || "0");
+  const fee = parseFloat(document.getElementById("fee").value || "0");
 
-  let selisih = (tglError - tglBeli) / (1000*60*60*24);
+  if (!harga || !tglBeliVal || !tglErrorVal || !durasi || !fee) {
+    document.getElementById("hasil").innerHTML = `
+      <div class="result">
+        <b>Isi semua data dulu</b>
+      </div>
+    `;
+    return;
+  }
+
+  const tglBeli = new Date(tglBeliVal);
+  const tglError = new Date(tglErrorVal);
+
+  let selisih = (tglError - tglBeli) / (1000 * 60 * 60 * 24);
+  if (isNaN(selisih)) selisih = 0;
+
   let sisa = durasi - selisih;
+  if (sisa < 0) sisa = 0;
 
-  if(sisa < 0) sisa = 0;
-
-  let refund = harga * (sisa/durasi) * fee;
+  const refund = harga * (sisa / durasi) * fee;
 
   document.getElementById("hasil").innerHTML = `
     <div class="result">
       <b>📊 Hasil Refund</b><br><br>
-      Harga: Rp ${harga.toLocaleString()}<br>
+      Harga: Rp ${harga.toLocaleString("id-ID")}<br>
       Durasi: ${durasi} hari<br>
-      Sisa: ${sisa} hari<br>
+      Sisa: ${Math.round(sisa)} hari<br>
       Fee: ${fee}<br>
       <hr>
-      <b>Total: Rp ${Math.round(refund).toLocaleString()}</b>
+      <b>Total: Rp ${Math.round(refund).toLocaleString("id-ID")}</b>
     </div>
   `;
 }
+
+async function loadTools() {
+  try {
+    const res = await fetch("config.json?t=" + Date.now());
+    if (!res.ok) throw new Error("Gagal memuat config.json");
+
+    const config = await res.json();
+    const tools = Array.isArray(config.tools) ? config.tools : [];
+    const container = document.getElementById("toolsContainer");
+
+    container.innerHTML = "";
+
+    if (!tools.length) {
+      container.innerHTML = `<div class="empty-tools">Belum ada tools</div>`;
+      return;
+    }
+
+    tools.forEach((tool) => {
+      const card = document.createElement("a");
+      card.className = "card";
+      card.href = tool.url || "#";
+
+      const isModalRefund =
+        tool.url === "#refund" ||
+        tool.url === "modal:refund" ||
+        tool.url === "refund";
+
+      if (isModalRefund) {
+        card.href = "javascript:void(0)";
+        card.addEventListener("click", openModal);
+      } else {
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+      }
+
+      const img = document.createElement("img");
+      img.src = tool.icon || "https://via.placeholder.com/300x200?text=Tool";
+      img.alt = tool.text || "Tool";
+
+      const title = document.createElement("div");
+      title.className = "title";
+      title.textContent = tool.text || "Untitled Tool";
+
+      card.appendChild(img);
+      card.appendChild(title);
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error(err);
+    document.getElementById("toolsContainer").innerHTML =
+      `<div class="empty-tools">Gagal memuat tools</div>`;
+  }
+}
+
+loadTools();
 </script>
 
 </body>
