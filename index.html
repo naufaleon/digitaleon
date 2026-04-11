@@ -50,11 +50,37 @@
     let currentIndex = 0;
     let autoSlideInterval = null;
 
+    function normalizePath(path) {
+      if (!path) return "/";
+      let result = path.trim();
+      if (!result.startsWith("/")) result = "/" + result;
+      if (result.length > 1 && result.endsWith("/")) result = result.slice(0, -1);
+      return result;
+    }
+
+    function handleRedirects(redirects = []) {
+      const currentPath = normalizePath(window.location.pathname);
+
+      const found = redirects.find((item) => {
+        if (!item || typeof item !== "object") return false;
+        return normalizePath(item.path) === currentPath;
+      });
+
+      if (found && found.url) {
+        window.location.replace(found.url);
+        return true;
+      }
+
+      return false;
+    }
+
     async function loadConfig() {
       try {
         const res = await fetch("config.json?t=" + Date.now());
         if (!res.ok) throw new Error("Gagal memuat config.json");
         const config = await res.json();
+
+        if (handleRedirects(config.redirects || [])) return;
 
         document.title = config.title || "Website";
         document.getElementById("site-title").textContent = config.title || "";
@@ -81,12 +107,11 @@
         const a = document.createElement("a");
         a.className = "btn";
         a.href = btn.url || "#";
-        // kalau link external → new tab
-        if (btn.url.startsWith("http")) {
+
+        if ((btn.url || "").startsWith("http")) {
           a.target = "_blank";
           a.rel = "noopener noreferrer";
         } else {
-          // internal link → same tab
           a.target = "_self";
         }
 
