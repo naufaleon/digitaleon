@@ -41,6 +41,12 @@
       "icon": "https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg"
     }
   ],
+  "redirects": [
+    {
+      "path": "/desk-alightmotion",
+      "url": "https://gist.githubusercontent.com/naufaleon/f70953a3f5caf8dd0687582311f626da/raw/a39b4abd11ad16a02d5cae58f24976468687c8af/tesssssss"
+    }
+  ],
   "posters": [
     "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png"
   ]
