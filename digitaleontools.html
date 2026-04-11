@@ -17,15 +17,28 @@ body{
   color:#fff;
 }
 
-.menu{text-align:center;width:100%;max-width:900px}
+.menu{
+  text-align:center;
+  width:100%;
+  max-width:900px;
+}
 
-.menu-grid{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.menu-grid{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
 
 .card{
   background:rgba(255,255,255,0.15);
   backdrop-filter:blur(10px);
-  padding:15px;border-radius:15px;
-  cursor:pointer;transition:.3s;width:150px;
+  padding:15px;
+  border-radius:15px;
+  cursor:pointer;
+  transition:.3s;
+  width:150px;
 }
 .card:hover{transform:scale(1.05)}
 
@@ -34,6 +47,24 @@ body{
   height:110px;
   object-fit:cover;
   border-radius:10px;
+}
+
+.title{
+  margin-top:10px;
+  font-weight:bold;
+}
+
+/* BACK BUTTON */
+.back-btn{
+  display:inline-block;
+  margin-top:25px;
+  padding:10px 25px;
+  background:rgba(255,255,255,0.2);
+  border-radius:20px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  backdrop-filter:blur(5px);
 }
 
 /* MODAL */
@@ -95,7 +126,13 @@ button{
 
 <div class="menu">
   <h1>Digitaleon Tools</h1>
+
   <div class="menu-grid" id="tools"></div>
+
+  <!-- BACK BUTTON -->
+  <a href="index.html" class="back-btn">
+    ← Back to Menu
+  </a>
 </div>
 
 <!-- MODAL -->
@@ -163,7 +200,7 @@ function toggleCustomFee(){
   document.getElementById("customFee").style.display = val==="custom"?"block":"none";
 }
 
-/* ===== FIX HITUNG ===== */
+/* FIX HITUNG */
 function hitung(){
 
   let harga = parseInt(document.getElementById("harga").value);
@@ -209,7 +246,7 @@ function hitung(){
   </div>`;
 }
 
-/* ===== WA ===== */
+/* WA */
 function kirimWA(){
   let nomor = document.getElementById("wa").value;
 
@@ -249,7 +286,11 @@ async function loadTools(){
       else window.open(tool.url,"_blank");
     }
 
-    div.innerHTML=`<img src="${tool.icon}"><div>${tool.text}</div>`;
+    div.innerHTML=`
+      <img src="${tool.icon}">
+      <div class="title">${tool.text}</div>
+    `;
+
     container.appendChild(div);
   });
 }
