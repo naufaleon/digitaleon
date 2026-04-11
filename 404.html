@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecting...</title>
+  <script>
+    function normalizePath(path) {
+      if (!path) return "/";
+      let result = path.trim();
+      if (!result.startsWith("/")) result = "/" + result;
+      if (result.length > 1 && result.endsWith("/")) result = result.slice(0, -1);
+      return result;
+    }
+
+    async function handleRedirect() {
+      try {
+        const currentPath = normalizePath(window.location.pathname);
+
+        const res = await fetch("/config.json?t=" + Date.now());
+        if (!res.ok) throw new Error("Gagal memuat config.json");
+
+        const config = await res.json();
+        const redirects = Array.isArray(config.redirects) ? config.redirects : [];
+
+        const found = redirects.find((item) => {
+          if (!item || typeof item !== "object") return false;
+          return normalizePath(item.path) === currentPath;
+        });
+
+        if (found && found.url) {
+          window.location.replace(found.url);
+          return;
+        }
+
+        window.location.replace("/");
+      } catch (err) {
+        console.error(err);
+        document.body.innerHTML = `
+          <div style="font-family:Arial,sans-serif;text-align:center;padding:40px">
+            <h1>404</h1>
+            <p>Path tidak ditemukan dan redirect gagal dimuat.</p>
+            <p><a href="/">Kembali ke beranda</a></p>
+          </div>
+        `;
+      }
+    }
+
+    handleRedirect();
+  </script>
+</head>
+<body>
+  <div style="font-family:Arial,sans-serif;text-align:center;padding:40px">
+    <h2>Sebentar...</h2>
+    <p>Sedang mengarahkan link.</p>
+  </div>
+</body>
+</html>
