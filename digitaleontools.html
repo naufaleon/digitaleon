@@ -17,107 +17,51 @@ body{
   color:#fff;
 }
 
-.menu{
-  text-align:center;
-  width:100%;
-  max-width:900px;
-}
-
-.menu-grid{
-  display:flex;
-  gap:20px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-top:20px;
-}
+.menu{text-align:center;max-width:900px;width:100%}
+.menu-grid{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:20px}
 
 .card{
   background:rgba(255,255,255,0.15);
   backdrop-filter:blur(10px);
-  padding:15px;
-  border-radius:15px;
-  cursor:pointer;
-  transition:.3s;
-  width:150px;
+  padding:15px;border-radius:15px;
+  cursor:pointer;transition:.3s;width:150px;
 }
 .card:hover{transform:scale(1.05)}
+.card img{width:100%;height:110px;object-fit:cover;border-radius:10px}
 
-.card img{
-  width:100%;
-  height:110px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-.title{
-  margin-top:10px;
-  font-weight:bold;
-}
-
-/* BACK BUTTON */
 .back-btn{
-  display:inline-block;
-  margin-top:25px;
-  padding:10px 25px;
-  background:rgba(255,255,255,0.2);
-  border-radius:20px;
-  color:white;
-  text-decoration:none;
-  font-weight:bold;
-  backdrop-filter:blur(5px);
+  display:inline-block;margin-top:25px;padding:10px 25px;
+  background:rgba(255,255,255,0.2);border-radius:20px;
+  color:white;text-decoration:none;font-weight:bold;
 }
 
-/* MODAL */
 .modal{
-  display:none;
-  position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  background:rgba(0,0,0,0.7);
-  justify-content:center;
-  align-items:center;
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.7);justify-content:center;align-items:center;
 }
 
 .modal-box{
-  background:#2f3441;
-  padding:25px;
-  border-radius:15px;
-  width:90%;
-  max-width:400px;
+  background:#2f3441;padding:25px;border-radius:15px;
+  width:90%;max-width:400px;
 }
 
-h2{
-  text-align:center;
-  margin-bottom:15px;
-}
+h2{text-align:center;margin-bottom:15px}
+
+label{margin-top:10px;display:block;font-size:14px;color:#ccc}
 
 input,select{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  background:#3c4252;
-  color:#fff;
+  width:100%;padding:10px;margin-top:5px;
+  border:none;border-radius:10px;background:#3c4252;color:#fff;
 }
 
 button{
-  width:100%;
-  padding:12px;
-  margin-top:12px;
-  border:none;
-  border-radius:10px;
-  background:#5a6275;
-  color:#fff;
-  cursor:pointer;
+  width:100%;padding:12px;margin-top:12px;
+  border:none;border-radius:10px;background:#5a6275;color:#fff;
 }
 
 .result{
-  margin-top:15px;
-  background:#3c4252;
-  padding:15px;
-  border-radius:10px;
-  text-align:center;
+  margin-top:15px;background:#3c4252;padding:15px;
+  border-radius:10px;text-align:center;
 }
 </style>
 </head>
@@ -126,13 +70,9 @@ button{
 
 <div class="menu">
   <h1>Digitaleon Tools</h1>
-
   <div class="menu-grid" id="tools"></div>
 
-  <!-- BACK BUTTON -->
-  <a href="index.html" class="back-btn">
-    ← Back to Menu
-  </a>
+  <a href="index.html" class="back-btn">← Back to Menu</a>
 </div>
 
 <!-- MODAL -->
@@ -141,11 +81,16 @@ button{
 
 <h2>Calculator Refund</h2>
 
-<input type="number" id="harga" placeholder="Harga">
+<label>Harga (Rp)</label>
+<input type="number" id="harga">
 
+<label>Tanggal Beli</label>
 <input type="date" id="tglBeli">
+
+<label>Tanggal Error</label>
 <input type="date" id="tglError">
 
+<label>Durasi</label>
 <select id="durasi" onchange="toggleCustomDurasi()">
 <option value="7">7 hari</option>
 <option value="30">30 hari</option>
@@ -156,17 +101,20 @@ button{
 
 <input type="number" id="customDurasi" placeholder="Custom hari" style="display:none">
 
+<label>Fee</label>
 <select id="fee" onchange="toggleCustomFee()">
-<option value="0.7">0.7</option>
-<option value="0.8">0.8</option>
-<option value="0.9">0.9</option>
-<option value="0.95">0.95</option>
+<option value="1">Tanpa Fee (100%)</option>
+<option value="0.95">0.95 (Potong 5%)</option>
+<option value="0.9">0.9 (Potong 10%)</option>
+<option value="0.8">0.8 (Potong 20%)</option>
+<option value="0.7">0.7 (Potong 30%)</option>
 <option value="custom">Custom</option>
 </select>
 
 <input type="number" step="0.01" id="customFee" placeholder="0.1 - 0.99" style="display:none">
 
-<input type="number" id="wa" placeholder="No WhatsApp (628xxxx)">
+<label>No WhatsApp</label>
+<input type="number" id="wa" placeholder="628xxxx">
 
 <button onclick="hitung()">Hitung</button>
 
@@ -191,62 +139,53 @@ function closeModal(){
 }
 
 function toggleCustomDurasi(){
-  const val = document.getElementById("durasi").value;
-  document.getElementById("customDurasi").style.display = val==="custom"?"block":"none";
+  customDurasi.style.display = durasi.value==="custom"?"block":"none";
 }
 
 function toggleCustomFee(){
-  const val = document.getElementById("fee").value;
-  document.getElementById("customFee").style.display = val==="custom"?"block":"none";
+  customFee.style.display = fee.value==="custom"?"block":"none";
 }
 
-/* FIX HITUNG */
 function hitung(){
 
   let harga = parseInt(document.getElementById("harga").value);
   let tglBeli = new Date(document.getElementById("tglBeli").value);
   let tglError = new Date(document.getElementById("tglError").value);
 
-  let durasiSelect = document.getElementById("durasi").value;
-  let durasi = durasiSelect==="custom"
-    ? parseInt(document.getElementById("customDurasi").value)
-    : parseInt(durasiSelect);
+  let durasiVal = durasi.value==="custom"
+    ? parseInt(customDurasi.value)
+    : parseInt(durasi.value);
 
-  let feeSelect = document.getElementById("fee").value;
-  let fee = feeSelect==="custom"
-    ? parseFloat(document.getElementById("customFee").value)
-    : parseFloat(feeSelect);
+  let feeVal = fee.value==="custom"
+    ? parseFloat(customFee.value)
+    : parseFloat(fee.value);
 
-  if(!harga || !durasi || !fee){
+  if(!harga || !durasiVal || !feeVal){
     alert("Isi semua data!");
     return;
   }
 
-  if(fee<0.1 || fee>0.99){
-    alert("Fee harus 0.1 - 0.99");
-    return;
-  }
-
   let selisih = (tglError - tglBeli)/(1000*60*60*24);
-  let sisa = durasi - selisih;
+  let sisa = durasiVal - selisih;
   if(sisa<0) sisa=0;
 
-  let refund = harga*(sisa/durasi)*fee;
+  let refund = harga*(sisa/durasiVal)*feeVal;
+  let potongan = harga - refund;
 
-  lastResult = {harga,durasi,sisa,fee,refund};
+  lastResult = {harga,durasiVal,sisa,feeVal,refund};
 
   document.getElementById("hasil").innerHTML = `
   <div class="result">
   Harga: Rp ${harga.toLocaleString()}<br>
-  Durasi: ${durasi} hari<br>
+  Durasi: ${durasiVal} hari<br>
   Sisa: ${Math.round(sisa)} hari<br>
-  Fee: ${fee}<br>
+  Fee: ${feeVal} (${Math.round(feeVal*100)}%)<br>
+  Potongan: Rp ${Math.round(potongan).toLocaleString()}<br>
   <hr>
-  <b>Total: Rp ${Math.round(refund).toLocaleString()}</b>
+  <b>Total Refund: Rp ${Math.round(refund).toLocaleString()}</b>
   </div>`;
 }
 
-/* WA */
 function kirimWA(){
   let nomor = document.getElementById("wa").value;
 
@@ -258,19 +197,16 @@ function kirimWA(){
   let text = `📊 HASIL REFUND
 
 💰 Harga: Rp ${lastResult.harga.toLocaleString()}
-📅 Durasi: ${lastResult.durasi} hari
+📅 Durasi: ${lastResult.durasiVal} hari
 ⏳ Sisa: ${Math.round(lastResult.sisa)} hari
-⚙️ Fee: ${lastResult.fee}
+⚙️ Fee: ${lastResult.feeVal}
 
-━━━━━━━━━━━━━━
-💵 Total:
-Rp ${Math.round(lastResult.refund).toLocaleString()}
-━━━━━━━━━━━━━━`;
+💸 Total Refund:
+Rp ${Math.round(lastResult.refund).toLocaleString()}`;
 
-  window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(text)}`,"_blank");
+  window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(text)}`);
 }
 
-/* LOAD TOOLS */
 async function loadTools(){
   const res = await fetch("config.json?t="+Date.now());
   const config = await res.json();
@@ -286,11 +222,7 @@ async function loadTools(){
       else window.open(tool.url,"_blank");
     }
 
-    div.innerHTML=`
-      <img src="${tool.icon}">
-      <div class="title">${tool.text}</div>
-    `;
-
+    div.innerHTML=`<img src="${tool.icon}"><div>${tool.text}</div>`;
     container.appendChild(div);
   });
 }
