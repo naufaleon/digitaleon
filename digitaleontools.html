@@ -101,19 +101,19 @@ button{
 
 <input type="number" id="customDurasi" placeholder="Custom hari" style="display:none">
 
-<label>Fee</label>
+<label>Fee ( Jasa Proses Garansi & Replace )</label>
 <select id="fee" onchange="toggleCustomFee()">
 <option value="1">Tanpa Fee (100%)</option>
-<option value="0.95">0.95 (Potong 5%)</option>
-<option value="0.9">0.9 (Potong 10%)</option>
-<option value="0.8">0.8 (Potong 20%)</option>
-<option value="0.7">0.7 (Potong 30%)</option>
+<option value="0.95">0.95 (Potong 5%) Garansi Replace 1x</option>
+<option value="0.9">0.9 (Potong 10%) Garansi Replace 2x</option>
+<option value="0.8">0.8 (Potong 20%) Garansi Replace 3x</option>
+<option value="0.7">0.7 (Potong 30%) Garansi Replace 4x</option>
 <option value="custom">Custom</option>
 </select>
 
 <input type="number" step="0.01" id="customFee" placeholder="0.1 - 0.99" style="display:none">
 
-<label>No WhatsApp</label>
+<label>No WhatsApp Buyer</label>
 <input type="number" id="wa" placeholder="628xxxx">
 
 <button onclick="hitung()">Hitung</button>
@@ -194,15 +194,18 @@ function kirimWA(){
     return;
   }
 
-  let text = `📊 HASIL REFUND
+  let text = `HASIL REFUND
 
-💰 Harga: Rp ${lastResult.harga.toLocaleString()}
-📅 Durasi: ${lastResult.durasiVal} hari
-⏳ Sisa: ${Math.round(lastResult.sisa)} hari
-⚙️ Fee: ${lastResult.feeVal}
+Harga: Rp ${lastResult.harga.toLocaleString()}
+Durasi: ${lastResult.durasiVal} hari
+Sisa: ${Math.round(lastResult.sisa)} hari
+Fee: ${lastResult.feeVal}
 
 💸 Total Refund:
-Rp ${Math.round(lastResult.refund).toLocaleString()}`;
+Rp ${Math.round(lastResult.refund).toLocaleString()}
+
+Calculator Refund by Digitaleon Tools ( naufaleon.my.id )
+`;
 
   window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(text)}`);
 }
