@@ -81,8 +81,14 @@
         const a = document.createElement("a");
         a.className = "btn";
         a.href = btn.url || "#";
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
+        // kalau link external → new tab
+        if (btn.url.startsWith("http")) {
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+        } else {
+          // internal link → same tab
+          a.target = "_self";
+        }
 
         const content = document.createElement("div");
         content.className = "btn-content";
