@@ -29,6 +29,18 @@
       "icon": "https://img.icons8.com/fluency/48/settings.png"
     }
   ],
+  "tools": [
+    {
+      "text": "Calculator Refund",
+      "url": "#refund",
+      "icon": "https://i.ibb.co.com/Pzb1fbDd/Whats-App-Image-2026-04-11-at-03-21-53.jpg"
+    },
+    {
+      "text": "QRIS Generator",
+      "url": "https://contoh-link-qris.com",
+      "icon": "https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg"
+    }
+  ],
   "posters": [
     "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png"
   ]
