@@ -14,8 +14,8 @@
       "icon": "https://avatars.githubusercontent.com/u/139215619?s=200&v=4"
     },
     {
-      "text": "TopUp Games Automatis ⭑ digitaleon.my.id",
-      "url": "https://digitaleon.my.id",
+      "text": "TopUp Games Automatis ⭑ Maintance",
+      "url": "#",
       "icon": "https://digitaleon.my.id/img/web/Digitaleon%20Dark%20Theme.png"
     },
     {
@@ -29,7 +29,70 @@
       "icon": "https://img.icons8.com/fluency/48/settings.png"
     }
   ],
+  "tools": [
+    {
+      "text": "Calculator Refund",
+      "url": "#refund",
+      "icon": "https://i.ibb.co.com/Pzb1fbDd/Whats-App-Image-2026-04-11-at-03-21-53.jpg"
+    },
+    {
+      "text": "QRIS Generator",
+      "url": "https://contoh-link-qris.com",
+      "icon": "https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg"
+    },
+    {
+      "text": "Invoice Generator",
+      "url": "",
+      "icon": ""
+    }
+  ],
+  "redirects": [
+    {
+      "path": "/desk-alightmotion",
+      "url": "https://gist.githubusercontent.com/naufaleon/f70953a3f5caf8dd0687582311f626da/raw/a39b4abd11ad16a02d5cae58f24976468687c8af/tesssssss"
+    },
+    {
+      "path": "/desk-primevideofullgar",
+      "url": "https://gist.githubusercontent.com/naufaleon/11a96c3a7db38f1589b83cba28270c13/raw/d7d8600d18cbfa7cbbaf23c10f734b4fcf55b8ad/Desk%2520Amazon%2520Prime%2520Video.txt"
+    },
+    {
+      "path": "/desk_bstationsharing",
+      "url": "https://gist.githubusercontent.com/naufaleon/28371c3a412d0135a076177903504065/raw/bc7968bbccdf02f32b19d8258d55477f9a297f9f/bstationshare-star"
+    },
+    {
+      "path": "/desk_bstationsharing1b",
+      "url": "https://gist.githubusercontent.com/naufaleon/28371c3a412d0135a076177903504065/raw/bc7968bbccdf02f32b19d8258d55477f9a297f9f/RSL-bstation1b"
+    },
+    {
+      "path": "/desk_bstationsharing3b",
+      "url": "https://gist.githubusercontent.com/naufaleon/28371c3a412d0135a076177903504065/raw/bc7968bbccdf02f32b19d8258d55477f9a297f9f/RSL-bstation3b"
+    }
+  ],
   "posters": [
     "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png"
+  ],
+  "products": [
+    {
+      "path": "/spotify-premium",
+      "name": "Spotify Premium",
+      "subtitle": "Akun premium aman dan cepat",
+      "price": "Rp15.000 / bulan",
+      "image": "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png",
+      "benefits": [
+        "Bebas iklan",
+        "Kualitas audio lebih jernih",
+        "Bisa skip lagu sepuasnya",
+        "Bisa download offline"
+      ],
+      "description": "Produk digital Spotify Premium untuk kebutuhan streaming musik yang lebih nyaman.",
+      "howToUse": [
+        "Lakukan order melalui tombol order",
+        "Kirim data yang dibutuhkan ke admin",
+        "Tunggu proses aktivasi",
+        "Produk siap digunakan"
+      ],
+      "orderUrl": "https://wa.me/6281234567890?text=Halo%20saya%20mau%20order%20Spotify%20Premium",
+      "whatsappUrl": "https://wa.me/6281234567890?text=Halo%20customer%20service"
+    }
   ]
 }
