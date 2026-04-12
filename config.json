@@ -39,6 +39,11 @@
       "text": "QRIS Generator",
       "url": "https://contoh-link-qris.com",
       "icon": "https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg"
+    },
+    {
+      "text": "Invoice Generator",
+      "url": "#",
+      "icon": "#"
     }
   ],
   "redirects": [
