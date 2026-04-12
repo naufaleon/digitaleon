@@ -70,5 +70,29 @@
   ],
   "posters": [
     "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png"
+  ],
+  "products": [
+    {
+      "path": "/spotify-premium",
+      "name": "Spotify Premium",
+      "subtitle": "Akun premium aman dan cepat",
+      "price": "Rp15.000 / bulan",
+      "image": "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png",
+      "benefits": [
+        "Bebas iklan",
+        "Kualitas audio lebih jernih",
+        "Bisa skip lagu sepuasnya",
+        "Bisa download offline"
+      ],
+      "description": "Produk digital Spotify Premium untuk kebutuhan streaming musik yang lebih nyaman.",
+      "howToUse": [
+        "Lakukan order melalui tombol order",
+        "Kirim data yang dibutuhkan ke admin",
+        "Tunggu proses aktivasi",
+        "Produk siap digunakan"
+      ],
+      "orderUrl": "https://wa.me/6281234567890?text=Halo%20saya%20mau%20order%20Spotify%20Premium",
+      "whatsappUrl": "https://wa.me/6281234567890?text=Halo%20customer%20service"
+    }
   ]
 }
