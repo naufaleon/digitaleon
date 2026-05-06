@@ -51,12 +51,19 @@
     <section id="custom-page" class="custom-page hidden">
       <div class="custom-page-card">
         <div class="custom-page-badge">Info Page</div>
+    
+        <img id="custom-page-image" class="custom-page-image" src="" alt="Page Image" style="display:none" />
+    
         <h1 id="custom-page-title">Judul</h1>
         <p id="custom-page-desc-1"></p>
         <p id="custom-page-desc-2"></p>
         <p id="custom-page-desc-3"></p>
+    
+        <a id="custom-page-button" class="custom-page-button" href="#" style="display:none">
+          Buka Link
+        </a>
       </div>
-    </section>    
+    </section>   
 
     
     <section id="product-page" class="product-page hidden">
@@ -197,6 +204,25 @@
       document.getElementById("custom-page-desc-1").textContent = page.description || "";
       document.getElementById("custom-page-desc-2").textContent = page.description2 || "";
       document.getElementById("custom-page-desc-3").textContent = page.description3 || "";
+      const imageEl = document.getElementById("custom-page-image");
+      if (imageEl) {
+        imageEl.src = page.image || "";
+        imageEl.style.display = page.image ? "block" : "none";
+      }
+      
+      const buttonEl = document.getElementById("custom-page-button");
+      if (buttonEl) {
+        buttonEl.textContent = page.buttonText || "Buka Link";
+        buttonEl.href = page.buttonUrl || "#";
+        buttonEl.style.display = page.buttonUrl ? "inline-flex" : "none";
+      
+        if ((page.buttonUrl || "").startsWith("http")) {
+          buttonEl.target = "_blank";
+          buttonEl.rel = "noopener noreferrer";
+        } else {
+          buttonEl.target = "_self";
+        }
+      }
     }
 
     function showSimplePage() {
