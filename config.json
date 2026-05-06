@@ -1,56 +1,95 @@
 {
-  "title": "Naufaleon",
-  "description": "Strimer Amatir & Pedagang Online\nMenyediakan Kebutuhan Digitalmu :D",
-  "logo": "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png",
-  "buttons": [
-    {
-      "text": "Kanal Yutuf Saya ⭑ Naufaleon",
-      "url": "https://www.youtube.com/@naufaleon_id/streams",
-      "icon": "https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
-    },
-    {
-      "text": "Support & Mediashare ⭑ tako.id/naufaleon",
-      "url": "https://www.tako.id/naufaleon",
-      "icon": "https://avatars.githubusercontent.com/u/139215619?s=200&v=4"
-    },
-    {
-      "text": "TopUp Games Automatis ⭑ Maintance",
-      "url": "#",
-      "icon": "https://digitaleon.my.id/img/web/Digitaleon%20Dark%20Theme.png"
-    },
-    {
-      "text": "Auto Order Apk Prem ⭑ ibmstore.my.id",
-      "url": "https://ibmstore.my.id",
-      "icon": "https://i.ibb.co.com/V0kHJ2PB/logo.png"
-    },
-    {
-      "text": "Digitaleon Tools",
-      "url": "digitaleontools.html",
-      "icon": "https://img.icons8.com/fluency/48/settings.png"
-    },
-    {
-      "text": "Customer Support",
-      "url": "https://tawk.to/ibmstore",
-      "icon": "https://cdn-icons-png.flaticon.com/128/4233/4233834.png"
-    }
-  ],
-  "tools": [
-    {
-      "text": "Calculator Refund",
-      "url": "#refund",
-      "icon": "https://i.ibb.co.com/Pzb1fbDd/Whats-App-Image-2026-04-11-at-03-21-53.jpg"
-    },
-    {
-      "text": "QRIS Generator",
-      "url": "https://contoh-link-qris.com",
-      "icon": "https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg"
-    },
-    {
-      "text": "Invoice Generator",
-      "url": "",
-      "icon": ""
-    }
-  ],
+  "indexPage": {
+    "title": "Naufaleon",
+    "description": "Strimer Amatir & Pedagang Online\nMenyediakan Kebutuhan Digitalmu :D",
+    "logo": "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png",
+    "buttons": [
+      {
+        "text": "Kanal Yutuf Saya ⭑ Naufaleon",
+        "url": "https://www.youtube.com/@naufaleon_id/streams",
+        "icon": "https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+      },
+      {
+        "text": "Support & Mediashare ⭑ tako.id/naufaleon",
+        "url": "https://www.tako.id/naufaleon",
+        "icon": "https://avatars.githubusercontent.com/u/139215619?s=200&v=4"
+      },
+      {
+        "text": "TopUp Games Automatis ⭑ Maintance",
+        "url": "#",
+        "icon": "https://digitaleon.my.id/img/web/Digitaleon%20Dark%20Theme.png"
+      },
+      {
+        "text": "Auto Order Apk Prem ⭑ ibmstore.my.id",
+        "url": "https://ibmstore.my.id",
+        "icon": "https://i.ibb.co.com/V0kHJ2PB/logo.png"
+      },
+      {
+        "text": "Digitaleon Tools",
+        "url": "digitaleontools.html",
+        "icon": "https://img.icons8.com/fluency/48/settings.png"
+      },
+      {
+        "text": "Customer Support",
+        "url": "https://tawk.to/ibmstore",
+        "icon": "https://cdn-icons-png.flaticon.com/128/4233/4233834.png"
+      }
+    ],
+    "posters": [
+      "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png"
+    ]
+  },
+  "collapsePage": {
+    "title": "Naufaleon",
+    "description": "Strimer Amatir & Pedagang Online\nMenyediakan Kebutuhan Digitalmu :D",
+    "logo": "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png",
+    "buttons": [
+      {
+        "text": "Kanal Yutuf Saya ⭑ Naufaleon",
+        "description": "Berisi informasi untuk Kanal Yutuf Saya ⭑ Naufaleon"
+      },
+      {
+        "text": "Support & Mediashare ⭑ tako.id/naufaleon",
+        "description": "Berisi informasi untuk Support & Mediashare ⭑ tako.id/naufaleon"
+      },
+      {
+        "text": "TopUp Games Automatis ⭑ Maintance",
+        "description": "Berisi informasi untuk TopUp Games Automatis ⭑ Maintance"
+      },
+      {
+        "text": "Auto Order Apk Prem ⭑ ibmstore.my.id",
+        "description": "Berisi informasi untuk Auto Order Apk Prem ⭑ ibmstore.my.id"
+      },
+      {
+        "text": "Digitaleon Tools",
+        "description": "Berisi informasi untuk Digitaleon Tools"
+      },
+      {
+        "text": "Customer Support",
+        "description": "Berisi informasi untuk Customer Support"
+      }
+    ]
+  },
+  "toolsPage": {
+    "title": "Digitaleon Tools",
+    "tools": [
+      {
+        "text": "Calculator Refund",
+        "url": "#refund",
+        "icon": "https://i.ibb.co.com/Pzb1fbDd/Whats-App-Image-2026-04-11-at-03-21-53.jpg"
+      },
+      {
+        "text": "QRIS Generator",
+        "url": "https://contoh-link-qris.com",
+        "icon": "https://i.ibb.co.com/nspBMmw7/Whats-App-Image-2026-04-11-at-03-21-54.jpg"
+      },
+      {
+        "text": "Invoice Generator",
+        "url": "",
+        "icon": ""
+      }
+    ]
+  },
   "redirects": [
     {
       "path": "/desk-alightmotion",
@@ -80,9 +119,6 @@
       "path": "/canvamember-mei2026",
       "url": "https://www.canva.com/brand/join?token=amSiYi8Z60dafQnTjJSPtQ&referrer=team-invite"
     }
-  ],
-  "posters": [
-    "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png"
   ],
   "products": [
     {
