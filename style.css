@@ -669,3 +669,29 @@ p {
   font-size: 15px;
   margin: 0 0 12px;
 }
+
+.custom-page-image {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin: 0 0 20px;
+  background: rgba(255,255,255,0.08);
+}
+
+.custom-page-button {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4cc9f0, #4361ee);
+  box-shadow: 0 8px 25px rgba(67, 97, 238, 0.35);
+  transition: 0.25s ease;
+}
+
+.custom-page-button:hover {
+  transform: translateY(-2px);
+}
