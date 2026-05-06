@@ -528,3 +528,101 @@ p {
     border-radius: 20px;
   }
 }
+
+/* ================= SIMPLE PAGE ================= */
+
+.simple-page {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.simple-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 26px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(0,0,0,0.25);
+}
+
+.simple-badge {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(92, 225, 230, 0.14);
+  border: 1px solid rgba(92, 225, 230, 0.35);
+  color: #bdfcff;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.simple-title {
+  margin: 0 0 18px;
+  font-size: 34px;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.simple-descriptions {
+  display: grid;
+  gap: 14px;
+}
+
+.simple-description {
+  margin: 0;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.88);
+  font-size: 15px;
+  line-height: 1.8;
+  text-align: left;
+  opacity: 1;
+  white-space: pre-line;
+}
+
+.simple-description:empty {
+  display: none;
+}
+
+.simple-back {
+  display: inline-flex;
+  margin-top: 22px;
+  min-height: 46px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: 0.25s ease;
+}
+
+.simple-back:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.18);
+}
+
+@media (max-width: 480px) {
+  .simple-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .simple-title {
+    font-size: 28px;
+  }
+
+  .simple-description {
+    padding: 14px;
+    font-size: 14px;
+  }
+}
