@@ -4,8 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loading...</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -45,8 +48,13 @@
     }
 
     @keyframes moveStars {
-      from { transform: translate(0, 0); }
-      to { transform: translate(-300px, -300px); }
+      from {
+        transform: translate(0, 0);
+      }
+
+      to {
+        transform: translate(-300px, -300px);
+      }
     }
 
     .container {
@@ -65,6 +73,10 @@
       box-shadow: 0 0 30px rgba(0,0,0,0.25);
     }
 
+    .center {
+      text-align: center;
+    }
+
     .badge {
       display: inline-flex;
       padding: 8px 14px;
@@ -74,7 +86,17 @@
       color: #bdfcff;
       font-size: 12px;
       font-weight: 700;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    .page-image {
+      width: 100%;
+      max-height: 380px;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+      margin: 0 0 22px;
+      background: rgba(255,255,255,0.08);
     }
 
     h1 {
@@ -92,46 +114,71 @@
       white-space: pre-line;
     }
 
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .main-button,
     .back {
       display: inline-flex;
-      margin-top: 22px;
+      min-height: 46px;
       padding: 12px 18px;
       border-radius: 999px;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
       color: white;
       font-weight: 700;
       background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      transition: 0.25s ease;
     }
 
-    .center {
-      text-align: center;
-
-    .page-image {
-      width: 100%;
-      max-height: 360px;
-      object-fit: cover;
-      border-radius: 20px;
-      margin: 0 0 20px;
-      background: rgba(255,255,255,0.08);
+    .main-button:hover,
+    .back:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.18);
     }
-    
-    .main-button {
-      display: inline-flex;
-      margin-top: 18px;
-      margin-right: 10px;
-      padding: 12px 18px;
-      border-radius: 999px;
-      text-decoration: none;
+
+    .main-button:visited,
+    .back:visited {
       color: white;
-      font-weight: 700;
-      background: linear-gradient(135deg, #4cc9f0, #4361ee);
-      box-shadow: 0 8px 25px rgba(67, 97, 238, 0.35);
     }
-  
+
+    @media (max-width: 480px) {
+      .container {
+        width: 94%;
+        padding: 28px 10px 50px;
+      }
+
+      .card {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      .main-button,
+      .back {
+        width: 100%;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="stars"></div>
 
@@ -164,24 +211,42 @@
       document.title = page.title || "Info Page";
 
       document.getElementById("app").classList.remove("center");
+
       document.getElementById("app").innerHTML = `
         <div class="badge">Info Page</div>
-        ${page.image ? `<img class="page-image" src="${escapeHtml(page.image)}" alt="${escapeHtml(page.title || "Image")}" />` : ""}
+
+        ${page.image ? `
+          <img class="page-image" src="${escapeHtml(page.image)}" alt="${escapeHtml(page.title || "Image")}" />
+        ` : ""}
+
         <h1>${escapeHtml(page.title || "Tanpa Judul")}</h1>
+
         ${page.description ? `<p>${escapeHtml(page.description)}</p>` : ""}
         ${page.description2 ? `<p>${escapeHtml(page.description2)}</p>` : ""}
         ${page.description3 ? `<p>${escapeHtml(page.description3)}</p>` : ""}
-        ${page.buttonUrl ? `<a class="main-button" href="${escapeHtml(page.buttonUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(page.buttonText || "Buka Link")}</a>` : ""}
-        <a class="back" href="/">Kembali ke Beranda</a>
+
+        <div class="button-row">
+          ${page.buttonUrl ? `
+            <a class="main-button" href="${escapeHtml(page.buttonUrl)}" target="_blank" rel="noopener noreferrer">
+              ${escapeHtml(page.buttonText || "Buka Link")}
+            </a>
+          ` : ""}
+
+          <a class="back" href="/">Kembali ke Beranda</a>
+        </div>
       `;
     }
 
     function renderNotFound() {
       document.title = "404";
+
       document.getElementById("app").innerHTML = `
         <h1>404</h1>
         <p>Halaman tidak ditemukan.</p>
-        <a class="back" href="/">Kembali ke Beranda</a>
+
+        <div class="button-row">
+          <a class="back" href="/">Kembali ke Beranda</a>
+        </div>
       `;
     }
 
