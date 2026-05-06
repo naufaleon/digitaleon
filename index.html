@@ -205,18 +205,16 @@
 
         showHomePage();
 
-        const page = config.indexPage || config;
-
-        document.title = page.title || "Website";
-        document.getElementById("site-title").textContent = page.title || "";
-        document.getElementById("site-description").textContent = page.description || "";
+        document.title = config.title || "Website";
+        document.getElementById("site-title").textContent = config.title || "";
+        document.getElementById("site-description").textContent = config.description || "";
 
         const logo = document.getElementById("logo");
-        logo.src = page.logo || "";
-        logo.style.display = page.logo ? "block" : "none";
+        logo.src = config.logo || "";
+        logo.style.display = config.logo ? "block" : "none";
 
-        renderButtons(page.buttons || []);
-        renderSlides(page.posters || []);
+        renderButtons(config.buttons || []);
+        renderSlides(config.posters || []);
       } catch (err) {
         console.error(err);
         document.getElementById("site-title").textContent = "Gagal memuat data";
