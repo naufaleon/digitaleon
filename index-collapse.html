@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collapse Page</title>
+  <link rel="icon" id="favicon" href="" />
+  <style>
+    *{box-sizing:border-box}
+    :root{--bg:#071533;--card:#29436f;--card2:#1e3358;--border:rgba(255,255,255,.14);--text:#fff;--muted:rgba(255,255,255,.78)}
+    body{margin:0;min-height:100vh;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);text-align:center;overflow-x:hidden}
+    .stars{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(135deg,#071533,#0b1734 55%,#0a1029)}
+    .stars:before,.stars:after{content:"";position:absolute;inset:-100%}
+    .stars:before{background-image:radial-gradient(white 1.5px,transparent 1.5px);background-size:40px 40px;animation:moveStars 25s linear infinite;opacity:.45}
+    .stars:after{background-image:radial-gradient(white 2px,transparent 2px);background-size:80px 80px;animation:moveStars 50s linear infinite;opacity:.18}
+    @keyframes moveStars{from{transform:translate(0,0)}to{transform:translate(-300px,-300px)}}
+    .container{width:min(92%,430px);margin:0 auto;padding:54px 0 70px}
+    .logo{width:90px;height:90px;margin:0 auto 18px;border-radius:50%;object-fit:cover;display:none;box-shadow:0 0 28px rgba(255,255,255,.32)}
+    h1{font-size:34px;line-height:1.1;margin:0 0 8px;font-weight:800;letter-spacing:-1px}
+    .desc{margin:0 auto 24px;max-width:360px;color:var(--muted);font-size:14px;font-weight:700;line-height:1.45;white-space:pre-line}
+    .accordion{display:flex;flex-direction:column;gap:14px}
+    .item{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:rgba(30,51,88,.86);box-shadow:0 10px 30px rgba(0,0,0,.16);backdrop-filter:blur(10px)}
+    .item.open{background:rgba(50,77,124,.92)}
+    .head{width:100%;border:0;background:transparent;color:var(--text);display:grid;grid-template-columns:36px 1fr 22px;align-items:center;gap:12px;padding:18px 22px;cursor:pointer;text-align:left;font:inherit}
+    .head.no-icon{grid-template-columns:1fr 22px}
+    .icon{width:32px;height:32px;border-radius:10px;object-fit:cover;background:rgba(255,255,255,.12)}
+    .title{font-size:16px;font-weight:800;text-align:center;line-height:1.3}
+    .chev{font-size:22px;transition:.25s ease;opacity:.86;text-align:center}.item.open .chev{transform:rotate(180deg)}
+    .panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease}.item.open .panel{grid-template-rows:1fr}.panel-inner{overflow:hidden}
+    .content{padding:0 24px 22px;color:var(--muted);font-size:14px;line-height:1.6;white-space:pre-line}.open-btn{display:inline-flex;margin-top:16px;padding:11px 18px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);color:#fff;text-decoration:none;font-weight:800;font-size:13px}.open-btn:hover{background:rgba(255,255,255,.22)}
+    .empty{padding:22px;border-radius:16px;background:rgba(255,255,255,.08);color:var(--muted)}
+    @media(max-width:480px){.container{padding-top:36px}.logo{width:76px;height:76px}h1{font-size:30px}.head{padding:16px}.title{font-size:15px}}
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <main class="container">
+    <img id="logo" class="logo" alt="Logo" />
+    <h1 id="site-title">Loading...</h1>
+    <p id="site-description" class="desc">Memuat data...</p>
+    <section id="accordion" class="accordion"></section>
+  </main>
+  <script>
+    const CONFIG_FILE = "config-collapse.json";
+    function safeText(value){return String(value ?? "")}
+    function setMeta(config){
+      document.title = config.title || "Collapse Page";
+      document.getElementById("site-title").textContent = config.title || "";
+      document.getElementById("site-description").textContent = config.description || "";
+      const logo = document.getElementById("logo");
+      const favicon = document.getElementById("favicon");
+      if(config.logo){logo.src=config.logo;logo.style.display="block";favicon.href=config.logo}else{logo.style.display="none"}
+    }
+    function renderCollapses(items=[]){
+      const wrap = document.getElementById("accordion");
+      wrap.innerHTML = "";
+      if(!items.length){wrap.innerHTML='<div class="empty">Belum ada collapse.</div>';return}
+      items.forEach((item,index)=>{
+        const card=document.createElement("article");
+        card.className="item"+(item.open ? " open" : "");
+        const head=document.createElement("button");
+        head.className="head"+(item.icon ? "" : " no-icon");
+        head.type="button";
+        head.setAttribute("aria-expanded", item.open ? "true" : "false");
+        if(item.icon){const img=document.createElement("img");img.className="icon";img.src=item.icon;img.alt="";head.appendChild(img)}
+        const title=document.createElement("div");title.className="title";title.textContent=safeText(item.title || `Collapse ${index+1}`);head.appendChild(title);
+        const chev=document.createElement("div");chev.className="chev";chev.textContent="⌄";head.appendChild(chev);
+        const panel=document.createElement("div");panel.className="panel";
+        const inner=document.createElement("div");inner.className="panel-inner";
+        const content=document.createElement("div");content.className="content";content.textContent=safeText(item.description || "");
+        if(item.url){const link=document.createElement("a");link.className="open-btn";link.href=item.url;link.textContent=item.buttonText || "Buka Link";if(/^https?:\/\//i.test(item.url)){link.target="_blank";link.rel="noopener noreferrer"}content.appendChild(document.createElement("br"));content.appendChild(link)}
+        inner.appendChild(content);panel.appendChild(inner);card.appendChild(head);card.appendChild(panel);wrap.appendChild(card);
+        head.addEventListener("click",()=>{const isOpen=card.classList.toggle("open");head.setAttribute("aria-expanded",isOpen?"true":"false")});
+      });
+    }
+    async function loadConfig(){
+      try{const res=await fetch(CONFIG_FILE+"?t="+Date.now());if(!res.ok)throw new Error("Gagal memuat "+CONFIG_FILE);const config=await res.json();setMeta(config);renderCollapses(config.collapses||[])}
+      catch(err){console.error(err);document.getElementById("site-title").textContent="Gagal memuat data";document.getElementById("site-description").textContent="Periksa config-collapse.json"}
+    }
+    loadConfig();
+  </script>
+</body>
+</html>
