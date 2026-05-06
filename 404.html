@@ -3,7 +3,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirecting...</title>
+  <title>Loading...</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #071533;
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .stars::before,
+    .stars::after {
+      content: "";
+      position: absolute;
+      inset: -100%;
+    }
+
+    .stars::before {
+      background-image: radial-gradient(white 1.5px, transparent 1.5px);
+      background-size: 40px 40px;
+      animation: moveStars 25s linear infinite;
+      opacity: 0.5;
+    }
+
+    .stars::after {
+      background-image: radial-gradient(white 2px, transparent 2px);
+      background-size: 80px 80px;
+      animation: moveStars 50s linear infinite;
+      opacity: 0.2;
+    }
+
+    @keyframes moveStars {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-300px, -300px); }
+    }
+
+    .container {
+      width: 90%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 50px 15px 70px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.25);
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(92, 225, 230, 0.14);
+      border: 1px solid rgba(92, 225, 230, 0.35);
+      color: #bdfcff;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    p {
+      opacity: 1;
+      color: rgba(255,255,255,0.86);
+      line-height: 1.8;
+      font-size: 15px;
+      margin: 0 0 12px;
+      white-space: pre-line;
+    }
+
+    .back {
+      display: inline-flex;
+      margin-top: 22px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <main class="container">
+    <div id="app" class="card center">
+      <h1>Loading...</h1>
+      <p>Sedang memuat halaman.</p>
+    </div>
+  </main>
+
   <script>
     function normalizePath(path) {
       if (!path) return "/";
@@ -13,46 +128,84 @@
       return result;
     }
 
-    async function handleRedirect() {
+    function escapeHtml(text = "") {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderPage(page) {
+      document.title = page.title || "Info Page";
+
+      document.getElementById("app").classList.remove("center");
+      document.getElementById("app").innerHTML = `
+        <div class="badge">Info Page</div>
+        <h1>${escapeHtml(page.title || "Tanpa Judul")}</h1>
+        ${page.description ? `<p>${escapeHtml(page.description)}</p>` : ""}
+        ${page.description2 ? `<p>${escapeHtml(page.description2)}</p>` : ""}
+        ${page.description3 ? `<p>${escapeHtml(page.description3)}</p>` : ""}
+        <a class="back" href="/">Kembali ke Beranda</a>
+      `;
+    }
+
+    function renderNotFound() {
+      document.title = "404";
+      document.getElementById("app").innerHTML = `
+        <h1>404</h1>
+        <p>Halaman tidak ditemukan.</p>
+        <a class="back" href="/">Kembali ke Beranda</a>
+      `;
+    }
+
+    async function load404Handler() {
+      const currentPath = normalizePath(window.location.pathname);
+
       try {
-        const currentPath = normalizePath(window.location.pathname);
+        const redirectRes = await fetch("/config.json?t=" + Date.now());
 
-        const res = await fetch("/config.json?t=" + Date.now());
-        if (!res.ok) throw new Error("Gagal memuat config.json");
+        if (redirectRes.ok) {
+          const config = await redirectRes.json();
+          const redirects = Array.isArray(config.redirects) ? config.redirects : [];
 
-        const config = await res.json();
-        const redirects = Array.isArray(config.redirects) ? config.redirects : [];
+          const foundRedirect = redirects.find((item) => {
+            if (!item || typeof item !== "object") return false;
+            return normalizePath(item.path) === currentPath;
+          });
 
-        const found = redirects.find((item) => {
-          if (!item || typeof item !== "object") return false;
-          return normalizePath(item.path) === currentPath;
-        });
-
-        if (found && found.url) {
-          window.location.replace(found.url);
-          return;
+          if (foundRedirect && foundRedirect.url) {
+            window.location.replace(foundRedirect.url);
+            return;
+          }
         }
 
-        window.location.replace("/");
+        const pagesRes = await fetch("/config-pages.json?t=" + Date.now());
+
+        if (pagesRes.ok) {
+          const pagesConfig = await pagesRes.json();
+          const pages = Array.isArray(pagesConfig.pages) ? pagesConfig.pages : [];
+
+          const foundPage = pages.find((item) => {
+            if (!item || typeof item !== "object") return false;
+            return normalizePath(item.path) === currentPath;
+          });
+
+          if (foundPage) {
+            renderPage(foundPage);
+            return;
+          }
+        }
+
+        renderNotFound();
       } catch (err) {
         console.error(err);
-        document.body.innerHTML = `
-          <div style="font-family:Arial,sans-serif;text-align:center;padding:40px">
-            <h1>404</h1>
-            <p>Path tidak ditemukan dan redirect gagal dimuat.</p>
-            <p><a href="/">Kembali ke beranda</a></p>
-          </div>
-        `;
+        renderNotFound();
       }
     }
 
-    handleRedirect();
+    load404Handler();
   </script>
-</head>
-<body>
-  <div style="font-family:Arial,sans-serif;text-align:center;padding:40px">
-    <h2>Sebentar...</h2>
-    <p>Sedang mengarahkan link.</p>
-  </div>
 </body>
 </html>
