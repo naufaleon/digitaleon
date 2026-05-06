@@ -106,6 +106,29 @@
 
     .center {
       text-align: center;
+
+    .page-image {
+      width: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin: 0 0 20px;
+      background: rgba(255,255,255,0.08);
+    }
+    
+    .main-button {
+      display: inline-flex;
+      margin-top: 18px;
+      margin-right: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, #4cc9f0, #4361ee);
+      box-shadow: 0 8px 25px rgba(67, 97, 238, 0.35);
+    }
+  
     }
   </style>
 </head>
@@ -143,10 +166,12 @@
       document.getElementById("app").classList.remove("center");
       document.getElementById("app").innerHTML = `
         <div class="badge">Info Page</div>
+        ${page.image ? `<img class="page-image" src="${escapeHtml(page.image)}" alt="${escapeHtml(page.title || "Image")}" />` : ""}
         <h1>${escapeHtml(page.title || "Tanpa Judul")}</h1>
         ${page.description ? `<p>${escapeHtml(page.description)}</p>` : ""}
         ${page.description2 ? `<p>${escapeHtml(page.description2)}</p>` : ""}
         ${page.description3 ? `<p>${escapeHtml(page.description3)}</p>` : ""}
+        ${page.buttonUrl ? `<a class="main-button" href="${escapeHtml(page.buttonUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(page.buttonText || "Buka Link")}</a>` : ""}
         <a class="back" href="/">Kembali ke Beranda</a>
       `;
     }
