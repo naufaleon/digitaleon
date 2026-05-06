@@ -1,14 +1,14 @@
 {
   "pages": [
     {
-      "path": "/produk-baru",
-      "title": "Produk Baru",
-      "description": "Deskripsi utama produk baru.",
-      "description2": "Deskripsi kedua bisa diisi dari Telegram.",
-      "description3": "Deskripsi ketiga juga bisa diedit, delete, dan reorder dari Telegram.",
-      "image": "https://i.ibb.co.com/gMvQccQg/1001364458-picsay.png",
-      "buttonText": "Buka Link",
-      "buttonUrl": "https://example.com"
+      "path": "/alightmotion-snk",
+      "title": "ALIGHT MOTION",
+      "description": "Alight Motion adalah sebuah aplikasi mobile profesional untuk motion graphics, animasi, video editing, dan visual effects, tersedia di perangkat Android dan iOS. ( Alight Motion is a professional mobile app for motion graphics, animation, video editing, and visual effects, available on Android and iOS devices. )",
+      "description2": "📌 Durasi 1 Tahun, 📌 Garansi 6 Bulan, 📌 Max Login 5 Devices",
+      "description3": "📌 1 Year Duration, 📌 6 Months Warranty, 📌 Max Login 5 Devices , Tutor Login Klik Link Button dibawah ( \nTutor Login Click the Link Button below )",
+      "image": "https://cdn.xoftware.id/f/25723_am_1175_1770243831294.jpg",
+      "buttonText": "Tutor Login AM",
+      "buttonUrl": "https://t.me/ibm_store/3"
     }
   ]
 }
