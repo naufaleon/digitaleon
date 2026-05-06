@@ -697,3 +697,8 @@ p {
 .custom-page-button:hover {
   transform: translateY(-2px);
 }
+
+.custom-page-card p,
+.simple-description {
+  white-space: pre-line;
+}
