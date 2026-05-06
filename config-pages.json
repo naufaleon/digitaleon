@@ -5,7 +5,10 @@
       "title": "Produk Baru",
       "description": "Deskripsi utama produk baru.",
       "description2": "Deskripsi kedua bisa diisi dari Telegram.",
-      "description3": "Deskripsi ketiga juga bisa diedit, delete, dan reorder dari Telegram."
+      "description3": "Deskripsi ketiga juga bisa diedit, delete, dan reorder dari Telegram.",
+      "image": "https://example.com/gambar.jpg",
+      "buttonText": "Buka Link",
+      "buttonUrl": "https://example.com"
     }
   ]
 }
