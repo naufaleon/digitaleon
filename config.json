@@ -27,6 +27,11 @@
       "text": "Digitaleon Tools",
       "url": "digitaleontools.html",
       "icon": "https://img.icons8.com/fluency/48/settings.png"
+    },
+    {
+      "text": "Customer Support",
+      "url": "https://tawk.to/ibmstore",
+      "icon": "https://cdn-icons-png.flaticon.com/128/4233/4233834.png"
     }
   ],
   "tools": [
