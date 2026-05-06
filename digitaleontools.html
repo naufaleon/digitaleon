@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digitaleon Tools</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+
+body{
+  background:url('https://i.ibb.co.com/hxrJRM74/Whats-App-Image-2026-04-11-at-02-49-38.jpg') center/cover no-repeat;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+}
+
+.menu{text-align:center;max-width:900px;width:100%}
+.menu-grid{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+
+.card{
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);
+  padding:15px;border-radius:15px;
+  cursor:pointer;transition:.3s;width:150px;
+}
+.card:hover{transform:scale(1.05)}
+.card img{width:100%;height:110px;object-fit:cover;border-radius:10px}
+
+.back-btn{
+  display:inline-block;margin-top:25px;padding:10px 25px;
+  background:rgba(255,255,255,0.2);border-radius:20px;
+  color:white;text-decoration:none;font-weight:bold;
+}
+
+.modal{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.7);justify-content:center;align-items:center;
+}
+
+.modal-box{
+  background:#2f3441;padding:25px;border-radius:15px;
+  width:90%;max-width:400px;
+}
+
+h2{text-align:center;margin-bottom:15px}
+
+label{margin-top:10px;display:block;font-size:14px;color:#ccc}
+
+input,select{
+  width:100%;padding:10px;margin-top:5px;
+  border:none;border-radius:10px;background:#3c4252;color:#fff;
+}
+
+button{
+  width:100%;padding:12px;margin-top:12px;
+  border:none;border-radius:10px;background:#5a6275;color:#fff;
+}
+
+.result{
+  margin-top:15px;background:#3c4252;padding:15px;
+  border-radius:10px;text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="menu">
+  <h1>Digitaleon Tools</h1>
+  <div class="menu-grid" id="tools"></div>
+
+  <a href="index.html" class="back-btn">← Back to Menu</a>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-box">
+
+<h2>Calculator Refund</h2>
+
+<label>Harga (Rp)</label>
+<input type="number" id="harga">
+
+<label>Tanggal Beli</label>
+<input type="date" id="tglBeli">
+
+<label>Tanggal Error</label>
+<input type="date" id="tglError">
+
+<label>Durasi</label>
+<select id="durasi" onchange="toggleCustomDurasi()">
+<option value="7">7 hari</option>
+<option value="30">30 hari</option>
+<option value="60">60 hari</option>
+<option value="90">90 hari</option>
+<option value="custom">Custom</option>
+</select>
+
+<input type="number" id="customDurasi" placeholder="Custom hari" style="display:none">
+
+<label>Fee ( Jasa Proses Garansi & Replace )</label>
+<select id="fee" onchange="toggleCustomFee()">
+<option value="1">Tanpa Fee (100%)</option>
+<option value="0.95">0.95 (Potong 5%) Garansi Replace 1x</option>
+<option value="0.9">0.9 (Potong 10%) Garansi Replace 2x</option>
+<option value="0.8">0.8 (Potong 20%) Garansi Replace 3x</option>
+<option value="0.7">0.7 (Potong 30%) Garansi Replace 4x</option>
+<option value="custom">Custom</option>
+</select>
+
+<input type="number" step="0.01" id="customFee" placeholder="0.1 - 0.99" style="display:none">
+
+<label>No WhatsApp Buyer</label>
+<input type="number" id="wa" placeholder="628xxxx">
+
+<button onclick="hitung()">Hitung</button>
+
+<div id="hasil"></div>
+
+<button onclick="kirimWA()">Kirim ke WhatsApp</button>
+<button onclick="closeModal()">Back</button>
+
+</div>
+</div>
+
+<script>
+
+let lastResult = null;
+
+function openModal(){
+  document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+function toggleCustomDurasi(){
+  customDurasi.style.display = durasi.value==="custom"?"block":"none";
+}
+
+function toggleCustomFee(){
+  customFee.style.display = fee.value==="custom"?"block":"none";
+}
+
+function hitung(){
+
+  let harga = parseInt(document.getElementById("harga").value);
+  let tglBeli = new Date(document.getElementById("tglBeli").value);
+  let tglError = new Date(document.getElementById("tglError").value);
+
+  let durasiVal = durasi.value==="custom"
+    ? parseInt(customDurasi.value)
+    : parseInt(durasi.value);
+
+  let feeVal = fee.value==="custom"
+    ? parseFloat(customFee.value)
+    : parseFloat(fee.value);
+
+  if(!harga || !durasiVal || !feeVal){
+    alert("Isi semua data!");
+    return;
+  }
+
+  let selisih = (tglError - tglBeli)/(1000*60*60*24);
+  let sisa = durasiVal - selisih;
+  if(sisa<0) sisa=0;
+
+  let refund = harga*(sisa/durasiVal)*feeVal;
+  let potongan = harga - refund;
+
+  /* ===== FIX FEE TEXT ===== */
+  let feeText = "";
+
+  if (feeVal === 1) {
+    feeText = "Tanpa Fee (Rp 0)";
+  } else {
+    let potonganFee = harga * (1 - feeVal);
+    feeText = `${feeVal} (${Math.round(feeVal*100)}%) - Potongan Rp ${Math.round(potonganFee).toLocaleString()}`;
+  }
+
+  lastResult = {harga,durasiVal,sisa,feeVal,refund};
+
+  document.getElementById("hasil").innerHTML = `
+  <div class="result">
+  Harga: Rp ${harga.toLocaleString()}<br>
+  Durasi: ${durasiVal} hari<br>
+  Sisa: ${Math.round(sisa)} hari<br>
+  Fee: ${feeText}<br>
+  Potongan: Rp ${Math.round(potongan).toLocaleString()}<br>
+  <hr>
+  <b>Total Refund: Rp ${Math.round(refund).toLocaleString()}</b>
+  </div>`;
+}
+
+function kirimWA(){
+  let nomor = document.getElementById("wa").value;
+
+  if(!nomor || !lastResult){
+    alert("Isi data dulu!");
+    return;
+  }
+
+  let text = `HASIL REFUND
+
+Harga: Rp ${lastResult.harga.toLocaleString()}
+Durasi: ${lastResult.durasiVal} hari
+Sisa: ${Math.round(lastResult.sisa)} hari
+Fee: ${lastResult.feeVal}
+
+💸 Total Refund:
+Rp ${Math.round(lastResult.refund).toLocaleString()}
+
+Calculator Refund by Digitaleon Tools ( naufaleon.my.id )
+`;
+
+  window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(text)}`);
+}
+
+async function loadTools(){
+  const res = await fetch("config.json?t="+Date.now());
+  const config = await res.json();
+
+  const container = document.getElementById("tools");
+
+  (config.tools||[]).forEach(tool=>{
+    let div=document.createElement("div");
+    div.className="card";
+
+    div.onclick=()=>{
+      if(tool.url==="#refund") openModal();
+      else window.open(tool.url,"_blank");
+    }
+
+    div.innerHTML=`<img src="${tool.icon}"><div>${tool.text}</div>`;
+    container.appendChild(div);
+  });
+}
+
+loadTools();
+
+</script>
+
+</body>
+</html>
