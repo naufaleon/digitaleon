@@ -47,6 +47,18 @@
       </section>
     </section>
 
+
+    <section id="custom-page" class="custom-page hidden">
+      <div class="custom-page-card">
+        <div class="custom-page-badge">Info Page</div>
+        <h1 id="custom-page-title">Judul</h1>
+        <p id="custom-page-desc-1"></p>
+        <p id="custom-page-desc-2"></p>
+        <p id="custom-page-desc-3"></p>
+      </div>
+    </section>    
+
+    
     <section id="product-page" class="product-page hidden">
       <div class="product-card">
         <div class="product-media">
@@ -156,13 +168,35 @@
     function showHomePage() {
       document.getElementById("home-page").classList.remove("hidden");
       document.getElementById("product-page").classList.add("hidden");
-      document.getElementById("simple-page").classList.add("hidden");
+      document.getElementById("custom-page").classList.add("hidden");
     }
 
     function showProductPage() {
       document.getElementById("home-page").classList.add("hidden");
       document.getElementById("product-page").classList.remove("hidden");
       document.getElementById("simple-page").classList.add("hidden");
+    }
+
+    function showCustomPage() {
+      document.getElementById("home-page").classList.add("hidden");
+      document.getElementById("product-page").classList.add("hidden");
+      document.getElementById("custom-page").classList.remove("hidden");
+    }
+    
+    function findCustomPageByPath(pages = []) {
+      const currentPath = normalizePath(window.location.pathname);
+      return pages.find((item) => item && normalizePath(item.path) === currentPath) || null;
+    }
+    
+    function renderCustomPage(page) {
+      showCustomPage();
+    
+      document.title = page.title || "Page";
+    
+      document.getElementById("custom-page-title").textContent = page.title || "";
+      document.getElementById("custom-page-desc-1").textContent = page.description || "";
+      document.getElementById("custom-page-desc-2").textContent = page.description2 || "";
+      document.getElementById("custom-page-desc-3").textContent = page.description3 || "";
     }
 
     function showSimplePage() {
@@ -249,6 +283,22 @@
           renderProduct(matchedProduct);
           return;
         }
+
+        try {
+          const pagesRes = await fetch("config-pages.json?t=" + Date.now());
+        
+          if (pagesRes.ok) {
+            const pagesConfig = await pagesRes.json();
+            const matchedPage = findCustomPageByPath(pagesConfig.pages || []);
+        
+            if (matchedPage) {
+              renderCustomPage(matchedPage);
+              return;
+            }
+          }
+        } catch (e) {
+          console.warn("config-pages.json tidak ditemukan atau gagal dibaca", e);
+        }    
 
         const pagesConfig = await loadPagesConfig();
         const matchedPage = findSimplePageByPath(pagesConfig?.pages || []);
