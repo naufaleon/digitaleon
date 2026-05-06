@@ -91,6 +91,19 @@
         </section>
       </div>
     </section>
+
+    <section id="simple-page" class="simple-page hidden">
+      <article class="simple-card">
+        <div class="simple-badge">Info Page</div>
+        <h1 id="simple-title" class="simple-title">Judul</h1>
+        <div class="simple-descriptions">
+          <p id="simple-description" class="simple-description"></p>
+          <p id="simple-description-2" class="simple-description"></p>
+          <p id="simple-description-3" class="simple-description"></p>
+        </div>
+        <a class="simple-back" href="/">Kembali ke Beranda</a>
+      </article>
+    </section>
   </main>
 
   <script>
@@ -135,14 +148,27 @@
       return products.find((item) => item && normalizePath(item.path) === currentPath) || null;
     }
 
+    function findSimplePageByPath(pages = []) {
+      const currentPath = normalizePath(window.location.pathname);
+      return pages.find((item) => item && normalizePath(item.path) === currentPath) || null;
+    }
+
     function showHomePage() {
       document.getElementById("home-page").classList.remove("hidden");
       document.getElementById("product-page").classList.add("hidden");
+      document.getElementById("simple-page").classList.add("hidden");
     }
 
     function showProductPage() {
       document.getElementById("home-page").classList.add("hidden");
       document.getElementById("product-page").classList.remove("hidden");
+      document.getElementById("simple-page").classList.add("hidden");
+    }
+
+    function showSimplePage() {
+      document.getElementById("home-page").classList.add("hidden");
+      document.getElementById("product-page").classList.add("hidden");
+      document.getElementById("simple-page").classList.remove("hidden");
     }
 
     function renderProduct(product) {
@@ -189,6 +215,27 @@
       });
     }
 
+    function renderSimplePage(page) {
+      showSimplePage();
+
+      document.title = page.title || "Info Page";
+      document.getElementById("simple-title").textContent = page.title || "Tanpa Judul";
+      document.getElementById("simple-description").textContent = page.description || "";
+      document.getElementById("simple-description-2").textContent = page.description2 || "";
+      document.getElementById("simple-description-3").textContent = page.description3 || "";
+    }
+
+    async function loadPagesConfig() {
+      try {
+        const res = await fetch("config-pages.json?t=" + Date.now());
+        if (!res.ok) return null;
+        return await res.json();
+      } catch (err) {
+        console.warn("config-pages.json belum tersedia", err);
+        return null;
+      }
+    }
+
     async function loadConfig() {
       try {
         const res = await fetch("config.json?t=" + Date.now());
@@ -200,6 +247,13 @@
         const matchedProduct = findProductByPath(config.products || []);
         if (matchedProduct) {
           renderProduct(matchedProduct);
+          return;
+        }
+
+        const pagesConfig = await loadPagesConfig();
+        const matchedPage = findSimplePageByPath(pagesConfig?.pages || []);
+        if (matchedPage) {
+          renderSimplePage(matchedPage);
           return;
         }
 
