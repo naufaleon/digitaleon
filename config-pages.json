@@ -19,6 +19,16 @@
       "image": "https://i.imgur.com/35Ka8fB.png",
       "buttonText": "Tutor verif OTP",
       "buttonUrl": "https://i.imgur.com/BGjYyMo.png"
+    },
+    {
+      "path": "/terms-refund",
+      "title": "Ketentuan Refund",
+      "description": "Setiap Refund Akan Dikenakan Biaya 0.7\n\nBiaya 0.7 adalah biaya untuk Layanan Qris Automatis, Layanan Jasa Bot Order/Web, Garansi Pertama Kali barang diterima, Dan Biaya Admin Beda Bank",
+      "description2": "Untuk Error di hari yang sama akan Free Admin untuk Refund",
+      "description3": "Kami menyediakan Fitur Calculator Refund jika ingin menghitung sisa durasi Refund - Klik Tombol Di Bawah",
+      "image": "https://i.ibb.co.com/MkJ4RBT9/Screenshot-2026-05-24-033300.png",
+      "buttonText": "Calculator Refund",
+      "buttonUrl": "https://naufaleon.my.id/digitaleontools.html"
     }
   ]
 }
