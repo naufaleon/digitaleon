@@ -269,7 +269,12 @@ async function uploadImgBB(file){
         );
     }
 
-    return result.data.url;
+    const imgUrl = result.data.url || result.data.display_url;
+
+    return imgUrl.replace(
+    "https://i.ibb.co/",
+    "https://i.ibb.co.com/"
+);
 }
 
 async function kirimWA(){
