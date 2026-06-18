@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Claim Garansi - IBM Store</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#071533;
+    color:white;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+.stars{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    overflow:hidden;
+}
+
+.stars::before,
+.stars::after{
+    content:"";
+    position:absolute;
+    inset:-100%;
+}
+
+.stars::before{
+    background-image:radial-gradient(white 1.5px, transparent 1.5px);
+    background-size:40px 40px;
+    animation:moveStars 25s linear infinite;
+    opacity:.5;
+}
+
+.stars::after{
+    background-image:radial-gradient(white 2px, transparent 2px);
+    background-size:80px 80px;
+    animation:moveStars 50s linear infinite;
+    opacity:.2;
+}
+
+@keyframes moveStars{
+    from{transform:translate(0,0);}
+    to{transform:translate(-300px,-300px);}
+}
+
+.container{
+    width:95%;
+    max-width:800px;
+    margin:auto;
+    padding:40px 15px;
+}
+
+.card{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(10px);
+    border-radius:25px;
+    padding:25px;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 15px;
+    border-radius:999px;
+    background:rgba(92,225,230,.15);
+    border:1px solid rgba(92,225,230,.4);
+    color:#bdfcff;
+    font-size:12px;
+    font-weight:bold;
+}
+
+h1{
+    margin-top:15px;
+    margin-bottom:10px;
+    font-size:32px;
+}
+
+.desc{
+    color:rgba(255,255,255,.8);
+    line-height:1.7;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    background:rgba(255,255,255,.08);
+    color:white;
+}
+
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+option{
+    color:black;
+}
+
+.form-box{
+    margin-top:15px;
+    padding:15px;
+    border-radius:15px;
+    background:rgba(255,255,255,.05);
+}
+
+.note{
+    margin-top:10px;
+    color:#bdfcff;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.hidden{
+    display:none;
+}
+
+.upload-box{
+    margin-top:15px;
+    padding:15px;
+    border-radius:15px;
+    border:2px dashed rgba(255,255,255,.2);
+    text-align:center;
+}
+
+.btn{
+    width:100%;
+    margin-top:25px;
+    border:none;
+    cursor:pointer;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    padding:15px;
+    border-radius:15px;
+    background:linear-gradient(135deg,#4cc9f0,#4361ee);
+}
+
+.btn:hover{
+    opacity:.9;
+}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div class="container">
+    <div class="card">
+
+        <div class="badge">
+            FORM CLAIM GARANSI
+        </div>
+
+        <h1>IBM Store</h1>
+
+        <p class="desc">
+            Silahkan isi data claim garansi dengan lengkap agar proses pengecekan dapat dilakukan lebih cepat.
+        </p>
+
+        <form>
+
+            <label>Nama Buyer</label>
+            <input type="text" id="nama" placeholder="Masukkan nama buyer">
+
+            <label>Order Via</label>
+            <select id="via" onchange="ubahForm()">
+                <option value="">Pilih Metode Pembelian</option>
+                <option value="Website">Website (ibmstore.my.id)</option>
+                <option value="Telegram">Telegram Bot</option>
+                <option value="WhatsApp">WhatsApp</option>
+            </select>
+
+            <!-- WEBSITE -->
+            <div id="websiteForm" class="hidden form-box">
+
+                <label>Tanggal Pembelian</label>
+                <input type="text" id="webTanggal">
+
+                <label>Data Pembelian</label>
+                <textarea id="webData"></textarea>
+
+                <label>Kendala / Masalah</label>
+                <textarea id="webMasalah"></textarea>
+
+                <div class="note">
+                    📌 Jika via Website silahkan upload screenshot orderan dan screenshot kendala.<br>
+                    Atau copas tanggal pembelian serta data pembelian.
+                </div>
+
+            </div>
+
+            <!-- TELEGRAM -->
+            <div id="telegramForm" class="hidden form-box">
+
+                <label>Reff ID</label>
+                <input type="text" id="reffId">
+
+                <label>Tanggal Pembelian</label>
+                <input type="text" id="teleTanggal">
+
+                <label>Data Orderan / Struk Sukses</label>
+                <textarea id="teleData"></textarea>
+
+                <label>Kendala / Masalah</label>
+                <textarea id="teleMasalah"></textarea>
+
+                <div class="note">
+                    📌 Jika via Telegram Bot silahkan input Reff ID, tanggal pembelian dan data orderan.<br>
+                    Atau copas struk sukses dan screenshot kendala.
+                </div>
+
+            </div>
+
+            <!-- WHATSAPP -->
+            <div id="waForm" class="hidden form-box">
+
+                <label>Data Orderan</label>
+                <textarea id="waData"></textarea>
+
+                <label>Kendala / Masalah</label>
+                <textarea id="waMasalah"></textarea>
+
+                <div class="note">
+                    📌 Jika via WhatsApp silahkan tag admin atau copas data orderan dan screenshot kendala.
+                </div>
+
+            </div>
+
+            <div class="upload-box">
+                <label>Upload Bukti Screenshot</label>
+                <input type="file" multiple accept="image/*">
+                <div class="note">
+                    Screenshot tidak dapat terkirim otomatis ke WhatsApp. Mohon kirim screenshot setelah chat WhatsApp terbuka.
+                </div>
+            </div>
+
+            <button type="button" class="btn" onclick="kirimWA()">
+                Kirim Claim Garansi
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+<script>
+
+function ubahForm(){
+
+    document.getElementById("websiteForm").classList.add("hidden");
+    document.getElementById("telegramForm").classList.add("hidden");
+    document.getElementById("waForm").classList.add("hidden");
+
+    let via = document.getElementById("via").value;
+
+    if(via==="Website"){
+        document.getElementById("websiteForm").classList.remove("hidden");
+    }
+
+    if(via==="Telegram"){
+        document.getElementById("telegramForm").classList.remove("hidden");
+    }
+
+    if(via==="WhatsApp"){
+        document.getElementById("waForm").classList.remove("hidden");
+    }
+
+}
+
+function kirimWA(){
+
+    let nama = document.getElementById("nama").value;
+    let via = document.getElementById("via").value;
+
+    let pesan =
+`*FORM CLAIM GARANSI IBM STORE*
+
+👤 Nama Buyer : ${nama}
+📌 Order Via : ${via}
+
+`;
+
+    if(via==="Website"){
+        pesan +=
+`📅 Tanggal Pembelian : ${document.getElementById("webTanggal").value}
+
+🛒 Data Pembelian :
+${document.getElementById("webData").value}
+
+⚠️ Kendala :
+${document.getElementById("webMasalah").value}
+`;
+    }
+
+    if(via==="Telegram"){
+        pesan +=
+`🆔 Reff ID : ${document.getElementById("reffId").value}
+📅 Tanggal Pembelian : ${document.getElementById("teleTanggal").value}
+
+🛒 Data Orderan :
+${document.getElementById("teleData").value}
+
+⚠️ Kendala :
+${document.getElementById("teleMasalah").value}
+`;
+    }
+
+    if(via==="WhatsApp"){
+        pesan +=
+`🛒 Data Orderan :
+${document.getElementById("waData").value}
+
+⚠️ Kendala :
+${document.getElementById("waMasalah").value}
+`;
+    }
+
+    window.open(
+        "https://wa.me/62895352265329?text=" +
+        encodeURIComponent(pesan),
+        "_blank"
+    );
+
+}
+</script>
+
+</body>
+</html>
