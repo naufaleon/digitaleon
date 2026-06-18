@@ -3,297 +3,277 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Claim Garansi - IBM Store</title>
+<title>Claim Garansi IBM Store</title>
 
 <style>
 *{
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#071533;
-    color:white;
-    min-height:100vh;
-    overflow-x:hidden;
-}
-
-.stars{
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    overflow:hidden;
-}
-
-.stars::before,
-.stars::after{
-    content:"";
-    position:absolute;
-    inset:-100%;
-}
-
-.stars::before{
-    background-image:radial-gradient(white 1.5px, transparent 1.5px);
-    background-size:40px 40px;
-    animation:moveStars 25s linear infinite;
-    opacity:.5;
-}
-
-.stars::after{
-    background-image:radial-gradient(white 2px, transparent 2px);
-    background-size:80px 80px;
-    animation:moveStars 50s linear infinite;
-    opacity:.2;
-}
-
-@keyframes moveStars{
-    from{transform:translate(0,0);}
-    to{transform:translate(-300px,-300px);}
-}
-
-.container{
-    width:95%;
-    max-width:800px;
-    margin:auto;
-    padding:40px 15px;
+background:#071533;
+color:white;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
 }
 
 .card{
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.1);
-    backdrop-filter:blur(10px);
-    border-radius:25px;
-    padding:25px;
-}
-
-.badge{
-    display:inline-block;
-    padding:8px 15px;
-    border-radius:999px;
-    background:rgba(92,225,230,.15);
-    border:1px solid rgba(92,225,230,.4);
-    color:#bdfcff;
-    font-size:12px;
-    font-weight:bold;
+width:100%;
+max-width:800px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
+border-radius:25px;
+padding:25px;
+border:1px solid rgba(255,255,255,.1);
 }
 
 h1{
-    margin-top:15px;
-    margin-bottom:10px;
-    font-size:32px;
+text-align:center;
+margin-bottom:10px;
 }
 
 .desc{
-    color:rgba(255,255,255,.8);
-    line-height:1.7;
+text-align:center;
+color:#cfd8e6;
+margin-bottom:20px;
 }
 
 label{
-    display:block;
-    margin-top:15px;
-    margin-bottom:6px;
-    font-weight:bold;
+display:block;
+margin-top:15px;
+margin-bottom:6px;
+font-weight:bold;
 }
 
 input,
 select,
 textarea{
-    width:100%;
-    padding:12px;
-    border:none;
-    outline:none;
-    border-radius:14px;
-    background:rgba(255,255,255,.08);
-    color:white;
+width:100%;
+padding:12px;
+border:none;
+outline:none;
+border-radius:12px;
+background:rgba(255,255,255,.08);
+color:white;
 }
 
 textarea{
-    min-height:120px;
-    resize:vertical;
+min-height:120px;
+resize:vertical;
 }
 
 option{
-    color:black;
-}
-
-.form-box{
-    margin-top:15px;
-    padding:15px;
-    border-radius:15px;
-    background:rgba(255,255,255,.05);
-}
-
-.note{
-    margin-top:10px;
-    color:#bdfcff;
-    font-size:13px;
-    line-height:1.6;
+color:black;
 }
 
 .hidden{
-    display:none;
+display:none;
 }
 
-.upload-box{
-    margin-top:15px;
-    padding:15px;
-    border-radius:15px;
-    border:2px dashed rgba(255,255,255,.2);
-    text-align:center;
+.box{
+margin-top:15px;
+padding:15px;
+border-radius:15px;
+background:rgba(255,255,255,.05);
+}
+
+.note{
+font-size:13px;
+line-height:1.6;
+color:#8de9ff;
+margin-top:10px;
 }
 
 .btn{
-    width:100%;
-    margin-top:25px;
-    border:none;
-    cursor:pointer;
-    color:white;
-    font-size:16px;
-    font-weight:bold;
-    padding:15px;
-    border-radius:15px;
-    background:linear-gradient(135deg,#4cc9f0,#4361ee);
+width:100%;
+padding:15px;
+margin-top:20px;
+border:none;
+border-radius:15px;
+cursor:pointer;
+font-size:16px;
+font-weight:bold;
+color:white;
+background:linear-gradient(135deg,#4cc9f0,#4361ee);
 }
 
 .btn:hover{
-    opacity:.9;
+opacity:.9;
+}
+
+.loading{
+display:none;
+margin-top:15px;
+text-align:center;
+color:#8de9ff;
 }
 </style>
 </head>
 <body>
 
-<div class="stars"></div>
+<div class="card">
 
-<div class="container">
-    <div class="card">
+<h1>🛡 Claim Garansi IBM Store</h1>
 
-        <div class="badge">
-            FORM CLAIM GARANSI
-        </div>
+<div class="desc">
+Silahkan isi data claim garansi dengan lengkap.
+</div>
 
-        <h1>IBM Store</h1>
+<label>Nama Buyer</label>
+<input type="text" id="nama">
 
-        <p class="desc">
-            Silahkan isi data claim garansi dengan lengkap agar proses pengecekan dapat dilakukan lebih cepat.
-        </p>
+<label>Order Via</label>
+<select id="via" onchange="showForm()">
+<option value="">Pilih Metode Pembelian</option>
+<option value="Website">Website IBMSTORE</option>
+<option value="Telegram">Telegram Bot</option>
+<option value="WhatsApp">WhatsApp</option>
+</select>
 
-        <form>
+<div id="websiteForm" class="box hidden">
 
-            <label>Nama Buyer</label>
-            <input type="text" id="nama" placeholder="Masukkan nama buyer">
+<label>Tanggal Pembelian</label>
+<input type="text" id="webTanggal">
 
-            <label>Order Via</label>
-            <select id="via" onchange="ubahForm()">
-                <option value="">Pilih Metode Pembelian</option>
-                <option value="Website">Website (ibmstore.my.id)</option>
-                <option value="Telegram">Telegram Bot</option>
-                <option value="WhatsApp">WhatsApp</option>
-            </select>
+<label>Data Pembelian</label>
+<textarea id="webData"></textarea>
 
-            <!-- WEBSITE -->
-            <div id="websiteForm" class="hidden form-box">
+<label>Kendala</label>
+<textarea id="webMasalah"></textarea>
 
-                <label>Tanggal Pembelian</label>
-                <input type="text" id="webTanggal">
+</div>
 
-                <label>Data Pembelian</label>
-                <textarea id="webData"></textarea>
+<div id="telegramForm" class="box hidden">
 
-                <label>Kendala / Masalah</label>
-                <textarea id="webMasalah"></textarea>
+<label>Reff ID</label>
+<input type="text" id="reffId">
 
-                <div class="note">
-                    📌 Jika via Website silahkan upload screenshot orderan dan screenshot kendala.<br>
-                    Atau copas tanggal pembelian serta data pembelian.
-                </div>
+<label>Tanggal Pembelian</label>
+<input type="text" id="teleTanggal">
 
-            </div>
+<label>Data Orderan / Struk</label>
+<textarea id="teleData"></textarea>
 
-            <!-- TELEGRAM -->
-            <div id="telegramForm" class="hidden form-box">
+<label>Kendala</label>
+<textarea id="teleMasalah"></textarea>
 
-                <label>Reff ID</label>
-                <input type="text" id="reffId">
+</div>
 
-                <label>Tanggal Pembelian</label>
-                <input type="text" id="teleTanggal">
+<div id="waForm" class="box hidden">
 
-                <label>Data Orderan / Struk Sukses</label>
-                <textarea id="teleData"></textarea>
+<label>Data Orderan</label>
+<textarea id="waData"></textarea>
 
-                <label>Kendala / Masalah</label>
-                <textarea id="teleMasalah"></textarea>
+<label>Kendala</label>
+<textarea id="waMasalah"></textarea>
 
-                <div class="note">
-                    📌 Jika via Telegram Bot silahkan input Reff ID, tanggal pembelian dan data orderan.<br>
-                    Atau copas struk sukses dan screenshot kendala.
-                </div>
+</div>
 
-            </div>
+<div class="box">
 
-            <!-- WHATSAPP -->
-            <div id="waForm" class="hidden form-box">
+<label>Upload Screenshot Bukti</label>
 
-                <label>Data Orderan</label>
-                <textarea id="waData"></textarea>
+<input
+type="file"
+id="screenshots"
+accept="image/*"
+multiple>
 
-                <label>Kendala / Masalah</label>
-                <textarea id="waMasalah"></textarea>
+<div class="note">
+Boleh upload lebih dari 1 screenshot.
+</div>
 
-                <div class="note">
-                    📌 Jika via WhatsApp silahkan tag admin atau copas data orderan dan screenshot kendala.
-                </div>
+</div>
 
-            </div>
+<div id="loading" class="loading">
+⏳ Mengupload screenshot...
+</div>
 
-            <div class="upload-box">
-                <label>Upload Bukti Screenshot</label>
-                <input type="file" multiple accept="image/*">
-                <div class="note">
-                    Screenshot tidak dapat terkirim otomatis ke WhatsApp. Mohon kirim screenshot setelah chat WhatsApp terbuka.
-                </div>
-            </div>
+<button class="btn" onclick="kirimWA()">
+Kirim Claim Garansi
+</button>
 
-            <button type="button" class="btn" onclick="kirimWA()">
-                Kirim Claim Garansi
-            </button>
-
-        </form>
-
-    </div>
 </div>
 
 <script>
 
-function ubahForm(){
+const IMGBB_API_KEY = "58631cfca72761d8119b18214390d01a";
 
-    document.getElementById("websiteForm").classList.add("hidden");
-    document.getElementById("telegramForm").classList.add("hidden");
-    document.getElementById("waForm").classList.add("hidden");
+function showForm(){
 
-    let via = document.getElementById("via").value;
+document.getElementById("websiteForm").classList.add("hidden");
+document.getElementById("telegramForm").classList.add("hidden");
+document.getElementById("waForm").classList.add("hidden");
 
-    if(via==="Website"){
-        document.getElementById("websiteForm").classList.remove("hidden");
-    }
+const via = document.getElementById("via").value;
 
-    if(via==="Telegram"){
-        document.getElementById("telegramForm").classList.remove("hidden");
-    }
+if(via==="Website"){
+document.getElementById("websiteForm").classList.remove("hidden");
+}
 
-    if(via==="WhatsApp"){
-        document.getElementById("waForm").classList.remove("hidden");
-    }
+if(via==="Telegram"){
+document.getElementById("telegramForm").classList.remove("hidden");
+}
+
+if(via==="WhatsApp"){
+document.getElementById("waForm").classList.remove("hidden");
+}
 
 }
 
-function kirimWA(){
+async function uploadImgBB(file){
 
-    let nama = document.getElementById("nama").value;
-    let via = document.getElementById("via").value;
+const formData = new FormData();
+formData.append("image", file);
 
-    let pesan =
+const response = await fetch(
+`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+{
+method:"POST",
+body:formData
+}
+);
+
+const result = await response.json();
+
+if(!result.success){
+throw new Error("Upload gagal");
+}
+
+return result.data.url;
+}
+
+async function kirimWA(){
+
+try{
+
+const loading = document.getElementById("loading");
+loading.style.display = "block";
+
+const nama = document.getElementById("nama").value;
+const via = document.getElementById("via").value;
+
+const files =
+document.getElementById("screenshots").files;
+
+let imageLinks = [];
+
+for(const file of files){
+
+const link =
+await uploadImgBB(file);
+
+imageLinks.push(link);
+
+}
+
+let pesan =
 `*FORM CLAIM GARANSI IBM STORE*
 
 👤 Nama Buyer : ${nama}
@@ -301,46 +281,83 @@ function kirimWA(){
 
 `;
 
-    if(via==="Website"){
-        pesan +=
-`📅 Tanggal Pembelian : ${document.getElementById("webTanggal").value}
+if(via==="Website"){
+
+pesan +=
+`📅 Tanggal Pembelian :
+${document.getElementById("webTanggal").value}
 
 🛒 Data Pembelian :
 ${document.getElementById("webData").value}
 
 ⚠️ Kendala :
 ${document.getElementById("webMasalah").value}
-`;
-    }
 
-    if(via==="Telegram"){
-        pesan +=
-`🆔 Reff ID : ${document.getElementById("reffId").value}
-📅 Tanggal Pembelian : ${document.getElementById("teleTanggal").value}
+`;
+
+}
+
+if(via==="Telegram"){
+
+pesan +=
+`🆔 Reff ID :
+${document.getElementById("reffId").value}
+
+📅 Tanggal Pembelian :
+${document.getElementById("teleTanggal").value}
 
 🛒 Data Orderan :
 ${document.getElementById("teleData").value}
 
 ⚠️ Kendala :
 ${document.getElementById("teleMasalah").value}
-`;
-    }
 
-    if(via==="WhatsApp"){
-        pesan +=
+`;
+
+}
+
+if(via==="WhatsApp"){
+
+pesan +=
 `🛒 Data Orderan :
 ${document.getElementById("waData").value}
 
 ⚠️ Kendala :
 ${document.getElementById("waMasalah").value}
-`;
-    }
 
-    window.open(
-        "https://wa.me/62895352265329?text=" +
-        encodeURIComponent(pesan),
-        "_blank"
-    );
+`;
+
+}
+
+if(imageLinks.length){
+
+pesan += "📸 Screenshot :\n\n";
+
+imageLinks.forEach((url,index)=>{
+pesan += `${index+1}. ${url}\n`;
+});
+
+}
+
+loading.style.display = "none";
+
+window.open(
+"https://wa.me/62895352265329?text="+
+encodeURIComponent(pesan),
+"_blank"
+);
+
+}catch(error){
+
+document.getElementById("loading").style.display = "none";
+
+alert(
+"Gagal upload screenshot. Pastikan API Key ImgBB benar."
+);
+
+console.error(error);
+
+}
 
 }
 </script>
