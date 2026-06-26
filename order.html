@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xoftware Digital Store - Order</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 text-white p-2 rounded-lg font-bold text-xl tracking-wider">XS</div>
+                <div>
+                    <h1 class="text-xl font-extrabold text-gray-900 tracking-tight">Xoftware Store</h1>
+                    <p class="text-xs text-gray-500">Automated Digital Product Gateway</p>
+                </div>
+            </div>
+            
+            <button onclick="daftarBot()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-lg shadow-sm transition flex items-center gap-2 text-sm cursor-pointer">
+                <i class="fab fa-whatsapp text-lg"></i> Daftar Akun Bot
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <section>
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-gray-900">Daftar Produk Tersedia</h3>
+                <span class="bg-gray-200 text-gray-700 text-xs font-medium px-2.5 py-1 rounded-full">Live API</span>
+            </div>
+
+            <div id="product-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center text-gray-500 py-8">
+                    <i class="fas fa-spinner animate-spin text-2xl mb-2"></i>
+                    <p>Memuat produk dari sistem...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-16 text-xs text-center">
+        <p>© 2026 Xoftware Digital Store. Powered by Xoftware Developer Team.</p>
+    </footer>
+
+    <script>
+        const WHATSAPP_BOT_NUMBER = "62895352265329";
+        
+        // ⚠️ GANTI URL INI dengan URL Web Service Anda yang ada di Render!
+        // Jangan lupa tambahkan '/api/products' di bagian ujung belakangnya
+        const BOT_SERVER_URL = "https://URL-ANDA-DARI-RENDER.onrender.com/api/products"; 
+
+        async function loadProducts() {
+            const container = document.getElementById('product-container');
+            try {
+                const response = await fetch(BOT_SERVER_URL);
+                const result = await response.json();
+                
+                if (result.status && result.data) {
+                    container.innerHTML = "";
+                    result.data.forEach(product => {
+                        const tagDiskon = product.discount > 0 
+                            ? `<span class="bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded-md">Hemat Rp ${product.discount.toLocaleString('id-ID')}</span>`
+                            : `<span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded-md">Harga Terbaik</span>`;
+
+                        const tagReseller = product.is_reseller 
+                            ? `<span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-1.5 py-0.5 rounded-sm uppercase tracking-tight">Reseller</span>`
+                            : '';
+
+                        container.innerHTML += `
+                            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden flex flex-col justify-between hover:shadow-md transition p-5">
+                                <div>
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-sm uppercase">SKU: ${product.code}</span>
+                                        <div class="flex gap-1 items-center">
+                                            ${tagReseller} 
+                                            <span class="bg-emerald-50 text-emerald-700 text-xs font-medium px-2 py-0.5 rounded-sm">Stok: ${product.stock}</span>
+                                        </div>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-gray-900 mb-1">${product.title}</h4>
+                                    <p class="text-xs text-gray-500 mb-4 line-clamp-2">${product.description || 'Tidak ada deskripsi.'}</p>
+                                    <div class="bg-gray-50 p-3 rounded-lg flex justify-between items-center mb-4">
+                                        <div>
+                                            <span class="text-xs text-gray-400 line-through block">Rp ${product.original_price.toLocaleString('id-ID')}</span>
+                                            <span class="text-xl font-black text-gray-900">Rp ${product.price.toLocaleString('id-ID')}</span>
+                                        </div>
+                                        ${tagDiskon}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex gap-2 items-center mb-3">
+                                        <label class="text-xs text-gray-500 font-medium">Qty:</label>
+                                        <input type="number" id="qty-${product.code}" value="1" min="1" max="${product.stock}" class="w-16 bg-gray-50 border border-gray-200 rounded px-2 py-1 text-sm text-center font-semibold">
+                                    </div>
+                                    <button onclick="orderProduk('${product.code}')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg text-sm transition flex items-center justify-center gap-2 cursor-pointer" ${product.stock < 1 ? 'disabled style="background-color:#cbd5e1; cursor:not-allowed;"' : ''}>
+                                        <i class="fas fa-shopping-cart text-xs"></i> ${product.stock < 1 ? 'Stok Habis' : 'Beli Sekarang (QRIS)'}
+                                    </button>
+                                </div>
+                            </div>`;
+                    });
+                } else {
+                    container.innerHTML = `<div class="col-span-full text-center text-rose-500 py-8">Gagal memuat produk dari API.</div>`;
+                }
+            } catch (error) {
+                container.innerHTML = `<div class="col-span-full text-center text-rose-500 py-8">Gagal terhubung ke jembatan server.</div>`;
+            }
+        }
+
+        function daftarBot() {
+            window.open(`https://wa.me/${WHATSAPP_BOT_NUMBER}?text=${encodeURIComponent('#daftar')}`, '_blank');
+        }
+
+        function orderProduk(skuCode) {
+            const qty = document.getElementById(`qty-${skuCode}`).value;
+            window.open(`https://wa.me/${WHATSAPP_BOT_NUMBER}?text=${encodeURIComponent(`#buynow ${skuCode} ${qty}`)}`, '_blank');
+        }
+
+        document.addEventListener("DOMContentLoaded", loadProducts);
+    </script>
+</body>
+</html>
