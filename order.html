@@ -58,17 +58,23 @@
                 const response = await fetch(BOT_SERVER_URL);
                 const result = await response.json();
                 
-                if (result.status && result.data) {
+                // 1. Ambil array produk yang berada di dalam result.data.data
+                const produkArray = result.data && result.data.data;
+                
+                // 2. Cek apakah status sukses dan produkArray berbentuk Array
+                if (result.status && Array.isArray(produkArray)) {
                     container.innerHTML = "";
-                    result.data.forEach(product => {
+                    
+                    // 3. Lakukan looping pada produkArray
+                    produkArray.forEach(product => {
                         const tagDiskon = product.discount > 0 
                             ? `<span class="bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded-md">Hemat Rp ${product.discount.toLocaleString('id-ID')}</span>`
                             : `<span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded-md">Harga Terbaik</span>`;
-
+        
                         const tagReseller = product.is_reseller 
                             ? `<span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-1.5 py-0.5 rounded-sm uppercase tracking-tight">Reseller</span>`
                             : '';
-
+        
                         container.innerHTML += `
                             <div class="bg-white rounded-xl border border-gray-100 overflow-hidden flex flex-col justify-between hover:shadow-md transition p-5">
                                 <div>
@@ -83,8 +89,8 @@
                                     <p class="text-xs text-gray-500 mb-4 line-clamp-2">${product.description || 'Tidak ada deskripsi.'}</p>
                                     <div class="bg-gray-50 p-3 rounded-lg flex justify-between items-center mb-4">
                                         <div>
-                                            <span class="text-xs text-gray-400 line-through block">Rp ${product.original_price.toLocaleString('id-ID')}</span>
-                                            <span class="text-xl font-black text-gray-900">Rp ${product.price.toLocaleString('id-ID')}</span>
+                                            <span class="text-xs text-gray-400 line-through block">Rp ${(product.original_price || 0).toLocaleString('id-ID')}</span>
+                                            <span class="text-xl font-black text-gray-900">Rp ${(product.price || 0).toLocaleString('id-ID')}</span>
                                         </div>
                                         ${tagDiskon}
                                     </div>
@@ -101,9 +107,10 @@
                             </div>`;
                     });
                 } else {
-                    container.innerHTML = `<div class="col-span-full text-center text-rose-500 py-8">Gagal memuat produk dari API.</div>`;
+                    container.innerHTML = `<div class="col-span-full text-center text-rose-500 py-8">Gagal memuat produk dari API. Format data tidak sesuai.</div>`;
                 }
             } catch (error) {
+                console.error(error); // Membantu Anda melihat error asli di Inspect Element -> Console
                 container.innerHTML = `<div class="col-span-full text-center text-rose-500 py-8">Gagal terhubung ke jembatan server.</div>`;
             }
         }
