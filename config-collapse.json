@@ -8,14 +8,18 @@
       "description": "Berisi video, live, dan update terbaru dari Naufaleon.",
       "url": "https://www.youtube.com/@naufaleon_id/streams",
       "icon": "https://cdn-icons-png.flaticon.com/512/1384/1384060.png",
-      "buttonText": "Buka Link"
+      "image": "https://cdn-icons-png.flaticon.com/512/1384/1384060.png",
+      "buttonText": "Buka Link",
+      "open": false
     },
     {
       "title": "Support & Mediashare • tako.id/naufaleon",
       "description": "Dukung live stream dan kirim mediashare melalui Tako.",
       "url": "https://www.tako.id/naufaleon",
       "icon": "https://avatars.githubusercontent.com/u/139215619?s=200&v=4",
-      "buttonText": "Support Sekarang"
+      "image": "",
+      "buttonText": "Support Sekarang",
+      "open": false
     }
   ]
 }
