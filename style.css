@@ -702,3 +702,26 @@ p {
 .simple-description {
   white-space: pre-line;
 }
+
+/* Bio Links Collapse */
+.back-to-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.back-to-main:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--text);
+  transform: translateX(-2px); /* Efek sedikit geser ke kiri saat hover */
+}
