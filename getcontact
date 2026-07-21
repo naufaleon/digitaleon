@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Form Konfirmasi Order Bot</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1f2937;
+            background:
+                radial-gradient(circle at top left, #dbeafe, transparent 35%),
+                linear-gradient(135deg, #f8fafc, #e0f2fe);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 560px;
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+        }
+
+        .badge {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 7px 12px;
+            color: #0369a1;
+            background: #e0f2fe;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #0f172a;
+            font-size: clamp(26px, 5vw, 36px);
+            line-height: 1.15;
+        }
+
+        .subtitle {
+            margin-bottom: 28px;
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            color: #0f172a;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.2s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            background: #ffffff;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        input[type="file"]::file-selector-button {
+            margin-right: 12px;
+            padding: 10px 14px;
+            color: #ffffff;
+            background: #0284c7;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .note {
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .preview-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .preview-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .loading {
+            display: none;
+            margin-bottom: 18px;
+            padding: 13px 15px;
+            color: #075985;
+            background: #e0f2fe;
+            border-radius: 12px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .error-message {
+            display: none;
+            margin-bottom: 18px;
+            padding: 13px 15px;
+            color: #991b1b;
+            background: #fee2e2;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px 20px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            border: none;
+            border-radius: 13px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 800;
+            box-shadow: 0 12px 25px rgba(34, 197, 94, 0.25);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+            transform: none;
+        }
+
+        .footer {
+            margin-top: 20px;
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        @media (max-width: 520px) {
+            body {
+                padding: 14px;
+            }
+
+            .container {
+                padding: 24px 18px;
+                border-radius: 18px;
+            }
+
+            .preview-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <span class="badge">Konfirmasi Pembayaran</span>
+
+        <h1>Form Order Bot</h1>
+
+        <p class="subtitle">
+            Lengkapi data berikut dan unggah bukti pembayaran atau
+            status transaksi sukses. Setelah itu, data akan dikirim
+            melalui WhatsApp.
+        </p>
+
+        <form id="orderForm">
+            <div class="form-group">
+                <label for="nama">
+                    Nama lengkap <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="nama"
+                    placeholder="Masukkan nama lengkap"
+                    autocomplete="name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="nomor">
+                    Nomor HP / WhatsApp <span class="required">*</span>
+                </label>
+
+                <input
+                    type="tel"
+                    id="nomor"
+                    placeholder="Contoh: 081234567890"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="screenshots">
+                    Bukti bayar / transaksi sukses
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="file"
+                    id="screenshots"
+                    accept="image/*"
+                    multiple
+                    required
+                >
+
+                <div class="note">
+                    Boleh upload lebih dari satu screenshot. Maksimal
+                    5 gambar dan 10 MB per gambar.
+                </div>
+
+                <div id="previewList" class="preview-list"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="keterangan">
+                    Keterangan <span class="required">*</span>
+                </label>
+
+                <textarea
+                    id="keterangan"
+                    placeholder="Contoh: Order bot WhatsApp paket premium, pembayaran melalui DANA."
+                    required
+                ></textarea>
+            </div>
+
+            <div id="loading" class="loading">
+                ⏳ Mengunggah screenshot ke ImgBB...
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+
+            <button
+                type="submit"
+                id="submitButton"
+                class="btn"
+            >
+                Kirim Form ke WhatsApp
+            </button>
+        </form>
+
+        <p class="footer">
+            Pastikan data dan bukti pembayaran sudah benar sebelum
+            menekan tombol kirim.
+        </p>
+    </main>
+
+    <script>
+        // Ganti dengan API key ImgBB milikmu.
+        const IMGBB_API_KEY = "MASUKKAN_API_KEY_IMGBB";
+
+        // Nomor WhatsApp tujuan menggunakan format internasional tanpa +.
+        const WHATSAPP_NUMBER = "628990663793";
+
+        const form = document.getElementById("orderForm");
+        const fileInput = document.getElementById("screenshots");
+        const previewList = document.getElementById("previewList");
+        const loading = document.getElementById("loading");
+        const errorMessage = document.getElementById("errorMessage");
+        const submitButton = document.getElementById("submitButton");
+
+        fileInput.addEventListener("change", tampilkanPreview);
+        form.addEventListener("submit", kirimWA);
+
+        function tampilkanPreview() {
+            previewList.innerHTML = "";
+
+            const files = Array.from(fileInput.files);
+
+            files.slice(0, 5).forEach((file) => {
+                if (!file.type.startsWith("image/")) {
+                    return;
+                }
+
+                const previewItem = document.createElement("div");
+                previewItem.className = "preview-item";
+
+                const image = document.createElement("img");
+                image.src = URL.createObjectURL(file);
+                image.alt = file.name;
+
+                image.onload = () => {
+                    URL.revokeObjectURL(image.src);
+                };
+
+                previewItem.appendChild(image);
+                previewList.appendChild(previewItem);
+            });
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    // ImgBB dapat menerima data base64 tanpa prefix data:image.
+                    const base64 = String(reader.result).split(",")[1];
+                    resolve(base64);
+                };
+
+                reader.onerror = () => {
+                    reject(
+                        new Error(
+                            `Gagal membaca file: ${file.name}`
+                        )
+                    );
+                };
+
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function uploadImgBB(file) {
+            const base64 = await fileToBase64(file);
+
+            const formData = new FormData();
+            formData.append("image", base64);
+            formData.append("name", file.name);
+
+            const response = await fetch(
+                `https://api.imgbb.com/1/upload?key=${encodeURIComponent(IMGBB_API_KEY)}`,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    `Upload gagal dengan status ${response.status}.`
+                );
+            }
+
+            const result = await response.json();
+
+            console.log("IMGBB RESULT:", result);
+
+            if (!result.success || !result.data) {
+                throw new Error(
+                    result?.error?.message ||
+                    "ImgBB tidak berhasil mengunggah gambar."
+                );
+            }
+
+            // Jangan mengganti domain i.ibb.co menjadi i.ibb.co.com.
+            // Gunakan URL asli yang dikembalikan oleh ImgBB.
+            return (
+                result.data.display_url ||
+                result.data.url ||
+                result.data.image?.url
+            );
+        }
+
+        function validasiNomorHP(nomor) {
+            const nomorBersih = nomor.replace(/[^\d+]/g, "");
+
+            return /^(\+?62|0)[0-9]{8,14}$/.test(nomorBersih);
+        }
+
+        function tampilkanError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = "block";
+        }
+
+        function sembunyikanError() {
+            errorMessage.textContent = "";
+            errorMessage.style.display = "none";
+        }
+
+        function setLoading(status) {
+            loading.style.display = status ? "block" : "none";
+            submitButton.disabled = status;
+            submitButton.textContent = status
+                ? "Sedang Memproses..."
+                : "Kirim Form ke WhatsApp";
+        }
+
+        async function kirimWA(event) {
+            event.preventDefault();
+            sembunyikanError();
+
+            const nama = document
+                .getElementById("nama")
+                .value
+                .trim();
+
+            const nomor = document
+                .getElementById("nomor")
+                .value
+                .trim();
+
+            const keterangan = document
+                .getElementById("keterangan")
+                .value
+                .trim();
+
+            const files = Array.from(fileInput.files);
+
+            if (!nama || !nomor || !keterangan) {
+                tampilkanError(
+                    "Nama, nomor WhatsApp, dan keterangan wajib diisi."
+                );
+                return;
+            }
+
+            if (!validasiNomorHP(nomor)) {
+                tampilkanError(
+                    "Format nomor HP tidak valid. Contoh: 081234567890."
+                );
+                return;
+            }
+
+            if (files.length === 0) {
+                tampilkanError(
+                    "Silakan unggah minimal satu bukti pembayaran."
+                );
+                return;
+            }
+
+            if (files.length > 5) {
+                tampilkanError(
+                    "Maksimal upload adalah 5 gambar."
+                );
+                return;
+            }
+
+            const maksimalUkuran = 10 * 1024 * 1024;
+
+            for (const file of files) {
+                if (!file.type.startsWith("image/")) {
+                    tampilkanError(
+                        `${file.name} bukan file gambar.`
+                    );
+                    return;
+                }
+
+                if (file.size > maksimalUkuran) {
+                    tampilkanError(
+                        `${file.name} melebihi batas 10 MB.`
+                    );
+                    return;
+                }
+            }
+
+            if (
+                !IMGBB_API_KEY ||
+                IMGBB_API_KEY === "MASUKKAN_API_KEY_IMGBB"
+            ) {
+                tampilkanError(
+                    "API key ImgBB belum dipasang di dalam kode."
+                );
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                const imageUrls = [];
+
+                // Upload satu per satu agar lebih stabil.
+                for (const file of files) {
+                    const imageUrl = await uploadImgBB(file);
+                    imageUrls.push(imageUrl);
+                }
+
+                const daftarBukti = imageUrls
+                    .map((url, index) => {
+                        return `${index + 1}. ${url}`;
+                    })
+                    .join("\n");
+
+                const pesan = [
+                    "Halo Admin, saya ingin mengirim konfirmasi order bot.",
+                    "",
+                    `Nama: ${nama}`,
+                    `Nomor HP/WA: ${nomor}`,
+                    "",
+                    "Keterangan:",
+                    keterangan,
+                    "",
+                    "Bukti pembayaran / transaksi sukses:",
+                    daftarBukti,
+                    "",
+                    "Mohon segera dicek. Terima kasih."
+                ].join("\n");
+
+                const whatsappUrl =
+                    `https://wa.me/${WHATSAPP_NUMBER}` +
+                    `?text=${encodeURIComponent(pesan)}`;
+
+                window.location.href = whatsappUrl;
+            } catch (error) {
+                console.error(error);
+
+                tampilkanError(
+                    `Terjadi kesalahan: ${
+                        error.message ||
+                        "Gagal mengunggah gambar."
+                    }`
+                );
+            } finally {
+                setLoading(false);
+            }
+        }
+    </script>
+</body>
+</html>
