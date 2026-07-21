@@ -224,24 +224,24 @@
     <main class="container">
         <span class="badge">Konfirmasi Pembayaran</span>
 
-        <h1>Form Order Bot</h1>
+        <h1>Form Order Getcontact Prem</h1>
 
         <p class="subtitle">
             Lengkapi data berikut dan unggah bukti pembayaran atau
             status transaksi sukses. Setelah itu, data akan dikirim
-            melalui WhatsApp.
+            melalui WhatsApp Atmint agar bisa di proses.
         </p>
 
         <form id="orderForm">
             <div class="form-group">
                 <label for="nama">
-                    Nama lengkap <span class="required">*</span>
+                    Nama Yang terdaftar di Getcontact <span class="required">*</span>
                 </label>
 
                 <input
                     type="text"
                     id="nama"
-                    placeholder="Masukkan nama lengkap"
+                    placeholder="Contoh : Udin"
                     autocomplete="name"
                     required
                 >
@@ -249,7 +249,7 @@
 
             <div class="form-group">
                 <label for="nomor">
-                    Nomor HP / WhatsApp <span class="required">*</span>
+                    Nomor HP dan Getcontact yang akan di prem kan (nomer WA dan GTC harus sama) <span class="required">*</span>
                 </label>
 
                 <input
@@ -264,7 +264,7 @@
 
             <div class="form-group">
                 <label for="screenshots">
-                    Bukti bayar / transaksi sukses
+                    Bukti bayar / ss transaksi sukses bot
                     <span class="required">*</span>
                 </label>
 
@@ -291,13 +291,18 @@
 
                 <textarea
                     id="keterangan"
-                    placeholder="Contoh: Order bot WhatsApp paket premium, pembayaran melalui DANA."
+                    placeholder="Contoh : ╭────〔 TRANSAKSI SUKSES 〕─
+
+┊・Pay ID : 67676767
+┊・Kode Unik : AMD-fgaxxx67676
+┊・Nama Produk : GETCONTACT PREM
+┊・ID Buyer : 389578"
                     required
                 ></textarea>
             </div>
 
             <div id="loading" class="loading">
-                ⏳ Mengunggah screenshot ke ImgBB...
+                ⏳ Mengunggah screenshot...
             </div>
 
             <div id="errorMessage" class="error-message"></div>
@@ -307,7 +312,7 @@
                 id="submitButton"
                 class="btn"
             >
-                Kirim Form ke WhatsApp
+                Kirim Form ke WhatsApp Atmint
             </button>
         </form>
 
